@@ -8,6 +8,7 @@ import './assets/js/flexible.min'
 Vue.prototype.$http = axios
 import 'babel-polyfill' // 转换es6api
 
+Vue.use(require('vue-wechat-title'))
 
 // 引入mint-ui 
 import 'mint-ui/lib/style.css'
