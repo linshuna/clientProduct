@@ -3,7 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 //首页
-const Index = () => import('@/components/Index')
+const Index = () => import('@/pages/Index')
 
 export default new Router({
   routes: [

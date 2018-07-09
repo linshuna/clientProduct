@@ -4,17 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from './utils/axios'
-
+import './assets/js/flexible.min'
 Vue.prototype.$http = axios
 import 'babel-polyfill' // 转换es6api
 
-import './assets/css/base.scss'
 
 // 引入mint-ui 
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
 Vue.use(MintUI)
 
+import './assets/css/base.scss'
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
