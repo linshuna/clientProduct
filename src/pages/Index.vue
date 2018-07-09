@@ -42,11 +42,8 @@
       </ul>
       <div class="banners">
         <mt-swipe :auto="0">
-          <mt-swipe-item>
-            <img src="../assets/images/banner.jpg" alt="">
-          </mt-swipe-item>
-          <mt-swipe-item>
-            <img src="../assets/images/banner.jpg" alt="">
+          <mt-swipe-item v-for="(item, index) in pageData.banners" :key="index">
+            <img :src="item" alt="">
           </mt-swipe-item>
         </mt-swipe>
       </div>
@@ -54,10 +51,10 @@
         <div class="recommend">
           <h3 class="tt">为您推荐</h3>
           <ul class="rm-list">
-            <li>
-              <img class="goods-img" src="../assets/images/banner.jpg" alt="">
-              <p class="goods-name">小保养</p>
-              <p class="goods-price">¥399.00</p>
+            <li v-for="(item, index) in pageData.goodsList" :key="index">
+              <img class="goods-img" :src="item.goodsImg" alt="">
+              <p class="goods-name">{{item.goodsName}}</p>
+              <p class="goods-price">¥{{item.goodsPrice}}</p>
             </li>
           </ul>
         </div>
@@ -66,18 +63,18 @@
           <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
           <ul class="shop-list">
             <li class="clearfix">
-              <img src="../assets/images/banner.jpg" alt="" class="shop-img fl">
+              <img :src="pageData.shop.shopImg" alt="" class="shop-img fl">
               <div class="shop-info-box fl">
-                <h3 class="shop-name">NO.01 微位科技服务店（白云店）</h3>
+                <h3 class="shop-name">{{pageData.shop.shopName}}</h3>
                 <div class="star-box">
-                  <img v-for="(item, index) in 3" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg" alt="">
+                  <img v-for="(item, index) in pageData.shop.shopStar" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg" alt="">
                 </div>
                 <div class="order-box">
                   <div class="appointment">接受预约</div>
-                  <div class="order-sum">月订单253单</div>
+                  <div class="order-sum">月订单{{pageData.shop.shopOrder}}单</div>
                 </div>
-                <p class="shop-address">广州市白云区机场路1948号</p>
-                <div class="shop-dist">距离8km</div>
+                <p class="shop-address">{{pageData.shop.shopAddress}}</p>
+                <div class="shop-dist">距离{{pageData.shop.shopDist}}</div>
               </div>
             </li>
           </ul>
@@ -88,15 +85,24 @@
 </template>
 
 <script>
+  import { getIndexData } from '../utils/api.js'
   export default {
     name: "index",
     data() {
-      return {};
+      return {
+        pageData: {}
+      };
     },
     mounted() {
-
+      this._getIndexData()
     },
-    methods: {}
+    methods: {
+      _getIndexData(){
+        getIndexData().then(res=>{
+          this.pageData = res
+        })
+      }
+    }
   };
 
 </script>
