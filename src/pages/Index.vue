@@ -62,7 +62,7 @@
           <h3 class="tt">最近门店</h3>
           <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
           <ul class="shop-list">
-            <li class="clearfix">
+            <li class="clearfix" v-if="pageData.shop">
               <img :src="pageData.shop.shopImg" alt="" class="shop-img fl">
               <div class="shop-info-box fl">
                 <h3 class="shop-name">{{pageData.shop.shopName}}</h3>
