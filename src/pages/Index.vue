@@ -1,91 +1,94 @@
 <template>
   <div class="e-index">
-    <div class="wrap">
-      <div class="car-model">
-        <img src="../assets/images/carImg.png" alt="车标" class="car-img">
-        <p class="txt">奔驰：粤A12345</p>
+    <div class="car-model">
+      <img src="../assets/images/carImg.png" alt="车标" class="car-img">
+      <p class="txt">奔驰：粤A12345</p>
+      <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
+    </div>
+    <ul class="nav-list">
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+      <li>
+        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
+        <p class="nav-txt">预约</p>
+      </li>
+    </ul>
+    <div class="banners">
+      <mt-swipe :auto="0">
+        <mt-swipe-item v-for="(item, index) in pageData.banners" :key="index">
+          <img :src="item" alt="">
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+    <div class="toolbar">
+      <div class="recommend">
+        <h3 class="tt">为您推荐</h3>
+        <ul class="rm-list">
+          <li v-for="(item, index) in pageData.goodsList" :key="index">
+            <img class="goods-img" :src="item.goodsImg" alt="">
+            <p class="goods-name">{{item.goodsName}}</p>
+            <p class="goods-price">¥{{item.goodsPrice}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="shop">
+        <h3 class="tt">最近门店</h3>
         <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
-      </div>
-      <ul class="nav-list">
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-        <li>
-          <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">预约</p>
-        </li>
-      </ul>
-      <div class="banners">
-        <mt-swipe :auto="0">
-          <mt-swipe-item v-for="(item, index) in pageData.banners" :key="index">
-            <img :src="item" alt="">
-          </mt-swipe-item>
-        </mt-swipe>
-      </div>
-      <div class="toolbar">
-        <div class="recommend">
-          <h3 class="tt">为您推荐</h3>
-          <ul class="rm-list">
-            <li v-for="(item, index) in pageData.goodsList" :key="index">
-              <img class="goods-img" :src="item.goodsImg" alt="">
-              <p class="goods-name">{{item.goodsName}}</p>
-              <p class="goods-price">¥{{item.goodsPrice}}</p>
-            </li>
-          </ul>
-        </div>
-        <div class="shop">
-          <h3 class="tt">最近门店</h3>
-          <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
-          <ul class="shop-list">
-            <li class="clearfix">
-              <img :src="pageData.shop.shopImg" alt="" class="shop-img fl">
-              <div class="shop-info-box fl">
-                <h3 class="shop-name">{{pageData.shop.shopName}}</h3>
-                <div class="star-box">
-                  <img v-for="(item, index) in pageData.shop.shopStar" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg" alt="">
-                </div>
-                <div class="order-box">
-                  <div class="appointment">接受预约</div>
-                  <div class="order-sum">月订单{{pageData.shop.shopOrder}}单</div>
-                </div>
-                <p class="shop-address">{{pageData.shop.shopAddress}}</p>
-                <div class="shop-dist">距离{{pageData.shop.shopDist}}</div>
+        <ul class="shop-list">
+          <li class="clearfix">
+            <img :src="pageData.shop.shopImg" alt="" class="shop-img fl">
+            <div class="shop-info-box fl">
+              <h3 class="shop-name">{{pageData.shop.shopName}}</h3>
+              <div class="star-box">
+                <img v-for="(item, index) in pageData.shop.shopStar" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg"
+                  alt="">
               </div>
-            </li>
-          </ul>
-        </div>
+              <div class="order-box">
+                <div class="appointment">接受预约</div>
+                <!-- <div class="appointment app-full">预约已满</div>
+                <div class="appointment app-hot">预约火爆</div> -->
+                <div class="order-sum">月订单{{pageData.shop.shopOrder}}单</div>
+              </div>
+              <p class="shop-address">{{pageData.shop.shopAddress}}</p>
+              <div class="shop-dist">距离{{pageData.shop.shopDist}}</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { getIndexData } from '../utils/api.js'
+  import {
+    getIndexData
+  } from '../utils/api.js'
   export default {
     name: "index",
     data() {
@@ -97,8 +100,8 @@
       this._getIndexData()
     },
     methods: {
-      _getIndexData(){
-        getIndexData().then(res=>{
+      _getIndexData() {
+        getIndexData().then(res => {
           this.pageData = res
         })
       }
@@ -114,6 +117,7 @@
     background-color: #f5f5f5;
     overflow: auto;
   }
+
   .car-model {
     position: relative;
     display: flex;
@@ -168,7 +172,7 @@
     }
   }
 
-  .toolbar .tt{
+  .toolbar .tt {
     height: 0.7rem;
     line-height: 0.7rem;
     padding-left: 0.3rem;
@@ -176,9 +180,12 @@
     background-color: #fff;
     border-bottom: solid 0.02rem #eaeaea;
   }
-  .recommend,.shop {
+
+  .recommend,
+  .shop {
     margin-bottom: .2rem;
   }
+
   .rm-list {
     display: flex;
     overflow: auto;
@@ -201,6 +208,7 @@
       color: #db3f40;
     }
   }
+
   .shop {
     position: relative;
     .r-arrow {
@@ -208,7 +216,7 @@
       top: .28rem;
       right: .4rem;
       width: 0.1rem;
-	    height: 0.18rem;
+      height: 0.18rem;
     }
     .shop-list {
       li {
@@ -231,9 +239,9 @@
       .star-box {
         position: relative;
         img {
-        	width: 0.28rem;
-          height: 0.28rem;  
-          padding: .04rem .03rem;          
+          width: 0.28rem;
+          height: 0.28rem;
+          padding: .04rem .03rem;
         }
       }
       .order-box {
@@ -249,6 +257,12 @@
           color: #fff;
           text-align: center;
         }
+        .appointment.app-full {
+          background-color: #999;
+        }
+        .appointment.app-hot {
+          background-color: #f8241e;
+        }
         .order-sum {
           padding-left: .2rem;
           color: #999;
@@ -260,7 +274,7 @@
       .shop-dist {
         position: absolute;
         top: 1.18rem;
-        right: -.6rem;
+        right: -.9rem;
         width: 1.48rem;
         height: 0.48rem;
         line-height: .48rem;
@@ -276,12 +290,12 @@
 </style>
 <style>
   .mint-swipe-indicator {
-    background: #fff;
-    opacity: 1;
+    background: #fff !important;
+    opacity: 1 !important;
   }
 
   .mint-swipe-indicator.is-active {
-    background-color: #cc5222;
+    background-color: #cc5222 !important;
   }
 
 </style>

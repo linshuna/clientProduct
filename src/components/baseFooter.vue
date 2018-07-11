@@ -1,25 +1,33 @@
 <template>
   <footer>
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">
-        <img class="tab-img" v-if="selected == 1" src="../assets/images/icon_gongzuotai.png" alt="">
-        <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
-        <p class="tab-txt" :class="selected == 1?'txt-is-selected':''">首页</p>
+      <mt-tab-item id="Index">
+        <router-link to="/">
+          <img class="tab-img" v-if="selected == 'Index'" src="../assets/images/icon_gongzuotai.png" alt="">
+          <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
+          <p class="tab-txt" :class="selected == 'Index'?'txt-is-selected':''">首页</p>
+        </router-link>
       </mt-tab-item>
-      <mt-tab-item id="2">
-        <img class="tab-img" v-if="selected == 2" src="../assets/images/icon_gongzuotai.png" alt="">
-        <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
-        <p class="tab-txt" :class="selected == 2?'txt-is-selected':''">预约</p>
+      <mt-tab-item id="Appointment">
+        <router-link to="/Appointment">
+          <img class="tab-img" v-if="selected == 'Appointment'" src="../assets/images/icon_gongzuotai.png" alt="">
+          <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
+          <p class="tab-txt" :class="selected == 'Appointment'?'txt-is-selected':''">预约</p>
+        </router-link>
       </mt-tab-item>
-      <mt-tab-item id="3">
-        <img class="tab-img" v-if="selected == 3" src="../assets/images/icon_gongzuotai.png" alt="">
-        <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
-        <p class="tab-txt" :class="selected == 3?'txt-is-selected':''">附近门店</p>
+      <mt-tab-item id="NearbyStores">
+        <router-link to="/NearbyStores">
+          <img class="tab-img" v-if="selected == 'NearbyStores'" src="../assets/images/icon_gongzuotai.png" alt="">
+          <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
+          <p class="tab-txt" :class="selected == 'NearbyStores'?'txt-is-selected':''">附近门店</p>
+        </router-link>
       </mt-tab-item>
-      <mt-tab-item id="4">
-        <img class="tab-img" v-if="selected == 4" src="../assets/images/icon_gongzuotai.png" alt="">
-        <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
-        <p class="tab-txt" :class="selected == 4?'txt-is-selected':''">我的</p>
+      <mt-tab-item id="UserCenter">
+        <router-link to="/UserCenter">
+          <img class="tab-img" v-if="selected == 'UserCenter'" src="../assets/images/icon_gongzuotai.png" alt="">
+          <img class="tab-img" v-else src="../assets/images/icon_gongzuotai_dis.png" alt="">
+          <p class="tab-txt" :class="selected == 'UserCenter'?'txt-is-selected':''">我的</p>
+        </router-link>
       </mt-tab-item>
     </mt-navbar>
   </footer>
@@ -29,11 +37,18 @@
     name: "baseFooter",
     data() {
       return {
-        selected: 1
+        selected:'Index'
       };
     },
     mounted() {
 
+    },
+    watch: {
+      $route(to,from){
+        if (to.name) {
+          this.selected = to.name
+        }
+      }
     },
     methods: {}
   };
@@ -61,7 +76,7 @@
   }
 
   .mint-tab-item {
-    padding-top: 0.18rem;
+    padding-top: 0.18rem !important;
   }
 
 </style>

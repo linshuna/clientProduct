@@ -16,6 +16,7 @@ import MintUI from 'mint-ui'
 Vue.use(MintUI)
 
 import './assets/css/base.scss'
+import './assets/css/animations.css'
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({

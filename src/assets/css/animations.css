@@ -16,7 +16,7 @@
 
 /* 从右边滑入 */
 .slideR-enter-active,.slideR-leave-active {
-	transition: all .5s;
+	transition: all .3s;
 }
 .slideR-enter, .slideR-leave-to {
 	transform: translateX(100%);
