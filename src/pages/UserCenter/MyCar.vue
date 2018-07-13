@@ -2,23 +2,25 @@
   <div class="my-car mask">
     <ul class="car-list">
       <li>
-        <div class="car-hd clearfix">
+        <router-link to="/UserCenter/MyCarDetails">
+          <div class="car-hd clearfix">
           <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2599367009,2667348798&fm=58" alt="" class="car-img fl">
           <p class="car-name fl">奔驰C级 2018款 C 180 L 动感版</p>
           <img class="fr r-arrow" src="../../assets/images/rightArrow.png">
         </div>
+        </router-link>
         <div class="car-bd">
           <p class="car-number car-info">
-            <img src="../../assets/images/rightArrow.png" alt="">粤A123456</p>
+            <img src="../../assets/images/car-number.png" alt="">粤A123456</p>
           <p class="car-mileage car-info">
-            <img src="../../assets/images/rightArrow.png" alt="">行驶里程
+            <img src="../../assets/images/mycar-dist.png" alt="">行驶里程
             <span>12345</span>公里</p>
           <div class="handle-box clearfix">
             <label class="fl">
               <input type="radio" name="default">默认
             </label>
             <div class="del-box fl">
-              <img src="" alt="" class="del-icon fl">
+              <img src="../../assets/images/我的车辆-垃圾桶icon.png" alt="" class="del-icon fl">
               <p class="fl">删除</p>
             </div>
           </div>
@@ -37,7 +39,8 @@
   .car-list {
     li {
       margin-top: .2rem;
-      background-color: #fff;
+      background: url('../../assets/images/mycar-bg.png')no-repeat;
+      background-size: 100% 100%;
     }
     .car-hd {
       line-height: .7rem;
@@ -105,5 +108,32 @@
     color: #ffffff;
     background-color: #fba019;
   }
+
+input[type="radio"] {
+  -moz-appearance: button;
+  /* Firefox */
+  -webkit-appearance: button;
+  background: url('../../assets/images/我的车辆-未选中icon.png')no-repeat;
+  /* Safari 和 Chrome */
+  background-size: 0.36rem 0.36rem;
+  display: inline-block;
+  outline: none;
+  height: 0.36rem;
+  width: 0.36rem;
+  margin-top: -2px;
+  margin-bottom: 1px;
+  vertical-align: middle;
+}
+
+input[type="radio"]:checked {
+  display: inline-block;
+  background: url('../../assets/images/我的车辆-选中icon.png')no-repeat;
+  background-size: 0.36rem 0.36rem;
+  height: 0.36rem;
+  width: 0.36rem;
+  margin-top: -2px;
+  margin-bottom: 1px;
+  vertical-align: middle;
+}
 
 </style>

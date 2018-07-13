@@ -4,20 +4,52 @@ Vue.use(Router)
 
 //首页
 const Index = () => import('@/pages/Index')
+//特惠
+const Discounts = () => import('@/pages/Index/Discounts/DiscountsPage')
+//车险
+const Insurance = () => import('@/pages/Index/Insurance/Insurance')
+//车险详情
+const InsuranceDetails = () => import('@/pages/Index/Insurance/InsuranceDetails')
+//救援
+const Rescue = () => import('@/pages/Index/Rescue/Rescue')
+//保养
+const UpKeep = () => import('@/pages/Index/UpKeep/UpKeep')
+//洗车
+const CarWash = () => import('@/pages/Index/CarWash/CarWash')
+//洗车详情
+const CarWashDetails = () => import('@/pages/Index/CarWash/CarWashDetails')
+//支付详情
+const CarWashPayPage = () => import('@/pages/Index/CarWash/CarWashPayPage')
+
 //附近门店
 const NearbyStores = () => import('@/pages/NearbyStores')
+
 //预约
 const Appointment = () => import('@/pages/Appointment')
+//预约详情
+const NowAppoint = () => import('@/pages/Appointment/NowAppoint')
 //我的
 const UserCenter = () => import('@/pages/UserCenter')
 //我的订单
 const MyOrder = () => import('@/pages/UserCenter/MyOrder')
 //我的车辆
 const MyCar = () => import('@/pages/UserCenter/MyCar')
+//我的车辆
+const MyCenter = () => import('@/pages/UserCenter/MyCenter')
 //设置
 const Setting = () => import('@/pages/UserCenter/Setting')
 //评价
 const Evaluate = () => import('@/pages/UserCenter/Evaluate')
+//优惠券
+const Coupon = () => import('@/pages/UserCenter/Coupon')
+//钱包
+const Wallet = () => import('@/pages/UserCenter/Wallet')
+//我的预约
+const MyAppointment = () => import('@/pages/UserCenter/MyAppointment')
+//帮助中心
+const HelpCenter = () => import('@/pages/UserCenter/HelpCenter')
+//我的车辆详情
+const MyCarDetails = () => import('@/pages/UserCenter/MyCarDetails')
 
 export default new Router({
   routes: [
@@ -28,6 +60,64 @@ export default new Router({
       meta: {
         title: '首页'
       },
+      children:[
+        {
+          path: '/Index/Discounts',
+          component: Discounts,
+          meta: {
+            title: '特惠'
+          },
+        },
+        {
+          path: '/Index/UpKeep',
+          component: UpKeep,
+          meta: {
+            title: '保养'
+          },
+        },
+        {
+          path: '/Index/CarWash',
+          component: CarWash,
+          meta: {
+            title: '洗车'
+          },
+        },
+        {
+          path: '/Index/CarWash/CarWashDetails',
+          component: CarWashDetails,
+          meta: {
+            title: '洗车详情'
+          },
+        },
+        {
+          path: '/Index/CarWash/CarWashPayPage',
+          component: CarWashPayPage,
+          meta: {
+            title: '支付详情'
+          },
+        },
+        {
+          path: '/Index/Insurance',
+          component: Insurance,
+          meta: {
+            title: '车险'
+          },
+        },
+        {
+          path: '/Index/Insurance/InsuranceDetails',
+          component: InsuranceDetails,
+          meta: {
+            title: '车险详情'
+          },
+        },
+        {
+          path: '/Index/Rescue',
+          component: Rescue,
+          meta: {
+            title: '救援'
+          },
+        },
+      ]
     },
     {
       path: '/NearbyStores',
@@ -44,6 +134,15 @@ export default new Router({
       meta: {
         title: '预约'
       },
+      children:[
+        {
+          path: '/Appointment/NowAppoint',
+          component: NowAppoint,
+          meta: {
+            title: '预约详情'
+          },
+        },
+      ]
     },
     {
       path: '/UserCenter',
@@ -68,6 +167,13 @@ export default new Router({
           },
         },
         {
+          path: '/UserCenter/MyCenter',
+          component: MyCenter,
+          meta: {
+            title: '个人中心'
+          },
+        },
+        {
           path: '/UserCenter/Setting',
           component: Setting,
           meta: {
@@ -80,7 +186,42 @@ export default new Router({
           meta: {
             title: '评价'
           },
-        }
+        },
+        {
+          path: '/UserCenter/Coupon',
+          component: Coupon,
+          meta: {
+            title: '优惠券'
+          },
+        },
+        {
+          path: '/UserCenter/Wallet',
+          component: Wallet,
+          meta: {
+            title: '钱包'
+          },
+        },
+        {
+          path: '/UserCenter/MyAppointment',
+          component: MyAppointment,
+          meta: {
+            title: '我的预约'
+          },
+        },
+        {
+          path: '/UserCenter/HelpCenter',
+          component: HelpCenter,
+          meta: {
+            title: '帮助中心'
+          },
+        },
+        {
+          path: '/UserCenter/MyCarDetails',
+          component: MyCarDetails,
+          meta: {
+            title: '我的车辆'
+          },
+        },
       ]
     },
   ]

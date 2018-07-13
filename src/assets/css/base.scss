@@ -60,8 +60,8 @@ pc端阻止滚轮<div class="mask" @scroll.prevent >
 
 //滑动顺畅
 body {
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
+  // overflow-scrolling: touch;
   font-size: .24rem !important;;
   font-family: -apple-system-font, "Helvetica Neue", sans-serif;
 }
@@ -233,4 +233,8 @@ table {
   opacity: 0;
 }
 
+//mint-ui
+.mint-tab-item-label {
+  font-size: .28rem;
+}
 

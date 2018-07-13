@@ -2,7 +2,7 @@
   <div class="evaluate-wrap mask">
     <div class="section">
       <div class="section_big">
-        <div class="section_img"></div>
+        <img src="../../assets/images/个人中心-默认头像icon.png" class="section_img">
         <div class="section_top">
           <div class="section_top_top">
             <p>李老板</p>
@@ -42,7 +42,6 @@
   .section_img {
     width: 1rem;
     height: 1rem;
-    background-color: #ff0;
     position: absolute;
     left: 0.28rem;
     top: 0.3rem;

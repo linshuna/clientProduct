@@ -3,18 +3,18 @@
   <div class="setting-wrap mask">
     <div class="nav_input">
       <div class="nav_input_phone">
-        <img src="http://p1.jmstatic.com/banner/75/mobile_app/24326_0.jpg" alt="">
+        <img src="../../assets/images/setting_phone.png" alt="">
         <input type="number" placeholder="输入手机号码">
       </div>
       <div class="nav_input_number">
-        <img src="http://p1.jmstatic.com/banner/75/mobile_app/24326_0.jpg" alt="">
+        <img src="../../assets/images/setting_safety.png" alt="">
         <input type="number" placeholder="短信验证码">
         <div class="nav_input_number_right">
           <button class="input_btn">获取验证码</button>
         </div>
       </div>
       <div class="nav_input_password">
-        <img src="http://p1.jmstatic.com/banner/75/mobile_app/24326_0.jpg" alt="">
+        <img src="../../assets/images/setting_lock.png" alt="">
         <input type="password" placeholder="请输入密码">
       </div>
       <button class="footer_btn">登录</button>
@@ -34,7 +34,6 @@
     background-color: #fff;
     position: relative;
     height: 100%;
-
   }
 
   .nav_input div {
@@ -63,17 +62,15 @@
   }
 
   .nav_input img {
-    width: 0.36rem;
+    width: 0.3rem;
     height: 0.36rem;
-    border-radius: 0.3rem;
-    /*position: absolute;*/
     margin-left: 3%;
   }
 
   input::-webkit-input-placeholder,
   textarea::-webkit-input-placeholder {
     color: #aaa;
-    font-size: 0.2rem;
+    font-size: 0.28rem;
   }
 
 

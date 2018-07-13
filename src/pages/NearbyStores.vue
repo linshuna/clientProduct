@@ -17,12 +17,12 @@
           <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
         </div>
         <div class="store-bd clearfix">
-          <img src="pageData.store.storeImg" alt="" class="store-img fl">
+          <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt="" class="store-img fl">
           <div class="store-info-box fl">
             <p class="store-address">广州市白云区机场路1948号</p>
             <div class="star-box">
-              <img v-for="(item, index) in 5" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg"
-                alt="">
+            <score-lv :stars='3'></score-lv>
+              
             </div>
             <div class="item-box">
               <div class="appointment">接受预约</div>
@@ -32,6 +32,7 @@
             </div>
             <p class="store-time">营业时间：08:00-18:00</p>
             <div class="store-dist">距离</div>
+            <img src="../assets/images/洗车详情-定位icon.png" alt="" class="dist-icon">
           </div>
         </div>
       </li>
@@ -39,8 +40,11 @@
   </div>
 </template>
 <script>
+  import {score} from "mixins";
+
   // import { getIndexData } from '../utils/api.js'
   export default {
+    mixins: [score],
     name: "NearbyStores",
     data() {
       return {
@@ -50,6 +54,7 @@
     mounted() {},
     methods: {}
   };
+
 </script>
 <style lang="scss" scoped>
   .nearby-stores {
@@ -114,14 +119,6 @@
           padding-top: .2rem;
           font-size: 0.24rem;
         }
-        .star-box {
-          position: relative;
-          img {
-            width: 0.28rem;
-            height: 0.28rem;
-            padding: .04rem .03rem;
-          }
-        }
         .item-box {
           height: .44rem;
           display: flex;
@@ -161,6 +158,13 @@
           font-size: 0.24rem;
           color: #ff8004;
           text-align: center;
+        }
+        .dist-icon {
+          position: absolute;
+          right: -2.2rem;
+          top: .3rem;
+          width: 0.32rem;
+          height: 0.36rem;
         }
       }
     }

@@ -31,7 +31,7 @@ service.get = (url, data = {}) => {
       })
       .then(response => {
         if (response.data.errorCode == 200) {
-          resolve(response.data);
+          resolve(response.data.data);
           return
         }
         Toast(response.data.message)
@@ -47,7 +47,7 @@ service.post = (url, data = {}, config = {}) => {
     axios.post(url, Qs.stringify(data), config)
       .then(response => {
         if (response.data.errorCode == 200) {
-          resolve(response.data);
+          resolve(response.data.data);
           return
         }
         Toast(response.data.message)

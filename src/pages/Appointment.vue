@@ -17,7 +17,7 @@
           <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
         </div>
         <div class="store-bd clearfix">
-          <img src="pageData.store.storeImg" alt="" class="store-img fl">
+          <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt="" class="store-img fl">
           <div class="store-info-box fl">
             <p class="store-address">广州市白云区机场路1948号</p>
             <p class="appointment-sum">预约数：3453次
@@ -29,12 +29,17 @@
               <div class="item-sum">维修丶保养</div>
             </div>
             <p class="store-time">营业时间：08:00-18:00</p>
-            <button class="appointment-btn">立即预约</button>
+            <router-link to="/Appointment/NowAppoint">
+              <button class="appointment-btn">立即预约</button>
+            </router-link>
             <div class="store-dist">距离</div>
           </div>
         </div>
       </li>
     </ul>
+    <transition name="slideR">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>

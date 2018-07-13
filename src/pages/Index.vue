@@ -1,110 +1,158 @@
 <template>
   <div class="e-index">
-    <div class="car-model">
-      <img src="../assets/images/carImg.png" alt="车标" class="car-img">
-      <p class="txt">奔驰：粤A12345</p>
-      <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
-    </div>
-    <ul class="nav-list">
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-      <li>
-        <img src="../assets/images/nav-icon-recharge.png" alt="导航图片" class="nav-img">
-        <p class="nav-txt">预约</p>
-      </li>
-    </ul>
-    <div class="banners">
-      <mt-swipe :auto="0">
-        <mt-swipe-item v-for="(item, index) in pageData.banners" :key="index">
-          <img :src="item" alt="">
-        </mt-swipe-item>
-      </mt-swipe>
-    </div>
-    <div class="toolbar">
-      <div class="recommend">
-        <h3 class="tt">为您推荐</h3>
-        <ul class="rm-list">
-          <li v-for="(item, index) in pageData.goodsList" :key="index">
-            <img class="goods-img" :src="item.goodsImg" alt="">
-            <p class="goods-name">{{item.goodsName}}</p>
-            <p class="goods-price">¥{{item.goodsPrice}}</p>
-          </li>
-        </ul>
-      </div>
-      <div class="shop">
-        <h3 class="tt">最近门店</h3>
+    <div v-show="isshow">
+      <div class="car-model">
+        <img src="../assets/images/carImg.png" alt="车标" class="car-img">
+        <p class="txt">奔驰：粤A12345</p>
         <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
-        <ul class="shop-list">
-          <li class="clearfix">
-            <img :src="pageData.shop.shopImg" alt="" class="shop-img fl">
-            <div class="shop-info-box fl">
-              <h3 class="shop-name">{{pageData.shop.shopName}}</h3>
-              <div class="star-box">
-                <img v-for="(item, index) in pageData.shop.shopStar" class="star" :key="index" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1157490336,1091943566&fm=27&gp=0.jpg"
-                  alt="">
+      </div>
+      <ul class="nav-list">
+        <li>
+          <img src="../assets/images/首页-预约icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">预约</p>
+        </li>
+        <router-link to="/Index/UpKeep" tag="li">
+          <img src="../assets/images/首页-保养icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">保养</p>
+        </router-link>
+        <router-link to="/Index/Rescue" tag="li">
+          <img src="../assets/images/首页-救援icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">救援</p>
+        </router-link>
+        <router-link to="/Index/CarWash" tag="li">
+          <img src="../assets/images/首页-洗车icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">洗车</p>
+        </router-link>
+        <router-link to="/Index/Insurance" tag="li">
+          <img src="../assets/images/首页-车险icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">车险</p>
+        </router-link>
+        <router-link to="/Index/Discounts" tag="li">
+          <img src="../assets/images/首页-特惠icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">特惠</p>
+        </router-link>
+        <li>
+          <img src="../assets/images/首页-找师傅icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">找师傅</p>
+        </li>
+        <li>
+          <img src="../assets/images/首页-充值优惠icon.png" alt="导航图片" class="nav-img">
+          <p class="nav-txt">充值优惠</p>
+        </li>
+      </ul>
+      <div class="banners">
+        <mt-swipe :auto="0">
+          <mt-swipe-item v-for="(item, index) in bannerList" :key="index">
+            <img :src="item.pic" alt="">
+          </mt-swipe-item>
+        </mt-swipe>
+      </div>
+      <div class="toolbar">
+        <div class="recommend">
+          <h3 class="tt">为您推荐</h3>
+          <ul class="rm-list">
+            <li v-for="(item, index) in recommendList" :key="index">
+              <img class="goods-img" :src="item.pic" alt="">
+              <p class="goods-name">{{item.name}}</p>
+              <p class="goods-price">¥{{item.price}}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="shop">
+          <router-link to="/NearbyStores">
+            <h3 class="tt">最近门店</h3>
+          </router-link>
+          <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
+          <ul class="shop-list">
+            <li class="clearfix">
+              <img :src="nearbyStores.pic" alt="" class="shop-img fl">
+              <div class="shop-info-box fl">
+                <h3 class="shop-name">{{nearbyStores.name}}</h3>
+                <div class="star-box">
+                  <score-lv :stars='nearbyStores.evaluateShow'></score-lv>
+                </div>
+                <div class="order-box">
+                  <div v-if="nearbyStores.state == 1" class="appointment">接受预约</div>
+                  <div v-else-if="nearbyStores.state == 2" class="appointment app-hot">预约火爆</div>
+                  <div v-else class="appointment app-full">预约已满</div>
+                  <div class="order-sum">月订单{{nearbyStores.sale}}单</div>
+                </div>
+                <p class="shop-address ellipsis fl">{{nearbyStores.address}}</p>
+                <img src="../assets/images/首页-导航icon.png" class="shop-dist-img" alt="">
               </div>
-              <div class="order-box">
-                <div class="appointment">接受预约</div>
-                <!-- <div class="appointment app-full">预约已满</div>
-                <div class="appointment app-hot">预约火爆</div> -->
-                <div class="order-sum">月订单{{pageData.shop.shopOrder}}单</div>
-              </div>
-              <p class="shop-address">{{pageData.shop.shopAddress}}</p>
-              <div class="shop-dist">距离{{pageData.shop.shopDist}}</div>
-            </div>
-          </li>
-        </ul>
+              <div class="shop-dist">距离{{Math.round(nearbyStores.distance)}}m</div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+    <transition name="slideR">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
+  import {score} from "mixins";
   import {
-    getIndexData
+    getIndexBanner,
+    getRecommendList,
+    getNearbyStores,
   } from '../utils/api.js'
   export default {
+    mixins: [score],
     name: "index",
     data() {
       return {
-        pageData: {}
+        isshow: true,
+        bannerList: [],
+        recommendList: [],
+        nearbyStores: {},
+        pageData: {
+          shop: {
+            shopImg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1128551442,917083253&fm=27&gp=0.jpg',
+            shopName: '黄埔店',
+            shopStar: 4,
+            shopOrder: 250,
+            shopAddress: '黄埔大道西又黄埔大道东',
+            shopDist: '8km'
+          }
+        }
       };
     },
     mounted() {
-      this._getIndexData()
+      this._getIndexBanner()
+      this._getRecommendList()
+      this._getNearbyStores()
+    },
+    watch: {
+      $route(to, from) {
+        if (to.name == 'Index') {
+          this.isshow = true
+          return
+        }
+        this.isshow = false
+      }
     },
     methods: {
-      _getIndexData() {
-        getIndexData().then(res => {
-          this.pageData = res
+      _getIndexBanner() {
+        getIndexBanner().then(res => {
+          this.bannerList = res
         })
-      }
+      },
+      _getRecommendList() {
+        getRecommendList().then(res => {
+          this.recommendList = res
+        })
+      }, 
+      _getNearbyStores() {
+        getNearbyStores({
+          latitude: '113.2813811302',
+          longitude: '23.1464370884',
+        }).then(res => {
+          this.nearbyStores = res
+        })
+      }, 
     }
   };
 
@@ -220,6 +268,7 @@
     }
     .shop-list {
       li {
+        position: relative;
         height: 2.24rem;
         background-color: #fff;
       }
@@ -231,19 +280,18 @@
       }
     }
     .shop-info-box {
-      position: relative;
       .shop-name {
         padding-top: .22rem;
         font-size: 0.3rem;
       }
-      .star-box {
-        position: relative;
-        img {
-          width: 0.28rem;
-          height: 0.28rem;
-          padding: .04rem .03rem;
-        }
-      }
+      // .star-box {
+      //   position: relative;
+      //   img {
+      //     width: 0.28rem;
+      //     height: 0.28rem;
+      //     padding: .04rem .03rem;
+      //   }
+      // }
       .order-box {
         height: .44rem;
         display: flex;
@@ -269,21 +317,26 @@
         }
       }
       .shop-address {
+        width: 3rem;
         font-size: 0.24rem;
       }
-      .shop-dist {
-        position: absolute;
-        top: 1.18rem;
-        right: -.9rem;
-        width: 1.48rem;
-        height: 0.48rem;
-        line-height: .48rem;
-        border-radius: 0.04rem;
-        border: solid 1px #ff8003;
-        font-size: 0.24rem;
-        color: #ff8004;
-        text-align: center;
+      .shop-dist-img {
+        width: 0.32rem;
+        height: 0.32rem;
       }
+    }
+    .shop-dist {
+      position: absolute;
+      top: 1.18rem;
+      right: .42rem;
+      width: 1.48rem;
+      height: 0.48rem;
+      line-height: .48rem;
+      border-radius: 0.04rem;
+      border: solid 1px #ff8003;
+      font-size: 0.24rem;
+      color: #ff8004;
+      text-align: center;
     }
   }
 
