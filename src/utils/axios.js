@@ -34,7 +34,11 @@ service.get = (url, data = {}) => {
           resolve(response.data.data);
           return
         }
+        
         Toast(response.data.message)
+        resolve(response.data); 
+      
+        
       }, err => {
         Toast('网络出错,请稍后重试')
         reject(err)
@@ -50,6 +54,7 @@ service.post = (url, data = {}, config = {}) => {
           resolve(response.data.data);
           return
         }
+        resolve(response.data);
         Toast(response.data.message)
       }, err => {
         Toast('网络出错,请稍后重试')

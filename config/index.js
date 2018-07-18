@@ -11,12 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     //开发环境跨域请求配置
-    // proxyTable: {
-    //   '/': {
-    //     target: 'http://w.hhqccar.cn',//接口域名
-    //     changeOrigin: true,//是否跨域
-    //   }
-    // },
+    proxyTable: {
+      '/': {
+        target: 'http://w.hhqccar.cn',//接口域名
+        changeOrigin: true,//是否跨域
+      }
+    },
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 7777, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

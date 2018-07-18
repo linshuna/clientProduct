@@ -1,14 +1,27 @@
 <template>
   <div class="user-center">
     <div class="user-wrap" v-if="isshow">
-      <div class="user-center-hd clearfix">
-        <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3942989250,3371488751&fm=27&gp=0.jpg" alt="" class="user-img fl">
-        <div class="user-info fl">
-          <p class="user-name">刘德华</p>
-          <p class="user-car">奔驰C级 2018款 C 180 L 动感版</p>
+      <div class="user-center-hd clearfix" @click.stop="isLogin">
+        <div class="setCenter">
+          <template v-if="clientvid">
+            <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3942989250,3371488751&fm=27&gp=0.jpg" alt="" class="user-img">
+            <div class="user-info">
+              <p class="user-name">刘德华</p>
+              <p class="user-car">奔驰C级 2018款 C 180 L 动感版</p>
+            </div>
+            
+          </template>
+          <template v-else>
+            <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3942989250,3371488751&fm=27&gp=0.jpg" alt="" class="user-img">
+            <div class="user-info">
+              登录/注册 
+            </div>
+          </template>
+          
         </div>
-        <div class="vip">普通会员</div>
+        <div class="vip" v-if="clientvid">普通会员</div>
       </div>
+      
       <ul class="accout-details">
         <router-link to="/UserCenter/MyOrder" tag="li">
           <p>23</p>
@@ -38,7 +51,7 @@
         </li>
       </ul>
       <ul class="footer">
-        <router-link v-for="(linkItem,index) in userSettingTypeData" :key="index" :to="linkItem.linkUrl" tag="li" @click.native="isWaitingTip(linkItem.linkUrl)">
+        <router-link v-for="(linkItem,index) in userSettingTypeData" :key="index" :to="linkItem.linkUrl" tag="li" >
           <img class="fl cell-logo" :src="linkItem.icon" alt="">
           <p class="fl">{{linkItem.linkName}}</p>
           <img class="fr arrow" src="../assets/images/rightArrow.png">
@@ -56,6 +69,7 @@
     name: "Appointment",
     data() {
       return {
+        clientvid: '',
         isshow: true,
         pageData: {},
         userSettingTypeData: [{
@@ -83,7 +97,10 @@
         ],
       };
     },
-    mounted() {},
+    mounted() {
+      this.clientvid = this.$store.getters.getStorage;
+      console.log(this.clientvid)
+    },
     watch: {
       $route(to, from) {
         if (to.name == 'UserCenter') {
@@ -93,14 +110,29 @@
         this.isshow = false
       }
     },
-    methods: {}
+    methods: {
+      isWaitingTip: function(url){
+        this.$router.push({path: url})
+      },
+      isLogin: function(){
+        if(!this.clientvid){
+          this.$router.push({path:'/Login'})
+        }
+      }
+    }
   };
 
 </script>
 <style lang="scss" scoped>
+  .wrap{
+    min-height: 120vh;
+    padding-bottom: 2rem;
+    background: #f4f4f4;
+  }
   .user-center {
     height: 100%;
     background-color: #f5f5f5;
+    padding-bottom: 2rem;
   }
 
   .user-center-hd {
@@ -109,14 +141,27 @@
     width: 100%;
     margin-bottom: .06rem; 
     @include bis('../assets/images/我的-背景图标.png');
+    .setCenter{
+      position: absolute;
+      left: 10%;
+      top: 50%;
+      transform: translate(0,-50%);
+    }
     .user-img {
+      display: inline-block;
       width: 1.36rem;
       height: 1.36rem;
-      margin: .92rem .3rem 0;
       border-radius: 50%;
+      vertical-align:middle;
+    }
+    .user-info{
+      display: inline-block;
+      vertical-align:middle;
+      color: #ffffff;
+      font-size: .32rem;
+      padding-left: .2rem;
     }
     .user-name {
-      padding-top: 1rem;
       font-size: 0.48rem;
       color: #ffffff;
     }

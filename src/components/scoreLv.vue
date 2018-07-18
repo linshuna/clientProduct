@@ -1,6 +1,7 @@
 <template>
   <div class="score-box">
-    <img v-for="item in stars" class="star" src="../assets/images/star-sel-icon.png" alt=""><img v-for="item in 5-stars" class="star" src="../assets/images/star-icon.png" alt="">
+    <img v-for="item in stars" class="star" src="../assets/images/star-sel-icon.png" alt="">
+    <img v-for="item in stars" class="star" src="../assets/images/star-icon.png" alt="">
   </div>
 </template>
 

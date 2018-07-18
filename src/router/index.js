@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
-
+//注册
+const Register = () => import('@/pages/Register')
+//登录
+const Login = () => import('@/pages/Login')
+//忘记秘密
+const Forgetpwd = () => import('@/pages/Forgetpwd')
 //首页
 const Index = () => import('@/pages/Index')
+
 //特惠
 const Discounts = () => import('@/pages/Index/Discounts/DiscountsPage')
 //车险
@@ -34,6 +40,9 @@ const UserCenter = () => import('@/pages/UserCenter')
 const MyOrder = () => import('@/pages/UserCenter/MyOrder')
 //我的车辆
 const MyCar = () => import('@/pages/UserCenter/MyCar')
+//新增车辆
+const AddCar = () => import('@/pages/UserCenter/AddCar')
+
 //我的车辆
 const MyCenter = () => import('@/pages/UserCenter/MyCenter')
 //设置
@@ -165,6 +174,13 @@ export default new Router({
           meta: {
             title: '我的车辆'
           },
+          children: [{
+            path: '/UserCenter/MyCar/AddCar',
+            component: AddCar,
+            meta: {
+              title: '新增车辆'
+            }
+          }]
         },
         {
           path: '/UserCenter/MyCenter',
@@ -216,7 +232,7 @@ export default new Router({
           },
         },
         {
-          path: '/UserCenter/MyCarDetails',
+          path: '/UserCenter/MyCarDetails/:carvid',
           component: MyCarDetails,
           meta: {
             title: '我的车辆'
@@ -224,5 +240,29 @@ export default new Router({
         },
       ]
     },
+    {
+      path: '/Register',
+      name: 'Register',
+      component: Register,
+      meta:{
+        title: '注册'
+      }
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login,
+      meta: {
+        title: '登录'
+      }
+    },
+    {
+      path: '/Forgetpwd',
+      name: 'Forgetpwd',
+      component: Forgetpwd,
+      mate: {
+        title: '忘记密码'
+      }
+    }
   ]
 })

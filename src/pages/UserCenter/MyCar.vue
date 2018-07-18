@@ -1,25 +1,27 @@
 <template>
   <div class="my-car mask">
     <ul class="car-list">
-      <li>
-        <router-link to="/UserCenter/MyCarDetails">
+      <li v-for="item in carList">
+        <div @click.stop="lookCarDetail(item.vid)">
           <div class="car-hd clearfix">
           <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2599367009,2667348798&fm=58" alt="" class="car-img fl">
-          <p class="car-name fl">奔驰C级 2018款 C 180 L 动感版</p>
+          <p class="car-name fl">
+            {{item.carplate}} {{item.carmodel}} {{item.carnat}}
+          </p>
           <img class="fr r-arrow" src="../../assets/images/rightArrow.png">
         </div>
-        </router-link>
+        </div>
         <div class="car-bd">
           <p class="car-number car-info">
-            <img src="../../assets/images/car-number.png" alt="">粤A123456</p>
+            <img src="../../assets/images/car-number.png" alt="">{{item.carNo}}</p>
           <p class="car-mileage car-info">
             <img src="../../assets/images/mycar-dist.png" alt="">行驶里程
-            <span>12345</span>公里</p>
+            <span>{{item.distance||0}}</span>公里</p>
           <div class="handle-box clearfix">
-            <label class="fl">
+            <label class="fl" @click.stop="setCarDefault(item.vid)">
               <input type="radio" name="default">默认
             </label>
-            <div class="del-box fl">
+            <div class="del-box fl" @click.stop="delCar(item.vid)">
               <img src="../../assets/images/我的车辆-垃圾桶icon.png" alt="" class="del-icon fl">
               <p class="fl">删除</p>
             </div>
@@ -27,12 +29,63 @@
         </div>
       </li>
     </ul>
-    <button class="add-car-btn">新增车辆
+    <button class="add-car-btn" >
+      <router-link to="/UserCenter/MyCar/AddCar">新增车辆</router-link>
+       
     </button>
+
+    <router-view></router-view>
   </div>
 </template>
 <script>
-
+  import {Toast} from 'mint-ui'
+  import {
+    carList,
+    delCar,
+    setCarDefault,
+  } from '@/utils/api.js'
+  export default {
+    name: 'mycar',
+    data() {
+      return {
+        clientvid: 0,
+        carList: null
+      }
+    },
+    created() {
+      this.clientvid = this.$store.getters.getStorage.vid
+      this.init()
+    },
+    methods:{
+      init: function(){
+        carList({clientvid: this.clientvid})
+        .then(res => {
+          console.log(res)
+          this.carList = res
+        })
+      },
+      lookCarDetail: function(id){
+        this.$router.push({path: '/UserCenter/MyCarDetails/'+id})
+      },
+      addCar: function(){
+        this.$router.push({path:'/UserCenter/MyCar/AddCar'})
+      },
+      delCar: function(id){
+        delCar({id: id,clientvid: this.clientvid})
+        .then(res=>{
+           Toast('成功删除车辆')
+           this.init()         
+        })
+      },
+      setCarDefault: function(id){
+        setCarDefault({id: id,clientvid: this.clientvid})
+        .then(res=>{
+          Toast('成功设为默认车辆');
+          this.init()
+        })
+      }
+    }
+  }
 
 </script>
 <style lang="scss" scoped>

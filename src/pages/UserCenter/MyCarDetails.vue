@@ -10,14 +10,14 @@
           <img src="../../assets/images/首页-救援icon.png" alt="" class="hd-img fl">
           <div class="hd-info fl">
             <p class="car-name">宝马汽车 530Li</p>
-            <p class="car-number">车架号：1G1BL52P7TR115520</p>
+            <p class="car-number">车架号：{{carMsg.vin}}</p>
             <img src="../../assets/images/车辆信息-修改icon.png" alt="" class="edit-icon">
           </div>
         </div>
         <ul class="details-bd">
           <li class="cell">
             <p class="left">注册时间</p>
-            <p class="right">2018.06.20 15:30</p>
+            <p class="right">{{carMsg.regtime}}</p>
           </li>
           <li class="cell">
             <p class="left">车价</p>
@@ -25,15 +25,15 @@
           </li>
           <li class="cell">
             <p class="left">发动机号</p>
-            <p class="right">2467429</p>
+            <p class="right">{{carMsg.engine}}</p>
           </li>
           <li class="cell">
             <p class="left">商业保险到期日</p>
-            <p class="right">2018.06.20 15:30</p>
+            <p class="right">{{carMsg.cominsurance}}</p>
           </li>
           <li class="cell">
             <p class="left">交强保险到期日</p>
-            <p class="right">2018.06.20 15:30</p>
+            <p class="right">{{carMsg.daninsurance}}</p>
           </li>
         </ul>
       </mt-tab-container-item>
@@ -67,23 +67,27 @@
   </div>
 </template>
 <script>
-  // import {
-  //   getIndexData
-  // } from '../utils/api.js'
+  import {
+    carMsg
+  } from '@/utils/api.js'
   export default {
     name: 'MyCarDetails',
     data() {
       return {
-        selected: '1'
+        selected: '1',
+        carvid: null,
+        carMsg: {}
       }
     },
     mounted() {
       // this._getIndexData()
+      this.carvid = this.$route.params.carvid;
+      this.init() 
     },
     methods: {
-      _getIndexData() {
-        getIndexData().then(res => {
-          this.pageData = res
+      init() {
+        carMsg({clientvid: 1,carvid: this.carvid}).then(res => {
+          this.carMsg = res
         })
       }
     }

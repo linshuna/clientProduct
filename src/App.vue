@@ -4,7 +4,10 @@
     <div class="wrap">
       <router-view/>
     </div>
-    <base-footer></base-footer>
+    <template v-if="isshow">
+      <base-footer></base-footer>
+    </template>
+    
   </div>
 </template>
 
@@ -12,8 +15,23 @@
 import baseFooter from './components/baseFooter.vue'
   export default {
     name: 'app',
+    data(){
+      return {
+        isshow: false
+      }
+    },
     components: {
-      baseFooter
+      'base-footer':baseFooter,
+    },
+    watch:{
+      $route(to, from) {
+        console.log(to.name)
+        if (to.name=='Index'||to.name=='Appointment'||to.name=='NearbyStores'||to.name=='UserCenter') {
+          this.isshow = true; 
+          return
+        }
+        this.isshow = false
+      }
     }
   }
 
@@ -28,6 +46,7 @@ import baseFooter from './components/baseFooter.vue'
   .wrap {
     position: absolute;
     width: 100%;
+    min-height: 100vh;
     top: 0;
     left: 0;
     right: 0;

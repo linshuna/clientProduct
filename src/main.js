@@ -10,6 +10,8 @@ import 'babel-polyfill' // 转换es6api
 
 Vue.use(require('vue-wechat-title'))
 
+import store from './store/index.js'
+
 // 引入mint-ui 
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
@@ -17,10 +19,12 @@ Vue.use(MintUI)
 
 import './assets/css/base.scss'
 import './assets/css/animations.css'
+import './assets/css/border-1px.css'
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: {

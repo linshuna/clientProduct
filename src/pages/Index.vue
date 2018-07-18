@@ -8,27 +8,27 @@
       </div>
       <ul class="nav-list">
         <li>
-          <img src="../assets/images/首页-预约icon.png" alt="导航图片" class="nav-img">
+          <img src="../assets/images/首页-预约icon.png" alt="预约图片" class="nav-img">
           <p class="nav-txt">预约</p>
         </li>
         <router-link to="/Index/UpKeep" tag="li">
-          <img src="../assets/images/首页-保养icon.png" alt="导航图片" class="nav-img">
-          <p class="nav-txt">保养</p>
+          <img src="../assets/images/shopIcon.png" alt="商城图片" class="nav-img">
+          <p class="nav-txt">商城</p>
         </router-link>
         <router-link to="/Index/Rescue" tag="li">
-          <img src="../assets/images/首页-救援icon.png" alt="导航图片" class="nav-img">
+          <img src="../assets/images/首页-救援icon.png" alt="救援图片" class="nav-img">
           <p class="nav-txt">救援</p>
         </router-link>
         <router-link to="/Index/CarWash" tag="li">
-          <img src="../assets/images/首页-洗车icon.png" alt="导航图片" class="nav-img">
+          <img src="../assets/images/首页-洗车icon.png" alt="洗车图片" class="nav-img">
           <p class="nav-txt">洗车</p>
         </router-link>
         <router-link to="/Index/Insurance" tag="li">
-          <img src="../assets/images/首页-车险icon.png" alt="导航图片" class="nav-img">
+          <img src="../assets/images/首页-车险icon.png" alt="车险图片" class="nav-img">
           <p class="nav-txt">车险</p>
         </router-link>
         <router-link to="/Index/Discounts" tag="li">
-          <img src="../assets/images/首页-特惠icon.png" alt="导航图片" class="nav-img">
+          <img src="../assets/images/首页-特惠icon.png" alt="特惠图片" class="nav-img">
           <p class="nav-txt">特惠</p>
         </router-link>
         <li>
@@ -52,7 +52,7 @@
           <h3 class="tt">为您推荐</h3>
           <ul class="rm-list">
             <li v-for="(item, index) in recommendList" :key="index">
-              <img class="goods-img" :src="item.pic" alt="">
+              <img class="goods-img" :src="item.pic" alt="商品图片">
               <p class="goods-name">{{item.name}}</p>
               <p class="goods-price">¥{{item.price}}</p>
             </li>
@@ -65,7 +65,7 @@
           <img src="../assets/images/rightArrow.png" alt="箭头" class="r-arrow">
           <ul class="shop-list">
             <li class="clearfix">
-              <img :src="nearbyStores.pic" alt="" class="shop-img fl">
+              <img :src="nearbyStores.pic" alt="门店图片" class="shop-img fl">
               <div class="shop-info-box fl">
                 <h3 class="shop-name">{{nearbyStores.name}}</h3>
                 <div class="star-box">
@@ -127,6 +127,7 @@
     },
     watch: {
       $route(to, from) {
+        console.log(to,from)
         if (to.name == 'Index') {
           this.isshow = true
           return
@@ -158,6 +159,11 @@
 
 </script>
 <style lang="scss" scoped>
+  .wrap{
+    min-height: 120vh;
+    padding-bottom: 2rem;
+    background: #f4f4f4;
+  }
   .e-index {
     position: relative;
     width: 100%;
