@@ -18,9 +18,12 @@ const UpKeep = () => import('@/pages/Index/UpKeep/UpKeep')
 const CarWash = () => import('@/pages/Index/CarWash/CarWash')
 //洗车详情
 const CarWashDetails = () => import('@/pages/Index/CarWash/CarWashDetails')
+<<<<<<< HEAD
 
 
 //我的
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
 //支付详情
 const CarWashPayPage = () => import('@/pages/Index/CarWash/CarWashPayPage')
 
@@ -53,6 +56,7 @@ const MyAppointment = () => import('@/pages/UserCenter/MyAppointment')
 const HelpCenter = () => import('@/pages/UserCenter/HelpCenter')
 //我的车辆详情
 const MyCarDetails = () => import('@/pages/UserCenter/MyCarDetails')
+<<<<<<< HEAD
 //立即购买
 const Purchase = () => import('@/pages/Index/UpKeep/Purchase')
 //立即付款
@@ -62,6 +66,8 @@ const PaymentFinsh = () => import('@/pages/UserCenter/PaymentFinsh')
 //我的帮助中心帮助
 const HelpConent = () => import('@/pages/UserCenter/HelpConent')
 
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
 
 export default new Router({
   routes: [
@@ -234,6 +240,7 @@ export default new Router({
             title: '我的车辆'
           },
         },
+<<<<<<< HEAD
         {
           path: '/Index/UpKeep/Purchase',
           component: Purchase,
@@ -263,6 +270,8 @@ export default new Router({
           },
         },
 
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
       ]
     },
   ]

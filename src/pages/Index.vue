@@ -77,7 +77,11 @@
                   <div v-else class="appointment app-full">预约已满</div>
                   <div class="order-sum">月订单{{nearbyStores.sale}}单</div>
                 </div>
+<<<<<<< HEAD
                 <p class="shop-address ellipsis fl">{{nearbyStores.province}}{{nearbyStores.city}}{{nearbyStores.dist}}{{nearbyStores.address}}</p>
+=======
+                <p class="shop-address ellipsis fl">{{nearbyStores.address}}</p>
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
                 <img src="../assets/images/首页-导航icon.png" class="shop-dist-img" alt="">
               </div>
               <div class="shop-dist">距离{{Math.round(nearbyStores.distance)}}m</div>
@@ -150,10 +154,16 @@
           latitude: '113.2813811302',
           longitude: '23.1464370884',
         }).then(res => {
+<<<<<<< HEAD
             console.log(res);
             this.nearbyStores = res
         })
       }
+=======
+          this.nearbyStores = res
+        })
+      }, 
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
     }
   };
 
