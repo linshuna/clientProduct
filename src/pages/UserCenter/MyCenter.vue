@@ -4,7 +4,10 @@
             <li class="userLogo">
                 <span>头像</span>
                 <div class="selfRight">
-                    <img :src="indexList.headimg" alt="" class="defaultLogo">
+                    <div class="img-box fl">
+                      <img class="defaultLogo" :src="avatar" @click="setAvatar" alt="头像">
+                      <input type="file" name="avatar" accept="image/*" style="display:none"  @change="changeImage($event)" ref="avatarInput">
+                    </div>
                     <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
                 </div>
             </li>
@@ -24,18 +27,34 @@
             </li>
             <li>
                 <span>性别</span>
-                <div class="selfRight">
-                    <span class="grayColor" v-if="getStorage.sex==0">保密</span>
-                    <span class="grayColor" v-else-if="getStorage.sex==1">男</span>
-                    <span class="grayColor" v-else>女</span>
+                <div class="selfRight" @click="changeSex">
+                    <span class="grayColor">{{sexText}}</span>
                     <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
                 </div>
+                <mt-popup v-model="popupVisible" position="bottom">
+                  <div class="picker-toolbar">  
+                      <span class="mint-datetime-cancel" @click="cancle">取消</span>  
+                      <span class="mint-datetime-confirm" @click="select">确定</span>  
+                  </div>  
+                  <mt-picker ref='pickerObj' :slots="slots" valueKey="name" ></mt-picker>
+                </mt-popup>
             </li>
             <li>
                 <span>出生日期</span>
-                <div class="selfRight">
-                    <span class="grayColor">{{indexList.birthday}}</span>
-                    <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+                <div class="fr setPadding">
+                  <span class="inp" :class="{'blackColor':birthday!=''}"  @click="cusBirth('birthPicker')">{{birthday==''?'请选择日期':birthday}}</span>
+                  <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+                    <mt-datetime-picker
+                      ref="birthPicker"
+                      type="date"
+                      :startDate="startDate"
+                      :endDate="endDate"
+                      year-format="{value} 年"
+                      month-format="{value} 月"
+                      date-format="{value} 日"
+                      @confirm="handleChange"
+                    >
+                    </mt-datetime-picker>
                 </div>
             </li>
         </ul>
@@ -43,12 +62,22 @@
 
 </template>
 <script>
-    import {getMyCenter} from '../../utils/api.js'
+    import {getMyCenter,changeHeadimg} from '../../utils/api.js'
+    import {format} from '@/assets/js/date.js'
     export default {
         name: 'MyCenter',
         data() {
             return {
                 clientvid: 0,
+                avatar: null,
+                popupVisible: false,
+                slots:[{defaultIndex:1}],
+                sexStyle: [{name:'男',value:1},{name:'女',value:2}],
+                sex:'',
+                sexText:'',
+                startDate: new Date('1960/1/1'),//开始的生日日期
+                endDate: new Date(),//结束的生日日期
+                birthday:'',
                 indexList:{},
                 getStorage:{}
             }
@@ -64,11 +93,62 @@
         methods: {
             _getMyCenter() {
                 getMyCenter({clientvid: this.clientvid}).then(res => {
-                    this.indexList = res
-                    console.log(this.indexList);
-                    console.log(res.headimg);
+                    this.indexList = res;
+                    console.log(res)
+                    this.avatar = res.headimg;
+                    this.birthday = res.birthday||''
+                    this.sex = res.sex;  
+                    this.sexText = res.sex==0?'保密':(res.sex==1?'男':'女')
                 })
-            }
+            },
+            changeSex(){//职业类型选择框
+              this.popupVisible=true;//激活picker组件
+              this.slots=[{
+                    defaultIndex:0,
+                    flex: 1,
+                    values: this.sexStyle,//职业类型
+                    textAlign: 'center'
+              }];
+            },
+            cancle:function(){
+              this.popupVisible=false;
+            },
+            select:function(){
+              var pickerVal=this.$refs.pickerObj.getValues();
+              this.sex = pickerVal[0].value;
+              this.sexText = pickerVal[0].name;
+              this.popupVisible=false;
+            },
+            cusBirth(picker){
+              this.$refs[picker].open();
+            },
+            handleChange(value){//选中日期
+              this.birthday = format(value.toString(),"yyyy-MM-dd");
+            },
+            setAvatar() {
+              this.$refs.avatarInput.click()
+            },
+            changeImage(e) {
+              var file = e.target.files[0]
+              var reader = new FileReader()
+              var that = this;
+              reader.readAsDataURL(file)
+              reader.onload = function (e) {
+                changeHeadimg({headimg:this.result})
+                .then(res=>{
+                  that.avatar = res.headimg; //改变头像
+                })
+                .catch(err=>{Toast(err)})
+                
+              }
+              // if (this.$refs.avatarInput.files.length != 0) {
+              //   var changeAvatarForm = this.$refs.changeAvatarForm; //获取form对象
+              //   var image = new FormData(changeAvatarForm);
+              //   image.append('avatar', this.$refs.avatarInput.files[0])
+              //   //对接修改头像接口
+              // }
+
+            },
         }
     }
 
@@ -103,25 +183,44 @@
                     top: 50%;
                     transform: translate(0, -50%);
                     .grayColor {
-                        color: #bfbfbf;
+                        color: gray;
                         font-size: .34rem;
                     }
                     img {
                         display: inline-block;
                     }
                     .defaultLogo {
-                        width: .72rem;
-                        height: .72rem;
+                        width: .8rem;
+                        height: .8rem;
                         vertical-align: middle;
+                        border-radius: 50%;
                     }
-                    .rightArrow {
-                        width: .15rem;
-                        padding-left: .15rem;
-                        vertical-align: middle;
-                    }
+                    
                 }
             }
         }
     }
-
+  .rightArrow {
+      width: .15rem;
+      padding-left: .15rem;
+      vertical-align: middle;
+  }
+  .setPadding{
+    padding-right: .2rem;
+  }
+  .mint-popup{
+    width: 100%;
+    .picker-toolbar{
+      width: 100%;
+      padding: 15px 10px;
+      box-sizing: border-box;
+      color: #26a2ff;
+    }
+      
+    .mint-datetime-picker  .mint-datetime-action{
+      line-height: 12px;
+    }
+             
+  }
+         
 </style>

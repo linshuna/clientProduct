@@ -18,46 +18,30 @@
                 </div>
               </div>
                 <!--0注册用户 1新客户 2普通 3金牌 4钻石-->
-                <div class="vip">
+                <div class="vip" v-if="clientvid">
                 {{indexList.level==0?'注册用户':(indexList.level==1?'新客户':(indexList.level==2?'普通':(indexList.level==3?'金牌':'钻石')))}}
                 </div>
             </div>
 
             <ul class="accout-details">
-                <router-link to="/UserCenter/MyOrder" tag="li">
-                    <p>{{indexList.order}}</p>
-                    <span>订单</span>
-                </router-link>
-                <router-link to="/UserCenter/MyAppointment" tag="li">
-                    <p>{{indexList.car}}</p>
-                    <span>预约</span>
-                </router-link>
-                <router-link to="/UserCenter/Coupon" tag="li">
-                    <p>{{indexList.coupon}}</p>
-                    <span>优惠券</span>
-                </router-link>
+              <li v-for="(item,index) in userOrderData" @click.stop="changeUrl(item.linkUrl)">
+                <p>{{index==0?indexList.order:(index==1?indexList.car:indexList.coupon) | noDataFilter}}</p>
+                <span>{{item.linkName}}</span>
+              </li>
             </ul>
             <ul class="sub-nav">
-                <router-link to="/UserCenter/Wallet" tag="li">
-                    <img src="../assets/images/我的-钱包icon.png" alt="">
-                    <p>钱包</p>
-                </router-link>
-                <router-link to="/UserCenter/Evaluate" tag="li">
-                    <img src="../assets/images/我的-我的评价icon.png" alt="">
-                    <p>我的评价</p>
-                </router-link>
-                <li>
-                    <img src="../assets/images/我的-客户icon.png" alt="">
-                    <p>客服</p>
-                </li>
+              <li v-for="item in userMsgData" @click.stop="changeUrl(item.linkUrl)">
+                <img :src="item.icon" alt="">
+                <p>{{item.linkName}}</p>
+              </li>
             </ul>
             <ul class="footer">
-                <router-link v-for="(linkItem,index) in userSettingTypeData" :key="index" :to="linkItem.linkUrl"
+                <li v-for="(linkItem,index) in userSettingTypeData" :key="index" @click.stop="changeUrl(linkItem.linkUrl)"
                              tag="li">
                     <img class="fl cell-logo" :src="linkItem.icon" alt="">
                     <p class="fl">{{linkItem.linkName}}</p>
                     <img class="fr arrow" src="../assets/images/rightArrow.png">
-                </router-link>
+                </li>
             </ul>
         </div>
         <transition name="slideR">
@@ -68,7 +52,7 @@
 <script>
     // import { getIndexData } from '../utils/api.js'
     import {getIndex} from '../utils/api.js'
-
+    import {Toast} from 'mint-ui'
     export default {
         name: "Appointment",
         data() {
@@ -102,17 +86,47 @@
                         'linkName': '设置'
                     }
                 ],
+                userMsgData:[{
+                  linkUrl:'/UserCenter/Wallet',
+                  icon:require('../assets/images/我的-钱包icon.png'),
+                  linkName:'钱包'
+                },{
+                  linkUrl:'/UserCenter/Evaluate',
+                  icon:require('../assets/images/我的-我的评价icon.png'),
+                  linkName:'我的评价'
+                },{
+                  linkUrl:'',
+                  icon:require('../assets/images/我的-客户icon.png'),
+                  linkName:'客服'
+                }],
+                userOrderData:[{
+                  linkUrl:'/UserCenter/MyOrder',
+                  linkName:'订单',
+                  num: '',
+                },{
+                  linkUrl:'/UserCenter/MyAppointment',
+                  linkName:'预约',
+                  num: ''
+                },{
+                  linkUrl:'/UserCenter/Coupon',
+                  linkName:'优惠券',
+                  num: ''
+                },]
+
             };
         },
         mounted() {
+          let getStorage = this.$store.getters.getStorage;
+          if(getStorage){
             this.clientvid = this.$store.getters.getStorage.vid;
             this._getIndex()
-
+          }
         },
-        watch: {
-            $route(to, from) {
-
-            }
+        filters:{
+          noDataFilter: function(value){
+            if(!value) return 0;
+              else return value;
+          }
         },
         methods: {
             _getIndex() {
@@ -121,6 +135,15 @@
                     this.indexList = res
                     console.log(this.indexList);
                 })
+            },
+            changeUrl:function(url){
+              this.$store.dispatch('delToast')
+              if(this.clientvid){
+                if(!url) {Toast('敬请期待，正在开发中。。。');return;}
+                this.$router.push({path: url})
+              }else{
+                Toast('请登录')
+              }
             },
             isLogin: function(){
               if(!this.clientvid){
@@ -133,8 +156,9 @@
 </script>
 <style lang="scss" scoped>
     .user-center {
-        height: 100%;
+        min-height: 100%;
         background-color: #f5f5f5;
+        padding-bottom: 2rem;
     }
 
     .user-center-hd {

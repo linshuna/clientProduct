@@ -57,6 +57,7 @@
     position: fixed;
     height: 1.04rem;
     background-color: #fff;
+    z-index: 10000;
   }
 
   .tab-img {

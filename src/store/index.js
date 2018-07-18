@@ -88,7 +88,17 @@ const actions = {
         // context.getters.getReturnUrl
             window.location.href = '/customer'
         },1000)    
-    },
+  },
+  delToast(){
+    let bodyObj = document.getElementsByTagName("body")[0];
+    let toastObj = document.getElementsByClassName("mint-toast");
+    let toastLen = toastObj.length;
+    for(var i=0,len=toastObj.length;i < len;i++){
+        if(toastObj[i]){
+            bodyObj.removeChild(toastObj[i])
+        }
+    }    
+  }
 }
 
 const store = new Vuex.Store({

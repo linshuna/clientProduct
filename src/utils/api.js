@@ -52,6 +52,10 @@ function getIndex(params) {
 function getMyCenter(params = {}) {
     return axios.post('/cliapi.php/Client/data', params)
 }
+//上传头像
+function changeHeadimg(params = {}) { 
+    return axios.post('/cliapi.php/Client/avatar_adds',params)
+}
 // 我的 我的车辆
 function getMyCar(params = {}) {
     return axios.post('/cliapi.php/Car/index', params)
@@ -72,6 +76,14 @@ function getHelpDetails(params = {}) {
 // 附近门店
 function getNearbyStorea(params = {}) {
     return axios.post('/cliapi.php/Index/nearby_store', params)
+}
+//筛选城市
+function getCityList(params = {}) { 
+  return axios.get('/cliapi.php/AppendixStore/provinceAndcity',params)
+}
+//获取地区
+function getAddress(params = {}) { 
+  return axios.post('/api/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp',params)
 }
 //预约
 // 立即预约
@@ -161,18 +173,21 @@ export {
   carModules,//车辆模型
   carYearPl,//车系
 
-    getEvaluate, //我的评价
-    // getMyAppoint,
-    getIndex, //我的首页
-    getMyCenter, //我的 个人中心
-    getMyCar, // 我的 我的车辆
-    getCarDefault,//我的 我的车辆默认
-    getHelpCenter,// 我的 帮助中心
-    getNearbyStorea,// 附近 附近门店
-    getHelpDetails,//我的 帮助中心
-    getAppointShop,// 预约 立即预约
-    getAppointConent,// 我的 我的预约
-    getActivity,//首页  特惠
-    getClientRiskIndex,//首页 车险
+  getEvaluate, //我的评价
+  getIndex, //我的首页
+  getMyCenter, //我的 个人中心
+  getMyCar, // 我的 我的车辆
+  getCarDefault,//我的 我的车辆默认
+  getHelpCenter,// 我的 帮助中心
+  getNearbyStorea,// 附近 附近门店
+  getHelpDetails,//我的 帮助中心
+  getAppointShop,// 预约 立即预约
+  getAppointConent,// 我的 我的预约
+  getActivity,//首页  特惠
+  getClientRiskIndex,//首页 车险
+
+  changeHeadimg,//上传头像
+  getCityList,//筛选城市
+  getAddress,//获取当前位置
 
 }
