@@ -32,7 +32,7 @@
                             <div class="item-sum">维修丶保养</div>
                         </div>
                         <p class="store-time">{{item.storeTime}}</p>
-                        <div class="store-dist">距离{{Math.round(StoreaList.distance)}}m</div>
+                        <div class="store-dist">距离{{Math.round(item.distance)}}m</div>
                         <img src="../assets/images/洗车详情-定位icon.png" alt="" class="dist-icon">
                     </div>
                 </div>
@@ -50,7 +50,8 @@
         data() {
             return {
                 StoreaList: [],
-                pageData: {}
+                pageData: {},
+
             };
         },
         mounted() {
@@ -59,8 +60,8 @@
         methods: {
             _getNearbyStorea() {
                 getNearbyStorea({
-                    longitude: 23.14,
-                    latitude: 113.28
+                    longitude: 23.1464370884,
+                    latitude: 113.2813811302
                 }).then(res => {
                     console.log(res);
                     this.StoreaList = res

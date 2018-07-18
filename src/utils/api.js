@@ -95,6 +95,10 @@ function getRecommendList (params = {}) {
 function getNearbyStores (params = {}) {
   return axios.post('/cliapi.php/Index/store_nearest', params)
 }
+// 首页 特惠
+function activity (params = {}) {
+  return axios.post('/cliapi.php/Discount/activity', params)
+}
 
 
 //车辆列表
@@ -116,6 +120,14 @@ function setCarDefault(params = {}) {
 //具体车辆信息
 function carMsg(params = {}) { 
   return axios.post('/cliapi.php/Car/carone',params)
+}
+//我的  特惠
+function getActivity(params = {}) {
+  return axios.post('/cliapi.php/Discount/activity',params)
+}
+//我的  车险
+function getClientRiskIndex(params = {}) {
+  return axios.post('/cliapi.php/ClientRisk/index',params)
 }
 
 
@@ -149,15 +161,18 @@ export {
   carModules,//车辆模型
   carYearPl,//车系
 
-    getEvaluate,
+    getEvaluate, //我的评价
     // getMyAppoint,
-    getIndex,
-    getMyCenter,
-    getMyCar,
-    getCarDefault,
-    getHelpCenter,
-    getNearbyStorea,
-    getHelpDetails,
-    getAppointShop,
-    getAppointConent
+    getIndex, //我的首页
+    getMyCenter, //我的 个人中心
+    getMyCar, // 我的 我的车辆
+    getCarDefault,//我的 我的车辆默认
+    getHelpCenter,// 我的 帮助中心
+    getNearbyStorea,// 附近 附近门店
+    getHelpDetails,//我的 帮助中心
+    getAppointShop,// 预约 立即预约
+    getAppointConent,// 我的 我的预约
+    getActivity,//首页  特惠
+    getClientRiskIndex,//首页 车险
+
 }

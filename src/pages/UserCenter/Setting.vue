@@ -24,7 +24,11 @@
 
 <script>
     export default {
-        name: "setting"
+        name: "setting",
+
+        created(){
+            this.clientvid = this.$store.getters.getStorage.vid;
+        }
     }
 
 </script>

@@ -36,7 +36,7 @@
             <router-link to="/Appointment/NowAppoint">
               <button class="appointment-btn">立即预约</button>
             </router-link>
-            <div class="store-dist">距离{{Math.round(AppointShopList.distance)}}m</div>
+            <div class="store-dist">距离{{Math.round(item.distance)}}m</div>
           </div>
         </div>
       </li>
@@ -74,7 +74,7 @@
 </script>
 <style lang="scss" scoped>
   .appointment-wrap {
-    height: 100%;
+    min-height: 100%;
     background-color: #f5f5f5;
   }
 

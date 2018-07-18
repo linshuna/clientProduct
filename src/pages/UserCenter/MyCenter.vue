@@ -53,7 +53,7 @@
                 getStorage:{}
             }
         },
-        created: function () { 
+        created: function () {
 
         },
         mounted: function () {

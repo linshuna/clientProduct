@@ -60,7 +60,11 @@
 
 <script>
     export default {
-        name: "wallet"
+        name: "wallet",
+
+        created(){
+            this.clientvid = this.$store.getters.getStorage.vid;
+        }
     }
 
 </script>

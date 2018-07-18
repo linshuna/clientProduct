@@ -28,7 +28,18 @@
 
 <script>
   export default {
-    name: "Rescue"
+    name: "Rescue",
+      data(){
+        return{
+
+        }
+      },
+      methods(){
+
+      },
+      mounted(){
+
+      }
   }
 
 </script>

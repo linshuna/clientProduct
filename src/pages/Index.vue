@@ -98,6 +98,7 @@
         getIndexBanner,
         getRecommendList,
         getNearbyStores,
+        getActivity,
     } from '../utils/api.js'
     export default {
         mixins: [score],
@@ -108,6 +109,10 @@
                 bannerList: [],
                 recommendList: [],
                 nearbyStores: {},
+                latitude:0,
+                longitude:0,
+
+
                 pageData: {
                     shop: {
                         shopImg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1128551442,917083253&fm=27&gp=0.jpg',
@@ -121,9 +126,10 @@
             };
         },
         mounted() {
-            this._getIndexBanner()
-            this._getRecommendList()
-            this._getNearbyStores()
+            this._getIndexBanner();
+            this._getRecommendList();
+            this._getNearbyStores();
+
         },
         watch: {
             $route(to, from) {
@@ -147,15 +153,16 @@
             },
             _getNearbyStores() {
                 getNearbyStores({
-                    latitude: '113.2813811302',
-                    longitude: '23.1464370884',
+                    latitude: 113.2813811302,
+                    longitude: 23.1464370884,
                 }).then(res => {
                     console.log(res);
                     this.nearbyStores = res
                 })
-            }
+            },
+
         }
-  
+
 
     };
 

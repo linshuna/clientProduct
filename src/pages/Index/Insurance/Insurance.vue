@@ -1,25 +1,23 @@
 <template>
   <div class="insurance-wrap mask">
-    <ul>
+    <ul class="insurance">
       <router-link to="/Index/Insurance/InsuranceDetails">
-        <li class="nav">
+        <li class="nav" v-for="item in ClientRiskIndexList">
           <div class="nav_left">
             <div class="nav_left_section_img">
               <div class="nav_left_section">
-                <img src="http://img5.imgtn.bdimg.com/it/u=257481653,4212749074&fm=27&gp=0.jpg" alt="">
-                <p>最高保障600万</p>
+                <img :src="item.pic" alt="">
               </div>
             </div>
           </div>
           <div class="nav_right">
             <div class="nav_right_section">
               <div class="nav_right_top">
-                <p>中国人民保险车险</p>
-                <p>地址:&nbsp;广州市白云区白云大道南..</p>
+                <p>{{item.name}}</p>
+                <p>{{item.desc.slice(0,11)}}..</p>
               </div>
               <div class="nav_right_footer">
-                <p>品牌优势</p>
-                <p>安心理赔</p>
+                <p  v-for="(items,index) in item.labels">{{items[index]}}</p>
               </div>
             </div>
           </div>
@@ -30,8 +28,25 @@
 </template>
 
 <script>
+  import {getClientRiskIndex} from '../../../utils/api.js'
   export default {
-    name: "Insurance"
+    name: "Insurance",
+      data(){
+        return{
+            ClientRiskIndexList:[]
+        }
+      },
+      mounted(){
+          this._getClientRiskIndex()
+      },
+      methods: {
+          _getClientRiskIndex() {
+              getClientRiskIndex().then(res => {
+                  this.ClientRiskIndexList = res
+                  console.log(res.labels);
+              })
+          }
+      },
   }
 
 </script>
@@ -39,6 +54,13 @@
 <style scoped>
   .nav {
     display: flex;
+
+  }
+  .insurance{
+    padding-bottom: 2rem;
+  }
+  .insurance  li{
+    margin-top: 0.2rem;
 
   }
 
