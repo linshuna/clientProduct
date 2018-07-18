@@ -77,11 +77,7 @@
                   <div v-else class="appointment app-full">预约已满</div>
                   <div class="order-sum">月订单{{nearbyStores.sale}}单</div>
                 </div>
-<<<<<<< HEAD
                 <p class="shop-address ellipsis fl">{{nearbyStores.province}}{{nearbyStores.city}}{{nearbyStores.dist}}{{nearbyStores.address}}</p>
-=======
-                <p class="shop-address ellipsis fl">{{nearbyStores.address}}</p>
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
                 <img src="../assets/images/首页-导航icon.png" class="shop-dist-img" alt="">
               </div>
               <div class="shop-dist">距离{{Math.round(nearbyStores.distance)}}m</div>
@@ -97,75 +93,69 @@
 </template>
 
 <script>
-  import {score} from "mixins";
-  import {
-    getIndexBanner,
-    getRecommendList,
-    getNearbyStores,
-  } from '../utils/api.js'
-  export default {
-    mixins: [score],
-    name: "index",
-    data() {
-      return {
-        isshow: true,
-        bannerList: [],
-        recommendList: [],
-        nearbyStores: {},
-        pageData: {
-          shop: {
-            shopImg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1128551442,917083253&fm=27&gp=0.jpg',
-            shopName: '黄埔店',
-            shopStar: 4,
-            shopOrder: 250,
-            shopAddress: '黄埔大道西又黄埔大道东',
-            shopDist: '8km'
-          }
+    import {score} from "mixins";
+    import {
+        getIndexBanner,
+        getRecommendList,
+        getNearbyStores,
+    } from '../utils/api.js'
+    export default {
+        mixins: [score],
+        name: "index",
+        data() {
+            return {
+                isshow: true,
+                bannerList: [],
+                recommendList: [],
+                nearbyStores: {},
+                pageData: {
+                    shop: {
+                        shopImg: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1128551442,917083253&fm=27&gp=0.jpg',
+                        shopName: '黄埔店',
+                        shopStar: 4,
+                        shopOrder: 250,
+                        shopAddress: '黄埔大道西又黄埔大道东',
+                        shopDist: '8km'
+                    }
+                }
+            };
+        },
+        mounted() {
+            this._getIndexBanner()
+            this._getRecommendList()
+            this._getNearbyStores()
+        },
+        watch: {
+            $route(to, from) {
+                if (to.name == 'Index') {
+                    this.isshow = true
+                    return
+                }
+                this.isshow = false
+            }
+        },
+        methods: {
+            _getIndexBanner() {
+                getIndexBanner().then(res => {
+                    this.bannerList = res
+                })
+            },
+            _getRecommendList() {
+                getRecommendList().then(res => {
+                    this.recommendList = res
+                })
+            },
+            _getNearbyStores() {
+                getNearbyStores({
+                    latitude: '113.2813811302',
+                    longitude: '23.1464370884',
+                }).then(res => {
+                    console.log(res);
+                    this.nearbyStores = res
+                })
+            }
         }
-      };
-    },
-    mounted() {
-      this._getIndexBanner()
-      this._getRecommendList()
-      this._getNearbyStores()
-    },
-    watch: {
-      $route(to, from) {
-        if (to.name == 'Index') {
-          this.isshow = true
-          return
-        }
-        this.isshow = false
-      }
-    },
-    methods: {
-      _getIndexBanner() {
-        getIndexBanner().then(res => {
-          this.bannerList = res
-        })
-      },
-      _getRecommendList() {
-        getRecommendList().then(res => {
-          this.recommendList = res
-        })
-      }, 
-      _getNearbyStores() {
-        getNearbyStores({
-          latitude: '113.2813811302',
-          longitude: '23.1464370884',
-        }).then(res => {
-<<<<<<< HEAD
-            console.log(res);
-            this.nearbyStores = res
-        })
-      }
-=======
-          this.nearbyStores = res
-        })
-      }, 
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
-    }
-  };
+    };
 
 </script>
 <style lang="scss" scoped>

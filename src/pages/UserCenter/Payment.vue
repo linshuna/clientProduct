@@ -70,7 +70,7 @@
                 <div class="footer_btn">
                     <div class="footer_btn_btn">
                         <button>取消订单</button>
-                       <router-link to="/UserCenter/PaymentFinsh"><button>微信支付</button></router-link>
+                        <router-link to="/UserCenter/PaymentFinsh"><button>微信支付</button></router-link>
                     </div>
                 </div>
             </div>

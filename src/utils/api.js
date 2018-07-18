@@ -2,7 +2,6 @@ import axios from './axios'
 // API请求方法
 const httpUrl = 'http://rap2api.taobao.org/app/mock/20322'
 
-<<<<<<< HEAD
 // 首页 轮播图
 function getIndexBanner (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
@@ -63,7 +62,7 @@ function getAppointShop(params = {}) {
 function getAppointConent(params = {}) {
     return axios.post(httpUrl + '/cliapi.php/Client/appoint', params)
 }
-=======
+
 // 首页轮播图
 function getIndexBanner (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
@@ -76,13 +75,12 @@ function getRecommendList (params = {}) {
 function getNearbyStores (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/store_nearest', params)
 }
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
+
 
 export {
   getIndexBanner,
   getRecommendList,
   getNearbyStores,
-<<<<<<< HEAD
     getEvaluate,
     // getMyAppoint,
     getIndex,
@@ -94,6 +92,6 @@ export {
     getHelpDetails,
     getAppointShop,
     getAppointConent
-=======
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
+
+
 }
