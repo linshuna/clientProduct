@@ -248,7 +248,7 @@ export default new Router({
           path: '/UserCenter/Payment',
           component: Payment,
           meta: {
-            title: '立即购买'
+            title: '点击支付'
           },
         },
         {
