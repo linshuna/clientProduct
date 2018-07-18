@@ -48,20 +48,22 @@
         name: 'MyCenter',
         data() {
             return {
+                clientvid: 0,
                 indexList:{},
                 getStorage:{}
             }
         },
-        created: function () {
+        created: function () { 
 
         },
         mounted: function () {
+            this.clientvid = this.$store.getters.getStorage.vid;
             this._getMyCenter()
         },
         computed: {},
         methods: {
             _getMyCenter() {
-                getMyCenter().then(res => {
+                getMyCenter({clientvid: this.clientvid}).then(res => {
                     this.indexList = res
                     console.log(this.indexList);
                     console.log(res.headimg);

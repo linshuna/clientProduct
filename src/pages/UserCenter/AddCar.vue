@@ -373,7 +373,7 @@ export default {
         Toast('成功添加车辆');
         setTimeout(function(){
           _this.$router.push({path: '/UserCenter/MyCar'})
-        },1000)
+        },1500)
          
       })
       // this.gainCarData.clientvid = this.clientvid;

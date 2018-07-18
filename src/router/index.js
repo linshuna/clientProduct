@@ -81,7 +81,8 @@ export default new Router({
       name: 'Index',
       component: Index,
       meta: {
-        title: '首页'
+        title: '首页',
+        keepActive: true
       },
       children:[
         {
@@ -147,7 +148,8 @@ export default new Router({
       name: 'NearbyStores',
       component: NearbyStores,
       meta: {
-        title: '附近门店'
+        title: '附近门店',
+        keepActive: true
       },
     },
     {
@@ -155,7 +157,8 @@ export default new Router({
       name: 'Appointment',
       component: Appointment,
       meta: {
-        title: '预约'
+        title: '预约',
+        keepActive: true
       },
       children:[
         {
@@ -172,7 +175,8 @@ export default new Router({
       name: 'UserCenter',
       component: UserCenter,
       meta: {
-        title: '我的'
+        title: '我的',
+        keepActive: true
       },
       children:[
         {

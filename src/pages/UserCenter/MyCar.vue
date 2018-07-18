@@ -1,5 +1,6 @@
 <template>
     <div class="my-car mask">
+      <template v-if="indexList&&indexList.length>0">
         <ul class="car-list" v-for="item in indexList">
             <li>
                 <router-link to="/UserCenter/MyCarDetails">
@@ -28,14 +29,19 @@
                 </div>
             </li>
         </ul>
-        <button class="add-car-btn">新增车辆
-        </button>
+      </template>
+      <template v-else>
+        <no-data-tip :tipData="{typeTipe:0,conTip:'暂无车辆信息'}"></no-data-tip>
+      </template>
+        
+      <button class="add-car-btn" @click="addCar">新增车辆</button>
+      <router-view></router-view>
     </div>
 </template>
 <script>
     import {getCarDefault} from '../../utils/api'
     import {getMyCar} from '../../utils/api'
-
+    import noDataTip from '@/components/noDataTip'
     export default {
         name: 'App',
         data() {
@@ -43,6 +49,9 @@
                 indexList: [],
                 defaultList:[]
             }
+        },
+        components:{
+          'no-data-tip': noDataTip
         },
         created: function () {
         },
@@ -63,6 +72,9 @@
                     console.log(this.defaultList);
                 })
 
+            },
+            addCar: function(){
+              this.$router.push({path: '/UserCenter/MyCar/AddCar'})
             }
         }
     }

@@ -4,39 +4,39 @@ const httpUrl = ''
 // const httpUrl = "http://w.hhqccar.cn"
 //先判断客户是否存在
 function isExistCustomer(params = {}) { 
-  return axios.post(httpUrl+'/cliapi.php/Client/phone_register',params)
+  return axios.post('/cliapi.php/Client/phone_register',params)
 }
 //注册
 function getCode(params) {
-  return axios.get(httpUrl+'/cliapi.php/Client/sendcode',params)
+  return axios.get('/cliapi.php/Client/sendcode',params)
 }
 function saveRegister(params) { 
-  return axios.post(httpUrl + '/cliapi.php/Client/register', params);
+  return axios.post('/cliapi.php/Client/register', params);
 }
 //登录
 function login(params) { 
-  return axios.post(httpUrl+"/cliapi.php/Client/login",params)
+  return axios.post("/cliapi.php/Client/login",params)
 }
 //忘记密码
 function forget(params) {
-  return axios.post(httpUrl+"/cliapi.php/Client/forget",params)
+  return axios.post("/cliapi.php/Client/forget",params)
 }
 
 // 首页 轮播图
 function getIndexBanner (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
+  return axios.post('/cliapi.php/Index/banner', params)
 }
 // 首页 商品推荐
 function getRecommendList (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/maintain_recommend', params)
+  return axios.post('/cliapi.php/Index/maintain_recommend', params)
 }
 // 首页 最近门店
 function getNearbyStores (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/store_nearest', params)
+  return axios.post('/cliapi.php/Index/store_nearest', params)
 }
 // 我的 我的评价
 function getEvaluate (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Client/evaluate', params)
+  return axios.post('/cliapi.php/Client/evaluate', params)
 }
 // // 我的 我的预约
 // function getMyAppoint(params = {}) {
@@ -45,89 +45,89 @@ function getEvaluate (params = {}) {
 
 // 我的 我的首页
 function getIndex(params) {
-    return axios.post(httpUrl + '/cliapi.php/Client/Index', params)
+    return axios.post('/cliapi.php/Client/Index', params)
 }
 
 // 我的 个人中心
 function getMyCenter(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Client/data', params)
+    return axios.post('/cliapi.php/Client/data', params)
 }
 // 我的 我的车辆
 function getMyCar(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Car/index', params)
+    return axios.post('/cliapi.php/Car/index', params)
 }
 // 我的 我的车辆默认
 function getCarDefault(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Car/car_default', params)
+    return axios.post('/cliapi.php/Car/car_default', params)
 }
 // 我的 帮助中心
 function getHelpCenter(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Client/help', params)
+    return axios.post('/cliapi.php/Client/help', params)
 }
 // 我的 帮助中心
 function getHelpDetails(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Client/help_details', params)
+    return axios.post('/cliapi.php/Client/help_details', params)
 }
 //附近
 // 附近门店
 function getNearbyStorea(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Index/nearby_store', params)
+    return axios.post('/cliapi.php/Index/nearby_store', params)
 }
 //预约
 // 立即预约
 function getAppointShop(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Appoint/appoint_shop', params)
+    return axios.post('/cliapi.php/Appoint/appoint_shop', params)
 }
 // 我的 我的预约
 function getAppointConent(params = {}) {
-    return axios.post(httpUrl + '/cliapi.php/Client/appoint', params)
+    return axios.post('/cliapi.php/Client/appoint', params)
 }
 
 // 首页轮播图
 function getIndexBanner (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
+  return axios.post('/cliapi.php/Index/banner', params)
 }
 // 首页商品推荐
 function getRecommendList (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/maintain_recommend', params)
+  return axios.post('/cliapi.php/Index/maintain_recommend', params)
 }
 // 首页最近门店
 function getNearbyStores (params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Index/store_nearest', params)
+  return axios.post('/cliapi.php/Index/store_nearest', params)
 }
 
 
 //车辆列表
 function carList(params = {}) { 
-  return axios.post(httpUrl+'/cliapi.php/Car/index',params)
+  return axios.post('/cliapi.php/Car/index',params)
 }
 //新增车辆
 function addCar(params = {}) {
-  return axios.post(httpUrl + '/cliapi.php/Car/addcar',params)  
+  return axios.post('/cliapi.php/Car/addcar',params)  
 }
 //删除车辆
 function delCar(params = {}) { 
-  return axios.post(httpUrl + '/cliapi.php/Car/delcar',params)
+  return axios.post('/cliapi.php/Car/delcar',params)
 }
 //设置默认车辆
 function setCarDefault(params = {}) { 
-  return axios.post(httpUrl+'/cliapi.php/Car/car_default',params)
+  return axios.post('/cliapi.php/Car/car_default',params)
 }
 //具体车辆信息
 function carMsg(params = {}) { 
-  return axios.post(httpUrl + '/cliapi.php/Car/carone',params)
+  return axios.post('/cliapi.php/Car/carone',params)
 }
 
 
 //车辆型号
 function bandList(params = {}) { 
-  return axios.post(httpUrl+'/api.php/TechCarModels/index',params)
+  return axios.post('/api.php/TechCarModels/index',params)
 }
 function carModules(params = {}) { 
-  return axios.post(httpUrl+'/api.php/TechCarModels/carmodels',params)
+  return axios.post('/api.php/TechCarModels/carmodels',params)
 }
 function carYearPl(params = {}) { 
-  return axios.post(httpUrl+'/api.php/TechCarModels/yearPl',params)
+  return axios.post('/api.php/TechCarModels/yearPl',params)
 }
 
 export {

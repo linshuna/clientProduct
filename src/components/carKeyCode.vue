@@ -95,6 +95,10 @@
             this.$emit('transferplate',{carno:this.plate}) 
         },
         composition : function(indexi,length){
+            if(this.plate.length>=7){
+              this.$emit('update:isShow', false);//隐藏键盘 
+              this.$emit('canRequest')
+            }
             //闪烁位置设置
             let winwidth = document.documentElement.clientWidth;
             let keyW = winwidth * 65 / 750;

@@ -19,12 +19,10 @@ export default {
     return {
       selected: '未使用',
       searchValue:'',
-      alreadyIcon:require("modules/images/alreadyIcon.png"),
-      noneCouponTipIcon:require("modules/images/noneCouponTipIcon.png"),
-      noneOrderTipIcon: require("modules/images/noData-order.png"),
+      noneCouponTipIcon:require("../assets/images/noneCouponTipIcon.png"),
+      noneOrderTipIcon: require("../assets/images/noData-order.png"),
       typeTip:'',
-      conTip:'',
-      titleTip:''
+      conTip:''
     }
   },
   mounted: function(){
@@ -32,7 +30,6 @@ export default {
       let gainTipeData = this.tipData;
       this.typeTip = gainTipeData.typeTip;
       this.conTip = gainTipeData.conTip
-      document.title = gainTipeData.titleTip
       
     })
   },

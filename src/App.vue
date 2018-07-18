@@ -4,7 +4,7 @@
     <div class="wrap">
       <router-view/>
     </div>
-    <template v-if="isshow">
+    <template v-if="$route.meta.keepActive">
       <base-footer></base-footer>
     </template>
     
@@ -17,7 +17,6 @@ import baseFooter from './components/baseFooter.vue'
     name: 'app',
     data(){
       return {
-        isshow: false
       }
     },
     components: {
@@ -25,14 +24,17 @@ import baseFooter from './components/baseFooter.vue'
     },
     watch:{
       $route(to, from) {
-        console.log(to.name)
-        if (to.name=='Index'||to.name=='Appointment'||to.name=='NearbyStores'||to.name=='UserCenter') {
-          this.isshow = true; 
-          return
-        }
-        this.isshow = false
+        // console.log(to.name)
+        // if (to.name=='Index'||to.name=='Appointment'||to.name=='NearbyStores'||to.name=='UserCenter') {
+        //   this.isshow = true; 
+        //   return
+        // }
+        // this.isshow = false
       }
-    }
+    },
+    created() {
+      
+    },
   }
 
 </script>

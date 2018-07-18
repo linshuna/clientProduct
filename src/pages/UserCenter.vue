@@ -1,15 +1,28 @@
 <template>
     <div class="user-center">
         <div class="user-wrap" v-if="isshow">
-            <div class="user-center-hd clearfix">
+            <div class="user-center-hd clearfix" @click.stop="isLogin">
+              <div class="setPosition" v-if="clientvid">
                 <img :src="indexList.headimg"
-                     alt="" class="user-img fl">
-                <div class="user-info fl">
+                     alt="" class="user-img">
+                <div class="user-info">
                     <p class="user-name">{{indexList.uname}}</p>
-                    <p class="user-car">{{indexList.clcar}}</p>
+                    <p class="user-car">{{indexList.phone}}</p>
                 </div>
-                <div class="vip">普通会员</div>
+              </div>
+              <div class="setPosition" v-else>
+                <img :src="defaultIcon"
+                     alt="" class="user-img">
+                <div class="user-info">
+                    <p class="user-name">登录/注册</p> 
+                </div>
+              </div>
+                <!--0注册用户 1新客户 2普通 3金牌 4钻石-->
+                <div class="vip">
+                {{indexList.level==0?'注册用户':(indexList.level==1?'新客户':(indexList.level==2?'普通':(indexList.level==3?'金牌':'钻石')))}}
+                </div>
             </div>
+
             <ul class="accout-details">
                 <router-link to="/UserCenter/MyOrder" tag="li">
                     <p>{{indexList.order}}</p>
@@ -40,7 +53,7 @@
             </ul>
             <ul class="footer">
                 <router-link v-for="(linkItem,index) in userSettingTypeData" :key="index" :to="linkItem.linkUrl"
-                             tag="li" @click.native="isWaitingTip(linkItem.linkUrl)">
+                             tag="li">
                     <img class="fl cell-logo" :src="linkItem.icon" alt="">
                     <p class="fl">{{linkItem.linkName}}</p>
                     <img class="fr arrow" src="../assets/images/rightArrow.png">
@@ -60,12 +73,12 @@
         name: "Appointment",
         data() {
             return {
+                defaultIcon: require("@/assets/images/我的-我的头像icon.png"),
+                clientvid: 0,
                 clcararr:[],
                 indexList:{},
                 isshow: true,
                 pageData: {},
-
-
                 userSettingTypeData: [{
                     'linkUrl': `/user/selfCenter`,
                     'icon': require("../assets/images/我的-推荐好友icon.png"),
@@ -92,24 +105,26 @@
             };
         },
         mounted() {
+            this.clientvid = this.$store.getters.getStorage.vid;
             this._getIndex()
         },
         watch: {
             $route(to, from) {
-                if (to.name == 'UserCenter') {
-                    this.isshow = true
-                    return
-                }
-                this.isshow = false
+
             }
         },
         methods: {
             _getIndex() {
-                getIndex({clientvid:1}).then(res => {
+                getIndex({clientvid: this.clientvid}).then(res => {
                     // this.getIndex = res
                     this.indexList = res
                     console.log(this.indexList);
                 })
+            },
+            isLogin: function(){
+              if(!this.clientvid){
+                this.$router.push({path:'/Login'})
+              }
             }
         }
     };
@@ -127,15 +142,26 @@
         width: 100%;
         margin-bottom: .06rem;
         @include bis('../assets/images/我的-背景图标.png');
+        .setPosition{
+          position: absolute;
+          left: 8%;
+          top: 50%;
+          transform: translate(0,-50%);
+        }
         .user-img {
             width: 1.36rem;
             height: 1.36rem;
-            margin: .92rem .3rem 0;
             border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .user-info{
+          padding-left: .2rem;
+          display: inline-block;
+          vertical-align: middle;
         }
         .user-name {
-            padding-top: 1rem;
-            font-size: 0.48rem;
+            font-size: 0.42rem;
             color: #ffffff;
         }
         .user-car {
