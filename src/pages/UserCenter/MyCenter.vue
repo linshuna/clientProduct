@@ -4,21 +4,33 @@
       <li class="userLogo">
         <span>头像</span>
         <div class="selfRight">
+<<<<<<< HEAD
+            <img :src="indexList.headimg" alt="" class="defaultLogo">
+=======
           <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3942989250,3371488751&fm=27&gp=0.jpg" alt="" class="defaultLogo">
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
           <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
         </div>
       </li>
       <li>
         <span>用户名</span>
         <div class="selfRight">
+<<<<<<< HEAD
+          <span class="grayColor">{{indexList.phone}}</span>
+=======
           <span class="grayColor">{{getStorage.username}}</span>
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
           <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
         </div>
       </li>
       <li>
         <span>昵称</span>
         <div class="selfRight">
+<<<<<<< HEAD
+          <span class="grayColor">{{indexList.uname}}</span>
+=======
           <span class="grayColor">{{getStorage.nickname}}</span>
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
           <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
         </div>
       </li>
@@ -34,7 +46,11 @@
       <li>
         <span>出生日期</span>
         <div class="selfRight">
+<<<<<<< HEAD
+          <span class="grayColor">{{indexList.birthday}}</span>
+=======
           <span class="grayColor">{{getStorage.birthday}}</span>
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
           <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
         </div>
       </li>
@@ -43,10 +59,18 @@
 
 </template>
 <script>
+<<<<<<< HEAD
+    import {getMyCenter} from '../../utils/api.js'
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
   export default {
     name: 'MyCenter',
     data() {
       return {
+<<<<<<< HEAD
+          indexList:{},
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
         getStorage:{}
       }
     },
@@ -54,11 +78,25 @@
 
     },
     mounted: function () {
+<<<<<<< HEAD
+        this._getMyCenter()
+    },
+    computed: {},
+    methods: {
+        _getMyCenter() {
+            getMyCenter().then(res => {
+                this.indexList = res
+                console.log(this.indexList);
+                console.log(res.headimg);
+            })
+        }
+=======
 
     },
     computed: {},
     methods: {
 
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
     }
   }
 

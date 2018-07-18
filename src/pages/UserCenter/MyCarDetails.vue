@@ -4,6 +4,10 @@
       <mt-tab-item id="1">车辆信息</mt-tab-item>
       <mt-tab-item id="2">消费记录</mt-tab-item>
     </mt-navbar>
+<<<<<<< HEAD
+
+=======
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="details-hd clearfix">

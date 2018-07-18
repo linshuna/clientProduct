@@ -5,6 +5,15 @@
         <div class="nav_top_img">
           <mt-swipe :auto="0">
             <mt-swipe-item>
+<<<<<<< HEAD
+              <img src="../../../assets/images/maintain.png" class="nav_top_img_a">
+            </mt-swipe-item>
+            <mt-swipe-item>
+              <img src="../../../assets/images/maintain.png" class="nav_top_img_a">
+            </mt-swipe-item>
+            <mt-swipe-item>
+              <img src="../../../assets/images/maintain.png" class="nav_top_img_a">
+=======
               <img src="../../../assets/images/保养详情-主图.png" class="nav_top_img_a">
             </mt-swipe-item>
             <mt-swipe-item>
@@ -12,6 +21,7 @@
             </mt-swipe-item>
             <mt-swipe-item>
               <img src="../../../assets/images/保养详情-主图.png" class="nav_top_img_a">
+>>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
             </mt-swipe-item>
           </mt-swipe>
         </div>
