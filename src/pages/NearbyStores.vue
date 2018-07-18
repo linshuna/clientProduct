@@ -10,8 +10,8 @@
                 <img src="../assets/images/btmArrow.png" alt="">
             </p>
         </nav>
-        <ul class="store-list" v-for="item in StoreaList">
-            <li>
+        <ul class="store-list">
+            <li v-for="item in StoreaList">
                 <div class="store-hd">
                     <p>{{item.name}}</p>
                     <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
@@ -72,7 +72,7 @@
 </script>
 <style lang="scss" scoped>
     .nearby-stores {
-        height: 100%;
+        min-height: 100%;
         background-color: #f5f5f5;
     }
 
@@ -103,10 +103,13 @@
     }
 
     .store-list {
+        min-height: 100%;
+        padding-bottom: 2rem;
         li {
             margin-top: .2rem;
             height: 3rem;
             background-color: #fff;
+            padding-bottom: 2rem;
             .store-hd {
                 position: relative;
                 display: flex;

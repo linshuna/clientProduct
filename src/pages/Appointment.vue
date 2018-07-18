@@ -11,28 +11,32 @@
       </p>
     </nav>
     <ul class="store-list">
-      <li>
+      <li  v-for="item in AppointShopList">
         <div class="store-hd">
-          <p>NO.01 微位科技服务店（白云店）</p>
+          <p>{{item.name}}</p>
           <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
         </div>
         <div class="store-bd clearfix">
-          <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt="" class="store-img fl">
+          <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt=""
+               class="store-img fl">
           <div class="store-info-box fl">
-            <p class="store-address">广州市白云区机场路1948号</p>
+            <p class="store-address">{{item.province}}{{item.city}}{{item.dist}}</p>
             <p class="appointment-sum">预约数：3453次
             </p>
             <div class="item-box">
-              <div class="appointment">接受预约</div>
+              <!--<div class="appointment">接受预约</div>-->
               <!-- <div class="appointment app-full">预约已满</div>
               <div class="appointment app-hot">预约火爆</div> -->
+              <div v-if="AppointShopList.state == 1" class="appointment">接受预约</div>
+              <div v-else-if="AppointShopList.state == 2" class="appointment app-hot">预约火爆</div>
+              <div v-else class="appointment app-full">预约已满</div>
               <div class="item-sum">维修丶保养</div>
             </div>
-            <p class="store-time">营业时间：08:00-18:00</p>
+            <p class="store-time">{{item.storeTime}}</p>
             <router-link to="/Appointment/NowAppoint">
               <button class="appointment-btn">立即预约</button>
             </router-link>
-            <div class="store-dist">距离</div>
+            <div class="store-dist">距离{{Math.round(AppointShopList.distance)}}m</div>
           </div>
         </div>
       </li>
@@ -43,17 +47,29 @@
   </div>
 </template>
 <script>
-  // import { getIndexData } from '../utils/api.js'
-  export default {
-    name: "Appointment",
-    data() {
-      return {
-        pageData: {}
-      };
-    },
-    mounted() {},
-    methods: {}
-  };
+    // import { getIndexData } from '../utils/api.js'
+    import {getAppointShop} from '../utils/api.js'
+
+    export default {
+        name: "Appointment",
+        data() {
+            return {
+                AppointShopList:[],
+                pageData: {}
+            };
+        },
+        mounted() {
+            this._getAppointShop()
+        },
+        methods: {
+            _getAppointShop(){
+                getAppointShop().then(res => {
+                    this.AppointShopList = res
+                    console.log(res);
+                })
+            }
+        }
+    };
 
 </script>
 <style lang="scss" scoped>
@@ -89,10 +105,13 @@
   }
 
   .store-list {
+    min-height: 100%;
+    padding-bottom: 2rem;
     li {
       margin-top: .2rem;
       height: 3rem;
       background-color: #fff;
+      /*padding-bottom: 2rem;*/
       .store-hd {
         position: relative;
         display: flex;

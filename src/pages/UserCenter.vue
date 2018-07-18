@@ -107,6 +107,7 @@
         mounted() {
             this.clientvid = this.$store.getters.getStorage.vid;
             this._getIndex()
+
         },
         watch: {
             $route(to, from) {
