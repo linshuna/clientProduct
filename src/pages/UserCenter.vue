@@ -350,10 +350,9 @@
 
 </script>
 <style lang="scss" scoped>
-  .wrap{
-    min-height: 120vh;
+  .user-wrap{
+    background-color: #f5f5f5;
     padding-bottom: 2rem;
-    background: #f4f4f4;
   }
   .user-center {
     height: 100%;
@@ -453,6 +452,7 @@
 
   .footer {
     background-color: #fff;
+    
     li {
       height: 1rem;
       line-height: 1rem;

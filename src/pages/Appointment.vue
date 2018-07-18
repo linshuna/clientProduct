@@ -256,11 +256,6 @@
 
 </script>
 <style lang="scss" scoped>
-  .wrap{
-    min-height: 120vh;
-    padding-bottom: 2rem;
-    background: #f4f4f4;
-  }
   .appointment-wrap {
     height: 100%;
     background-color: #f5f5f5;

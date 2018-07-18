@@ -170,11 +170,6 @@
 
 </script>
 <style lang="scss" scoped>
-  .wrap{
-    min-height: 120vh;
-    padding-bottom: 2rem;
-    background: #f4f4f4;
-  }
   .e-index {
     position: relative;
     width: 100%;
@@ -276,6 +271,7 @@
 
   .shop {
     position: relative;
+    padding-bottom: 2rem;
     .r-arrow {
       position: absolute;
       top: .28rem;
