@@ -22,7 +22,6 @@ function forget(params) {
   return axios.post(httpUrl+"/cliapi.php/Client/forget",params)
 }
 
-<<<<<<< HEAD
 // 首页 轮播图
 function getIndexBanner (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
@@ -83,7 +82,7 @@ function getAppointShop(params = {}) {
 function getAppointConent(params = {}) {
     return axios.post(httpUrl + '/cliapi.php/Client/appoint', params)
 }
-=======
+
 // 首页轮播图
 function getIndexBanner (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/banner', params)
@@ -96,7 +95,7 @@ function getRecommendList (params = {}) {
 function getNearbyStores (params = {}) {
   return axios.post(httpUrl + '/cliapi.php/Index/store_nearest', params)
 }
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
+
 
 //车辆列表
 function carList(params = {}) { 
@@ -140,7 +139,7 @@ export {
   getIndexBanner,
   getRecommendList,
   getNearbyStores,
-<<<<<<< HEAD
+
   carList,//车辆列表
   addCar,//新增车辆
   delCar,//删除车辆
@@ -149,8 +148,7 @@ export {
   bandList,//车辆型号
   carModules,//车辆模型
   carYearPl,//车系
-=======
-<<<<<<< HEAD
+
     getEvaluate,
     // getMyAppoint,
     getIndex,
@@ -162,7 +160,4 @@ export {
     getHelpDetails,
     getAppointShop,
     getAppointConent
-=======
->>>>>>> bf5cc854ff7d8e21e5acc494e8594a4cc4a4d3b8
->>>>>>> dccfa2b25c42152abec95fb556aafd661d2412c8
 }

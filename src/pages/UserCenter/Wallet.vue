@@ -59,9 +59,9 @@
 </template>
 
 <script>
-  export default {
-    name: "wallet"
-  }
+    export default {
+        name: "wallet"
+    }
 
 </script>
 
@@ -103,18 +103,18 @@
 
     width: 7.5rem;
   }
-	.section>.section_left,
+  .section>.section_left,
   .section>.section_center {
-		position: relative;
-	}
+    position: relative;
+  }
   /*<!--&lt;!&ndash;.section>.section_left::after,-->*/
   /*<!--.section>.section_center::after {-->*/
-    /*<!--content: '';-->*/
-    /*<!--@include ct;-->*/
-    /*<!--right: 0;-->*/
-    /*<!--width: 2px;-->*/
-    /*<!--height: 1.12rem;-->*/
-    /*<!--background-color: #efefef;-->*/
+  /*<!--content: '';-->*/
+  /*<!--@include ct;-->*/
+  /*<!--right: 0;-->*/
+  /*<!--width: 2px;-->*/
+  /*<!--height: 1.12rem;-->*/
+  /*<!--background-color: #efefef;-->*/
   /*<!--}&ndash;&gt;-->*/
 
   .section div {

@@ -23,9 +23,9 @@
 </template>
 
 <script>
-  export default {
-    name: "setting"
-  }
+    export default {
+        name: "setting"
+    }
 
 </script>
 

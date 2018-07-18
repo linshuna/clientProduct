@@ -1,7 +1,7 @@
 <template>
     <div class="HelpConent-wrap mask">
         <div class="help-conent">
-           <h3 class="Ttitle">{{PconentList.title}}</h3>
+            <h3 class="Ttitle">{{PconentList.title}}</h3>
             <p class="Pconent">&nbsp;&nbsp;&nbsp;{{PconentList.content}}</p>
         </div>
 
