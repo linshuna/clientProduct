@@ -42,7 +42,7 @@
                             <div class="item-sum">维修丶保养</div>
                         </div>
                         <p class="store-time">{{item.storeTime}}</p>
-                        <div class="store-dist">距离{{Math.round(item.distance)}}m</div>
+                        <div class="store-dist">大约{{Math.round(item.distance)}}m</div>
                         <img src="../assets/images/洗车详情-定位icon.png" alt="" class="dist-icon">
                     </div>
                 </div>

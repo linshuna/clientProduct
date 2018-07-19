@@ -142,7 +142,7 @@
                 if(!url) {Toast('敬请期待，正在开发中。。。');return;}
                 this.$router.push({path: url})
               }else{
-                Toast('请登录')
+                Toast('请登录')            //如果没有登录
               }
             },
             isLogin: function(){

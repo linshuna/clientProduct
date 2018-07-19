@@ -6,44 +6,59 @@
       <mt-tab-item id="3">默认排序</mt-tab-item>
     </mt-navbar>
     <ul>
+        <li v-for="item in CarwashList">
       <router-link to="/Index/CarWash/CarWashDetails" tag="li">
         <div class="nav">
           <div class="nav_left">
             <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1880760143,1213047443&fm=27&gp=0.jpg" alt="">
           </div>
           <div class="nav_center">
-            <p>广州微位科技汽车美容</p>
+            <p>{{item.shop_name}}</p>
             <div class="nav_center_center">
               <div class="nav_center_left">
                 <p>评价</p>
-                <p>6246</p>
+                <p>{{item.evaluateNum}}</p>
               </div>
               <div class="nav_center_right">
                 <p>订单</p>
-                <p>1666</p>
+                <p>{{}}</p>
               </div>
             </div>
-            <p>广州市荔湾区芳村大道东74号首层</p>
+            <p>{{item.province}}{{item.city}}{{item.dist}}{{item.address}}</p>
           </div>
           <div class="nav_right">
-            <p>¥40</p>
-            <p>5.76km</p>
+            <p>¥{{item.price}}</p>
+            <p>{{Math.round(item.distance)}} km</p>
           </div>
         </div>
       </router-link>
+        </li>
     </ul>
   </div>
 
 </template>
 
 <script>
+  import {getCarwashIndex}from'../../../utils/api.js'
   export default {
     name: "CarWash",
     data() {
       return {
-        selected: '1'
+        selected: '1',
+          CarwashList:''
       }
     },
+      methods:{
+        _getCarwashIndex(){
+              getCarwashIndex().then(res => {
+                  console.log(res.store);
+                  this.CarwashList = res.store
+              })
+          }
+      },
+      mounted(){
+          this._getCarwashIndex()
+      }
   }
 
 </script>
@@ -61,7 +76,7 @@
   .mint-navbar .mint-tab-item.is-selected {
     border: none;
     color: #fa9e15;
-  } 
+  }
   .nav {
     height: 1.88rem;
     background-color: #fff;
@@ -133,7 +148,7 @@
     height: 1.88rem;
     width: 0.9rem;
     position: absolute;
-    right: 0.18rem;
+    right: 0.8rem;
   }
 
   .nav_right p:first-child {

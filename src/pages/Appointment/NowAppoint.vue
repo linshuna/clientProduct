@@ -93,6 +93,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .nowappoint-wrap{
+    height:14.22rem ;
+  }
   .line {
     height: 0.7rem;
     width: 0.06rem;

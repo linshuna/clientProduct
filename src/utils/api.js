@@ -3,41 +3,49 @@ import axios from './axios'
 const httpUrl = ''
 // const httpUrl = "http://w.hhqccar.cn"
 //先判断客户是否存在
-function isExistCustomer(params = {}) { 
-  return axios.post('/cliapi.php/Client/phone_register',params)
+function isExistCustomer(params = {}) {
+    return axios.post('/cliapi.php/Client/phone_register', params)
 }
+
 //注册
 function getCode(params) {
-  return axios.get('/cliapi.php/Client/sendcode',params)
+    return axios.get('/cliapi.php/Client/sendcode', params)
 }
-function saveRegister(params) { 
-  return axios.post('/cliapi.php/Client/register', params);
+
+function saveRegister(params) {
+    return axios.post('/cliapi.php/Client/register', params);
 }
+
 //登录
-function login(params) { 
-  return axios.post("/cliapi.php/Client/login",params)
+function login(params) {
+    return axios.post("/cliapi.php/Client/login", params)
 }
+
 //忘记密码
 function forget(params) {
-  return axios.post("/cliapi.php/Client/forget",params)
+    return axios.post("/cliapi.php/Client/forget", params)
 }
 
 // 首页 轮播图
-function getIndexBanner (params = {}) {
-  return axios.post('/cliapi.php/Index/banner', params)
+function getIndexBanner(params = {}) {
+    return axios.post('/cliapi.php/Index/banner', params)
 }
+
 // 首页 商品推荐
-function getRecommendList (params = {}) {
-  return axios.post('/cliapi.php/Index/maintain_recommend', params)
+function getRecommendList(params = {}) {
+    return axios.post('/cliapi.php/Index/maintain_recommend', params)
 }
+
 // 首页 最近门店
-function getNearbyStores (params = {}) {
-  return axios.post('/cliapi.php/Index/store_nearest', params)
+function getNearbyStores(params = {}) {
+    return axios.post('/cliapi.php/Index/store_nearest', params)
 }
+
 // 我的 我的评价
-function getEvaluate (params = {}) {
-  return axios.post('/cliapi.php/Client/evaluate', params)
+function getEvaluate(params = {}) {
+    return axios.post('/cliapi.php/Client/evaluate', params)
 }
+
 // // 我的 我的预约
 // function getMyAppoint(params = {}) {
 //     return axios.post(httpUrl + '/cliapi.php/Client/appoint', params)
@@ -52,142 +60,171 @@ function getIndex(params) {
 function getMyCenter(params = {}) {
     return axios.post('/cliapi.php/Client/data', params)
 }
+
 //上传头像
-function changeHeadimg(params = {}) { 
-    return axios.post('/cliapi.php/Client/avatar_adds',params)
+function changeHeadimg(params = {}) {
+    return axios.post('/cliapi.php/Client/avatar_adds', params)
 }
+
 // 我的 我的车辆
 function getMyCar(params = {}) {
     return axios.post('/cliapi.php/Car/index', params)
 }
+
 // 我的 我的车辆默认
 function getCarDefault(params = {}) {
     return axios.post('/cliapi.php/Car/car_default', params)
 }
+
 // 我的 帮助中心
 function getHelpCenter(params = {}) {
     return axios.post('/cliapi.php/Client/help', params)
 }
+
 // 我的 帮助中心
 function getHelpDetails(params = {}) {
     return axios.post('/cliapi.php/Client/help_details', params)
 }
+
 //附近
 // 附近门店
 function getNearbyStorea(params = {}) {
     return axios.post('/cliapi.php/Index/nearby_store', params)
 }
+
 //筛选城市
-function getCityList(params = {}) { 
-  return axios.get('/cliapi.php/AppendixStore/provinceAndcity',params)
+function getCityList(params = {}) {
+    return axios.get('/cliapi.php/AppendixStore/provinceAndcity', params)
 }
+
 //获取地区
-function getAddress(params = {}) { 
-  return axios.post('/api/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp',params)
+function getAddress(params = {}) {
+    return axios.post('/api/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', params)
 }
+
 //预约
 // 立即预约
 function getAppointShop(params = {}) {
     return axios.post('/cliapi.php/Appoint/appoint_shop', params)
 }
+
 // 我的 我的预约
 function getAppointConent(params = {}) {
     return axios.post('/cliapi.php/Client/appoint', params)
 }
 
 // 首页轮播图
-function getIndexBanner (params = {}) {
-  return axios.post('/cliapi.php/Index/banner', params)
+function getIndexBanner(params = {}) {
+    return axios.post('/cliapi.php/Index/banner', params)
 }
+
 // 首页商品推荐
-function getRecommendList (params = {}) {
-  return axios.post('/cliapi.php/Index/maintain_recommend', params)
+function getRecommendList(params = {}) {
+    return axios.post('/cliapi.php/Index/maintain_recommend', params)
 }
+
 // 首页最近门店
-function getNearbyStores (params = {}) {
-  return axios.post('/cliapi.php/Index/store_nearest', params)
+function getNearbyStores(params = {}) {
+    return axios.post('/cliapi.php/Index/store_nearest', params)
 }
+
 // 首页 特惠
-function activity (params = {}) {
-  return axios.post('/cliapi.php/Discount/activity', params)
+function activity(params = {}) {
+    return axios.post('/cliapi.php/Discount/activity', params)
 }
 
 
 //车辆列表
-function carList(params = {}) { 
-  return axios.post('/cliapi.php/Car/index',params)
+function carList(params = {}) {
+    return axios.post('/cliapi.php/Car/index', params)
 }
+
 //新增车辆
 function addCar(params = {}) {
-  return axios.post('/cliapi.php/Car/addcar',params)  
+    return axios.post('/cliapi.php/Car/addcar', params)
 }
+
 //删除车辆
-function delCar(params = {}) { 
-  return axios.post('/cliapi.php/Car/delcar',params)
+function delCar(params = {}) {
+    return axios.post('/cliapi.php/Car/delcar', params)
 }
+
 //设置默认车辆
-function setCarDefault(params = {}) { 
-  return axios.post('/cliapi.php/Car/car_default',params)
+function setCarDefault(params = {}) {
+    return axios.post('/cliapi.php/Car/car_default', params)
 }
+
 //具体车辆信息
-function carMsg(params = {}) { 
-  return axios.post('/cliapi.php/Car/carone',params)
+function carMsg(params = {}) {
+    return axios.post('/cliapi.php/Car/carone', params)
 }
+
 //我的  特惠
 function getActivity(params = {}) {
-  return axios.post('/cliapi.php/Discount/activity',params)
+    return axios.post('/cliapi.php/Discount/activity', params)
 }
+
 //我的  车险
 function getClientRiskIndex(params = {}) {
-  return axios.post('/cliapi.php/ClientRisk/index',params)
+    return axios.post('/cliapi.php/ClientRisk/index', params)
+}
+
+//我的  洗车
+function getCarwashIndex(params = {}) {
+    return axios.post('/cliapi.php/Carwash/index', params)
 }
 
 
 //车辆型号
-function bandList(params = {}) { 
-  return axios.post('/api.php/TechCarModels/index',params)
+function bandList(params = {}) {
+    return axios.post('/api.php/TechCarModels/index', params)
 }
-function carModules(params = {}) { 
-  return axios.post('/api.php/TechCarModels/carmodels',params)
+
+function carModules(params = {}) {
+    return axios.post('/api.php/TechCarModels/carmodels', params)
 }
-function carYearPl(params = {}) { 
-  return axios.post('/api.php/TechCarModels/yearPl',params)
+
+function carYearPl(params = {}) {
+    return axios.post('/api.php/TechCarModels/yearPl', params)
 }
 
 export {
-  isExistCustomer,
-  getCode,
-  saveRegister,
-  login,
-  forget,
-  getIndexBanner,
-  getRecommendList,
-  getNearbyStores,
+    isExistCustomer,
+    getCode,
+    saveRegister,
+    login,
+    forget,
+    getIndexBanner,
+    getRecommendList,
+    getNearbyStores,
 
-  carList,//车辆列表
-  addCar,//新增车辆
-  delCar,//删除车辆
-  setCarDefault,//设备默认车辆
-  carMsg,//具体车辆信息
-  bandList,//车辆型号
-  carModules,//车辆模型
-  carYearPl,//车系
+    carList,//车辆列表
+    addCar,//新增车辆
+    delCar,//删除车辆
+    setCarDefault,//设备默认车辆
+    carMsg,//具体车辆信息
+    bandList,//车辆型号
+    carModules,//车辆模型
+    carYearPl,//车系
 
-  getEvaluate, //我的评价
-  getIndex, //我的首页
-  getMyCenter, //我的 个人中心
-  getMyCar, // 我的 我的车辆
-  getCarDefault,//我的 我的车辆默认
-  getHelpCenter,// 我的 帮助中心
-  getNearbyStorea,// 附近 附近门店
-  getHelpDetails,//我的 帮助中心
-  getAppointShop,// 预约 立即预约
-  getAppointConent,// 我的 我的预约
-  getActivity,//首页  特惠
-  getClientRiskIndex,//首页 车险
+    getEvaluate, //我的评价
+    getIndex, //我的首页
+    getMyCenter, //我的 个人中心
+    getMyCar, // 我的 我的车辆
+    getCarDefault,//我的 我的车辆默认
+    getHelpCenter,// 我的 帮助中心
+    getNearbyStorea,// 附近 附近门店
+    getHelpDetails,//我的 帮助中心
+    getAppointShop,// 预约 立即预约
+    getAppointConent,// 我的 我的预约
+    getActivity,//首页  特惠
+    getClientRiskIndex,//首页 车险
+    getCarwashIndex,//首页 洗车
 
-  changeHeadimg,//上传头像
-  getCityList,//筛选城市
-  getAddress,//获取当前位置
+    changeHeadimg,//上传头像
+    getCityList,//筛选城市
+    getAddress,//获取当前位置
+
+
 
 }

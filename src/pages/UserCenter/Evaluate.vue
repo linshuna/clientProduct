@@ -12,7 +12,7 @@
                                 <p class="p_data">{{item.addtime}}</p>
                             </div>
                             <div class="section_top_center">
-                                <p>服务态度</p>
+                                <p class="section_top_center_p">服务态度</p>
                             </div>
                             <div class="section_center" >
                                 <span class="section_top_center_span" v-for="(items,index) in item.label">{{items[index]}}</span>
@@ -106,20 +106,15 @@
         right: 3%;
     }
 
-    .section_top_center_span,
-    .section_top_center_span_right {
+    .section_top_center_span{
         display: inline-block;
         width: 1rem;
         height: 0.4rem;
         background-color: #ff6d83;
-        color: #fff;
+        /*color: #fff;*/
         border-radius: 10rem;
         text-align: center;
         margin-right: 0.08rem;
-    }
-
-    .section_top_center_span_right {
-        margin-left: 2%;
     }
 
     .section_top_footer,
