@@ -124,9 +124,7 @@
   import {format} from '@/assets/js/date.js'
   import carKeyCode from "@/components/carKeyCode.vue"
   import brand from "@/components/brand.vue"
-  import {
-    addCar
-  } from '@/utils/api.js'
+  import {addCar,carMsg,editCar} from '@/utils/api.js'
 export default {
   name: 'App',
   props:{
@@ -138,6 +136,8 @@ export default {
   },
   data(){
     return {
+      clientvid:'',
+      carvid:'',
       carno:'',
       carVin:'',
       btmArrowIcon: require("../../assets/images/btmArrow.png"),
@@ -179,6 +179,9 @@ export default {
     'brand':brand
   },
   created:function(){
+      let getStorage = this.$store.getters.getStorage;
+      this.clientvid = getStorage?getStorage.vid:0
+      this.carvid = this.$route.params.carvid;
       let gainCarData = {};
       this.carno = this.hasCarno ||''
       gainCarData.carNo = this.carno;
@@ -190,61 +193,23 @@ export default {
       gainCarData.daninsurance = this.tranDate;
       gainCarData.engine = this.carEniger;
 
-      this.gainCarData = gainCarData
-  },
-  mounted: function(){
-    // if(this.routeCarId&&this.routeCarId!=0&&!this.carno){
-    //   this.$http.get('/api.php/TechSysClient/editcar?carvid='+this.routeCarId)
-    //   .then((response)=>{
-    //     let res = response.data;
-    //     if(res.errorCode == 200){
-    //       let gainData = res.data.car;
-    //       this.carno = gainData.carNo;
-    //       this.carVin = gainData.vin;
-    //       if(gainData.modelid!=0||!gainData.modelid){
-    //         this.selectedBrand = gainData.carplate+"-"+gainData.carmodel+"-"+gainData.carnat;
-    //       }
-    //       this.modelid = gainData.modelid
-    //       this.registDate = gainData.regtime||'';
-    //       this.companyText = gainData.insurance||'';
-    //       this.bussiDate = gainData.cominsurance||'';
-    //       this.tranDate = gainData.daninsurance||'';
-    //       this.carEniger = gainData.engine||'';
-    //       this.$emit('gainCustomerMsg',res.data.client)
-    //     }else{
-    //       Toast(res.message)
-    //     }
-    //   })
-    // }else{
-    //     if(!this.carno){ return false;}
-    //     this.$http.post('/api.php/TechCar/getCar',{carNo:this.carno})
-    //         .then(response=>{
-    //           let res = response.data;
-    //           if(res.errorCode == 200){
-    //             if(res.data.length==0) return;
-    //             let resCarData = res.data.car;
-    //             this.carVin = resCarData.vin
-                
-    //             if((resCarData.modelid!=0||!resCarData.modelid)&&resCarData.carplate){
-    //               console.log(resCarData.modelid)
-    //               this.selectedBrand = resCarData.carplate+"-"+resCarData.carmodel+"-"+resCarData.carnat
-    //             }
-                
-    //             this.registDate = resCarData.regtime||''
-    //             this.companyText = resCarData.insurance||''
-    //             this.bussiDate = resCarData.cominsurance||''
-    //             this.tranDate = resCarData.daninsurance||''
-    //             this.carEniger = resCarData.engine||''
-    //             this.$emit('customerMsg',res.data.client)
-    //           }else{
-    //             Toast(res.message)
-    //           }
-    //         }) 
-    //         .catch(err=>{Toast(err)})  
-
-    //     this.$emit("gainCarMsg",this.gainCarData)
-    // }
-
+      this.gainCarData = gainCarData;
+      if(this.carvid!=0){//显示车辆信息
+        carMsg({carvid:this.carvid}).then(res=>{
+          this.carno = res.carNo;
+          this.carVin = res.vin;
+          this.modelid = res.modelid;
+          this.registDate = res.regtime;
+          this.companyText = res.insurance;
+          this.bussiDate = res.cominsurance;
+          this.tranDate = res.daninsurance;
+          this.carEniger = res.engine;
+          if(this.modelid!=0){
+            this.selectedBrand = res.carplate+"-"+res.carmodel+"-"+res.carnat;
+          }
+          
+        })
+      }
   },
   computed: {
     errors () {
@@ -305,31 +270,6 @@ export default {
           Toast('').close();
           Toast(this.tips)
       }
-      //查找车辆
-      // if(this.carno.length>=7){
-      //   this.gainCarData['carNo'] = this.carno
-      //   this.$http.post('/api.php/TechSysClient/carno',{carNo:this.carno})
-      //     .then(response=>{
-      //       let res = response.data;
-      //       if(res.errorCode == 200){
-      //         let gainCarData = res.data;
-      //         if(gainCarData&&gainCarData.length!=0){
-      //           this.carVin= gainCarData.vin;
-      //           this.carvid = gainCarData.vid;//车辆id
-      //           this.modelid = gainCarData.modelid;
-      //           this.registDate=gainCarData.regtime||'';
-      //           this.companyText = gainCarData.insurance||'';
-      //           this.bussiDate = gainCarData.cominsurance||'';
-      //           this.tranDate = gainCarData.daninsurance||'';
-      //           this.carEniger = gainCarData.engine||'';
-      //           this.gainCarData.carvid = gainCarData.vid;//车辆id
-      //         }
-      //         // this.$emit('gainCarMsg',this.gainCarData);  
-      //       }
-
-      //     })
-      //     .catch(err=>{Toast(err)})
-      // }
     },
     activedBrand(brand) {
       if(brand){
@@ -345,7 +285,7 @@ export default {
     },
     saveMsg:function(){
       let reqData = {
-        clientvid: 1,
+        clientvid: this.clientvid,
         carNo: this.carno,
         vin: this.carVin,
         regtime: this.registDate,
@@ -368,50 +308,27 @@ export default {
         return false;
       }
       let _this = this;
-      addCar(reqData)
-      .then((res)=>{
-        Toast('成功添加车辆');
-        setTimeout(function(){
-          _this.$router.push({path: '/UserCenter/MyCar'})
-        },1500)
-         
-      })
-      // this.gainCarData.clientvid = this.clientvid;
-      // let httpUrl = '',
-      //     tipMsg = '',
-      //     message = '';
-      // if((this.carId&&this.carId!=0)||this.gainCarData.carvid!=0){//编辑修改车辆信息
-      //     httpUrl = '/api.php/TechSysClient/editcar';
-      //     tipMsg = '是否确定保存已修改的车辆信息?'
-      //     if(this.gainCarData.carvid&&this.gainCarData.carvid!=0){
-      //       this.gainCarData.carvid = this.gainCarData.carvid
-      //     }else{
-      //       this.gainCarData.carvid = this.carId;
-      //     }
+      if(this.carvid==0){//新增车辆
+        addCar(reqData)
+        .then((res)=>{
+          Toast('成功添加车辆');
+          setTimeout(function(){
+            _this.$router.push({path: '/UserCenter/MyCar'})
+          },1500)
+        })
+      }else{//车辆编辑
+        reqData.carvid = this.carvid
+        editCar(reqData).then(res=>{
+          if(res&&!res.errorCode){
+            this.$store.commit('showToast','编辑成功')
+            let paramData = {
+              url:'/UserCenter/MyCarDetails/'+this.carvid,$router:this.$router
+            }
+            this.$store.commit('delay',paramData)  
+          }
           
-      //     message = '成功修改车辆信息'
-      // }else{//新增车辆
-      //     httpUrl = '/api.php/TechSysClient/addNewCar';
-      //     tipMsg = '是否确定新增车辆?'
-      //     message = '绑定成功'
-      // }
-      // MessageBox.confirm(tipMsg,'').then(action => {
-      //   this.$http.post(httpUrl,this.gainData)
-      //   .then((res)=>{
-      //     // let res = response.data
-      //     // if(res.errorCode == 200){
-      //       Toast(message);
-      //       let clientvid = this.clientvid
-      //       setTimeout(function(){
-      //         window.location.href = "customerDetail.html?cusId="+clientvid
-      //       },1000)
-      //     // }else{
-      //       // Toast(res.message)
-      //     // }
-      //   })
-      //   .catch((err)=>{Toast(err)})
-      // })
-      // .catch(()=>{})
+        })
+      }
 
     },
     

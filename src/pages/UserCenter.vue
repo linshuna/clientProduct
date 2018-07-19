@@ -64,7 +64,8 @@
                 isshow: true,
                 pageData: {},
                 userSettingTypeData: [{
-                    'linkUrl': `/user/selfCenter`,
+                    'linkUrl': '',
+                    // 'linkUrl': `/user/selfCenter`,
                     'icon': require("../assets/images/我的-推荐好友icon.png"),
                     'linkName': '推荐好友'
                 }, {
@@ -131,7 +132,6 @@
         methods: {
             _getIndex() {
                 getIndex({clientvid: this.clientvid}).then(res => {
-                    // this.getIndex = res
                     this.indexList = res
                     console.log(this.indexList);
                 })

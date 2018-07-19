@@ -1,7 +1,7 @@
 <template>
   <div class="score-box">
     <img v-for="item in stars" class="star" src="../assets/images/star-sel-icon.png" alt="">
-    <img v-for="item in stars" class="star" src="../assets/images/star-icon.png" alt="">
+    <img v-for="item in (5-stars)" class="star" src="../assets/images/star-icon.png" alt="">
   </div>
 </template>
 
@@ -11,7 +11,7 @@
     name: 'scoreLv',
     data() {
       return {
-
+        grayStars:0
       }
     },
     props: ['stars'],
@@ -19,7 +19,8 @@
 
     },
     created() {
-
+      // this.stars = this.stars - 0
+      this.grayStars = 5-(this.stars-0)
     },
     methods: {
 

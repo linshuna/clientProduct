@@ -48,21 +48,17 @@ function getIndex(params) {
     return axios.post('/cliapi.php/Client/Index', params)
 }
 
-// 我的 个人中心
+// 我的 个人信息列表
 function getMyCenter(params = {}) {
     return axios.post('/cliapi.php/Client/data', params)
+}
+//我的 个人信息编辑
+function editorMyCenter(params = {}) { 
+  return axios.post('/cliapi.php/Client/client_edit',params)
 }
 //上传头像
 function changeHeadimg(params = {}) { 
     return axios.post('/cliapi.php/Client/avatar_adds',params)
-}
-// 我的 我的车辆
-function getMyCar(params = {}) {
-    return axios.post('/cliapi.php/Car/index', params)
-}
-// 我的 我的车辆默认
-function getCarDefault(params = {}) {
-    return axios.post('/cliapi.php/Car/car_default', params)
 }
 // 我的 帮助中心
 function getHelpCenter(params = {}) {
@@ -74,8 +70,8 @@ function getHelpDetails(params = {}) {
 }
 //附近
 // 附近门店
-function getNearbyStorea(params = {}) {
-    return axios.post('/cliapi.php/Index/nearby_store', params)
+function getStoreList(params = {}) {
+    return axios.post('/cliapi.php/AppendixStore/index', params)
 }
 //筛选城市
 function getCityList(params = {}) { 
@@ -129,9 +125,14 @@ function delCar(params = {}) {
 function setCarDefault(params = {}) { 
   return axios.post('/cliapi.php/Car/car_default',params)
 }
-//具体车辆信息
+
+//具体车辆信息/cliapi.php/Car/editcar/carvid/:carvid
 function carMsg(params = {}) { 
-  return axios.post('/cliapi.php/Car/carone',params)
+  return axios.get('/cliapi.php/Car/editcar',params)
+}
+//编辑保存车辆信息
+function editCar(params = {}) { 
+  return axios.post('/cliapi.php/Car/editcar',params)
 }
 //我的  特惠
 function getActivity(params = {}) {
@@ -169,17 +170,18 @@ export {
   delCar,//删除车辆
   setCarDefault,//设备默认车辆
   carMsg,//具体车辆信息
+  editCar,//编辑保存车辆信息
   bandList,//车辆型号
   carModules,//车辆模型
   carYearPl,//车系
 
   getEvaluate, //我的评价
   getIndex, //我的首页
-  getMyCenter, //我的 个人中心
-  getMyCar, // 我的 我的车辆
-  getCarDefault,//我的 我的车辆默认
+  getMyCenter, //我的 个人信息列表
+  editorMyCenter,//我的 个人信息编辑
+
   getHelpCenter,// 我的 帮助中心
-  getNearbyStorea,// 附近 附近门店
+  getStoreList,// 附近 附近门店
   getHelpDetails,//我的 帮助中心
   getAppointShop,// 预约 立即预约
   getAppointConent,// 我的 我的预约

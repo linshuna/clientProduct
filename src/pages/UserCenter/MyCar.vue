@@ -1,29 +1,32 @@
 <template>
-    <div class="my-car mask">
+    <div class="my-car">
       <template v-if="indexList&&indexList.length>0">
-        <ul class="car-list" v-for="item in indexList">
-            <li>
-                <router-link to="/UserCenter/MyCarDetails">
+        <ul class="car-list">
+            <li v-for="item in indexList">
+                <div @click.stop="showCarMsg(item.carvid)">
                     <div class="car-hd clearfix">
-                        <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2599367009,2667348798&fm=58" alt=""
-                             class="car-img fl">
-                        <p class="car-name fl">奔驰C级 2018款 C 180 L 动感版</p>
+                        <img :src="item.icon" alt=""
+                             class="car-img">
+                        <span class="car-name" v-if="item.modelid!=0">{{item.carplate}}-{{item.carmodel}}-{{item.carnat}}</span>
+                        <span class="car-name" v-else>暂无</span>
                         <img class="fr r-arrow" src="../../assets/images/rightArrow.png">
                     </div>
-                </router-link>
+                </div>
                 <div class="car-bd">
                     <p class="car-number car-info">
                         <img src="../../assets/images/car-number.png" alt="">{{item.carNo}}</p>
                     <p class="car-mileage car-info">
-                        <img src="../../assets/images/mycar-dist.png" alt="">行驶里程
-                        <span>12345</span>公里</p>
-                    <div class="handle-box clearfix">
-                        <label class="fl">
-                            <input type="radio" name="default" @click="getPretermit">默认
+                        <img src="../../assets/images/mycar-dist.png" alt="">上次进店里程
+                        <span>{{item.distance}}</span>公里
+                    </p>
+                    <div class="handle-box clearfix" >
+                        <label class="defaultIcon" @click.stop="getPretermit(item.carvid)">
+                            <input type="radio" :checked="item.moren==1?true:false" name="default">
+                            <span>默认</span> 
                         </label>
-                        <div class="del-box fl">
-                            <img src="../../assets/images/我的车辆-垃圾桶icon.png" alt="" class="del-icon fl">
-                            <p class="fl">删除</p>
+                        <div class="del-box deleteIcon" @click.stop="delCar(item.carvid)">
+                            <img src="../../assets/images/我的车辆-垃圾桶icon.png" alt="" class="del-icon">
+                            <span class="">删除</span>
                         </div>
                     </div>
                 </div>
@@ -39,48 +42,70 @@
     </div>
 </template>
 <script>
-    import {getCarDefault} from '../../utils/api'
-    import {getMyCar} from '../../utils/api'
+    import {carList,setCarDefault,delCar} from '../../utils/api'
     import noDataTip from '@/components/noDataTip'
     export default {
         name: 'App',
         data() {
             return {
                 indexList: [],
-                defaultList:[]
+                clientvid:0
             }
         },
         components:{
           'no-data-tip': noDataTip
         },
         created: function () {
+          let getStorage = this.$store.getters.getStorage;
+          this.clientvid = getStorage?getStorage.vid:0;
+          this._getMyCar()
         },
         mounted: function () {
+          
+        },
+        watch: {
+          '$route' (to, from) {
             this._getMyCar()
-
+          }
         },
         methods: {
             _getMyCar() {
-                getMyCar().then(res => {
+                carList({clientvid: this.clientvid}).then(res => {
                     this.indexList = res
-                    // console.log(this.indexList);
                 })
             },
-            getPretermit() {
-                getCarDefault().then(res => {
-                    this.defaultList = res
-                    console.log(this.defaultList);
+            showCarMsg: function(carvid){
+              this.$router.push({path: '/UserCenter/MyCarDetails/'+carvid})
+            },
+            getPretermit(carvid) {
+                setCarDefault({clientvid: this.clientvid,carvid: carvid}).then(res => {
+                    this.$store.commit('showToast','更改默认成功')
+                    this._getMyCar()
                 })
-
+            },
+            delCar: function(carvid){
+              delCar({clientvid: this.clientvid,carvid: carvid}).then(res=>{
+                  this.$store.commit('showToast','删除车辆成功')
+                  this._getMyCar()
+              })
             },
             addCar: function(){
-              this.$router.push({path: '/UserCenter/MyCar/AddCar'})
+              this.$router.push({path: '/UserCenter/MyCar/AddCar/0'})
             }
         }
     }
 
 </script>
 <style lang="scss" scoped>
+  .my-car{
+    width:100%;
+    min-height: 100%;
+    position: absolute;
+    left: 0;
+    top:0;
+    padding-bottom: 2rem;
+    background-color: #f5f5f5;
+  }
     .car-list {
         li {
             margin-top: .2rem;
@@ -90,19 +115,28 @@
         .car-hd {
             line-height: .7rem;
             border-bottom: 1px solid #eaeaea;
+            width: 100%;
+            padding-left: .2rem;
         }
         .car-img {
             width: 0.52rem;
             height: 0.52rem;
-            margin: .1rem 0.14rem 0 .38rem;
+            vertical-align: middle;
         }
         .car-name {
             font-size: 0.3rem;
+            vertical-align: middle;
+            padding-left: .1rem;
+            width: 85%;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .r-arrow {
             width: 0.1rem;
             height: 0.18rem;
-            padding: .28rem .42rem 0 0;
+            padding: .28rem .2rem 0 0;
         }
         .car-bd {
             position: relative;
@@ -139,13 +173,26 @@
             .del-icon {
                 width: 0.36rem;
                 height: 0.36rem;
-                margin: 0 .06rem 0 .1rem;
             }
         }
     }
-
+    .defaultIcon{
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: .15rem;
+      input,span{
+        vertical-align: middle;
+      }
+    }
+    .deleteIcon{
+      display: inline-block;
+      vertical-align: middle;
+      img,span{
+        vertical-align: middle;
+      }
+    }
     .add-car-btn {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         width: 100%;
         height: 0.72rem;
@@ -165,8 +212,6 @@
         outline: none;
         height: 0.36rem;
         width: 0.36rem;
-        margin-top: -2px;
-        margin-bottom: 1px;
         vertical-align: middle;
     }
 
@@ -176,8 +221,6 @@
         background-size: 0.36rem 0.36rem;
         height: 0.36rem;
         width: 0.36rem;
-        margin-top: -2px;
-        margin-bottom: 1px;
         vertical-align: middle;
     }
 

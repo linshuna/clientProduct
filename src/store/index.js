@@ -53,6 +53,18 @@ const mutations = {
       }
       localStorage.removeItem(state.key)
   },
+  showToast(state, value) { 
+    Toast(value)
+  },
+  delay(state, paramData) {
+    
+    setTimeout(function () {     
+      console.log('清时期')
+      let $router = paramData.$router;
+      $router.push({path:paramData.url})
+      store.dispatch('delToast')
+    },1500)
+  }
 }
 
 const actions = {
@@ -67,19 +79,17 @@ const actions = {
     console.log(playData)
     login(playData)
       .then(res => {
-          console.log(isTip)
-          if(isTip){
-            Toast('登录成功')  
-          }
+        if(isTip&&!res.errorCode){
+          Toast('登录成功')  
+        }
+        if (res&&!res.errorCode) { 
           context.commit("_setStorage",res);//用vuex本地存储
           setTimeout(function(){
               window.location.href = '/customer'
-          }, 1000)    
+          }, 1000)  
+        }
           
-        })
-        .catch(res=>{
-            Toast("如有问题，请联系客户")
-        })
+      })
     },
     logout(context){
         context.commit('_remvoeStorage')

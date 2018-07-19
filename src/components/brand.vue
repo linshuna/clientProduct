@@ -106,7 +106,6 @@
           this.initScroll()
           this.init();//如果是滚动就显示
         }
-        console.log(newVal)
         //this.$emit('show',this.show)
       },
       currentLetter(){
@@ -185,6 +184,7 @@
         this.$emit('closePop')
         this.$emit('selectedBrand',this.activeBrand.substring(0,this.activeBrand.length-1));
         this.$emit('modelid',this.modelid)
+
         this.activeBrand = ''
       }
     }

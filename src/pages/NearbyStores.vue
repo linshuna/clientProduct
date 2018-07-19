@@ -1,23 +1,23 @@
 <template>
     <div class="nearby-stores">
         <nav>
-            <div class="addres" @click="changeAddress(1)">
+            <div class="addres" @click="changeType(1)">
                 <p>{{addressname.name}}</p>
                 <img src="../assets/images/btmArrow.png" alt="">
             </div>
-            <p class="sort" @click="changeAddress(2)">默认排序
+            <p class="sort" @click="changeType(2)">默认排序
                 <img src="../assets/images/btmArrow.png" alt="">
             </p>
         </nav>
-
-        <!--三级联动-->
+        <pro-city-area v-bind:current.sync="currentPicker" v-bind:popupVisible.sync="popupVisible" @gainAllAddress="gainAllAddress" @gainSort="gainSort"></pro-city-area>
+        <!--三级联动
         <mt-popup v-model="popupVisible" position="top">
-          <mt-picker ref='pickerObj' :slots="slots" valueKey="name" ></mt-picker>
+          <mt-picker ref='pickerObj' :slots="slots" valueKey="name" @change="onMyAddressChange"></mt-picker>
           <div class="picker-toolbar">  
               <span class="mint-datetime-cancel" @click="cancle">取消</span>  
               <span class="mint-datetime-confirm" @click="select">确定</span>  
           </div> 
-        </mt-popup>
+        </mt-popup>-->
 
         <ul class="store-list">
             <li v-for="item in StoreaList">
@@ -27,12 +27,12 @@
                     <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
                 </div>
                 <div class="store-bd clearfix">
-                    <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt=""
+                    <img :src="item.pic" alt=""
                          class="store-img fl">
                     <div class="store-info-box fl">
                         <p class="store-address">{{item.province}}{{item.city}}{{item.dist}}{{item.address}}</p>
                         <div class="star-box">
-                            <score-lv :stars='3'></score-lv>
+                            <score-lv :stars='item.evaluateShow-0'></score-lv>
 
                         </div>
                         <div class="item-box">
@@ -53,144 +53,85 @@
 <script>
     var jsonp = require('jsonp');
     import {score} from "mixins";
-    import {getNearbyStorea,getCityList,getAddress} from '../utils/api.js'
+    import {getStoreList,getCityList,getAddress} from '../utils/api.js'
+    import ProCityArea from 'components/ProCityArea.vue'
     // import { getIndexData } from '../utils/api.js'
     export default {
+
         mixins: [score],
         name: "NearbyStores",
+        components:{
+          'pro-city-area': ProCityArea
+        },
         data() {
             return {
+                longitude: '' ,
+                latitude:'',
                 StoreaList: [],
                 pageData: {},
-
-                slots:[],
-                province: [],//省
-                city:[],//市
-                area:[],//区
-                popupVisible: false,
                 addressValue:0,
                 addressName:'',
                 checkedName:'',
                 currentPicker:1,
-                checkedStatus:[
-                  {name:'附近优先',value:'2'},
-                  {name:'累计点评',value:'3'},
-                  {name:'默认排序',value:'1'},
-                  {name:'评分最高',value:'4'},
-                ],
-                addressname:{}
+                popupVisible: false,
+                addressname:{},
+                allAddress:[],
+                search:'',
+                sorts:1,
+
             };
         },
         created() {
           
         },
         mounted() {
+          //获取当前位置
           let _this = this;
           jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data){
             let res = data.result
             let addressName = res.ad_info.city+" "+res.ad_info.district;
             _this.$set(_this.addressname,'name',addressName)
-            console.log(11,_this.addressName)
+            _this.$set(_this.addressname,'longitude',res.location.lng)
+            _this.$set(_this.addressname,'latitude',res.location.lat)
+            _this.$set(_this.addressname,'code',res.ad_info.adcode)
+            console.log(res)
           })
-          console.log(_this.addressName)
-            // this.initCurrentAddress();//获取当前位置
-            this.initCity();//获取城市
+        },
+        watch:{
+          addressname: function(newVal,oldVal){
+            this.longitude = newVal.longitude
+            this.latitude = newVal.latitude
+            this.search = newVal.code;//默认的城市code
             this._getNearbyStorea()
+          }
         },
         methods: {
             _getNearbyStorea() {
-                getNearbyStorea({
-                    longitude: 23.1464370884,
-                    latitude: 113.2813811302
+                getStoreList({
+                    longitude: this.longitude,
+                    latitude: this.latitude,
+                    search:this.search,
+                    sorts:this.sorts
                 }).then(res => {
-                    this.StoreaList = res
+                    this.StoreaList = res.store
                 })
+            },
+            changeType:function(value){
+              this.currentPicker = value;
+              this.popupVisible = true;
             },
             onValuesChange: function(){
               let obj = document.getElementsByClassName('picker-slot-wrapper')[0];
             },
-            initCurrentAddress: function(){
-              
-
+            gainAllAddress:function(value){
+              this.$set(this.addressname,'name',value.area);
+              this.search = value.search;
+              this._getNearbyStorea()
             },
-            initCity: function(){
-              getCityList().then(res=>{
-                res.map((item,index)=>{
-                  this.province.push(item.province)
-                  item.citylist.map((cityItem,cityIndex)=>{
-                    this.city.push(cityItem.city)
-   
-                      cityItem.area.map((areaItem,areaIndex)=>{
-                        this.area.push({name:areaItem.dist,vlaue: areaItem.areaCode})
-                      })
-                    
-                    
-                  })
-                })
-                this.area.push({name:'全部',value:0})
-
-              })
-            },
-            changeAddress: function(value){
-              this.popupVisible=true;//激活picker组件
-              this.currentPicker = value;//选中的picker对象
-              if(value==1){
-                this.slots=[{
-                      flex: 1,
-                      defaultIndex: 0,    
-                      values: this.province,  //省份数组
-                      className: 'slot1',
-                      textAlign: 'center'
-                    }, {
-                      divider: true,
-                      content: '-',
-                      className: 'slot2'
-                    }, {
-                      flex: 1,
-                      values: this.city,
-                      defaultIndex: 0, 
-                      className: 'slot3',
-                      textAlign: 'center'
-                    },
-                    {
-                      divider: true,
-                      content: '-',
-                      className: 'slot4'
-                    },
-                    {
-                      flex: 1,
-                      defaultIndex: 2, 
-                      values: this.area,
-                      className: 'slot5',
-                      textAlign: 'center'
-                    }];
-              }else{
-                this.slots=[{
-                    defaultIndex:2,
-                    flex: 1,
-                    values: this.checkedStatus,//职业类型
-                    textAlign: 'left'
-                }];
-              }
-              
-            },
-            cancle:function(){
-              this.popupVisible=false;
-            },
-            select:function(){
-              var pickerVal=this.$refs.pickerObj.getValues();
-              if(this.currentPicker==1){//三级联动
-                this.addressname.name = pickerVal[1]+" "+pickerVal[2]['name']
-
-              }else{
-                this.addressValue = pickerVal[0].value;
-                this.addressName = pickerVal[0].name;
-              }
-              // this.sex = pickerVal[0].value;
-              // this.sexText = pickerVal[0].name;
-              console.log(pickerVal)
-              this.popupVisible=false;
-            },
+            gainSort: function(value){
+              this.sorts = value;
+              this._getNearbyStorea()
+            }
         }
     };
 

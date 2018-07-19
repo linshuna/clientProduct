@@ -14,55 +14,58 @@
             <li>
                 <span>用户名</span>
                 <div class="selfRight">
-                    <span class="grayColor">{{indexList.phone}}</span>
+                    <span class="grayColor">{{phone}}</span>
                     <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
                 </div>
             </li>
             <li>
                 <span>昵称</span>
                 <div class="selfRight">
-                    <span class="grayColor">{{indexList.uname}}</span>
+                    <input v-model="uname" class="uname" placeholder="请输入昵称"/>
                     <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
                 </div>
             </li>
-            <li>
+            <li @click.stop="changeSex">
                 <span>性别</span>
-                <div class="selfRight" @click="changeSex">
+                <div class="selfRight">
                     <span class="grayColor">{{sexText}}</span>
                     <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
                 </div>
                 <mt-popup v-model="popupVisible" position="bottom">
                   <div class="picker-toolbar">  
-                      <span class="mint-datetime-cancel" @click="cancle">取消</span>  
-                      <span class="mint-datetime-confirm" @click="select">确定</span>  
+                      <span class="mint-datetime-cancel" @click.stop="cancle">取消</span>  
+                      <span class="mint-datetime-confirm" @click.stop="select">确定</span>  
                   </div>  
                   <mt-picker ref='pickerObj' :slots="slots" valueKey="name" ></mt-picker>
                 </mt-popup>
             </li>
-            <li>
+            <li @click.stop="cusBirth('birthPicker')">
                 <span>出生日期</span>
                 <div class="fr setPadding">
-                  <span class="inp" :class="{'blackColor':birthday!=''}"  @click="cusBirth('birthPicker')">{{birthday==''?'请选择日期':birthday}}</span>
+                  <span class="inp grayColor" :class="{'blackColor':birthday!=''}"  >{{birthday==''?'请选择日期':birthday}}</span>
                   <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
-                    <mt-datetime-picker
-                      ref="birthPicker"
-                      type="date"
-                      :startDate="startDate"
-                      :endDate="endDate"
-                      year-format="{value} 年"
-                      month-format="{value} 月"
-                      date-format="{value} 日"
-                      @confirm="handleChange"
-                    >
-                    </mt-datetime-picker>
                 </div>
             </li>
         </ul>
+        <mt-datetime-picker
+          ref="birthPicker"
+          type="date"
+          :startDate="startDate"
+          :endDate="endDate"
+          year-format="{value} 年"
+          month-format="{value} 月"
+          date-format="{value} 日"
+          @confirm="handleChange"
+        >
+        </mt-datetime-picker>
+        <div class="btnWrap" @click="save">
+          <button>保存</button>
+        </div>
     </div>
 
 </template>
 <script>
-    import {getMyCenter,changeHeadimg} from '../../utils/api.js'
+    import {getMyCenter,changeHeadimg,editorMyCenter} from '../../utils/api.js'
     import {format} from '@/assets/js/date.js'
     export default {
         name: 'MyCenter',
@@ -72,14 +75,14 @@
                 avatar: null,
                 popupVisible: false,
                 slots:[{defaultIndex:1}],
+                uname:'',
+                phone:'',
                 sexStyle: [{name:'男',value:1},{name:'女',value:2}],
                 sex:'',
                 sexText:'',
                 startDate: new Date('1960/1/1'),//开始的生日日期
                 endDate: new Date(),//结束的生日日期
-                birthday:'',
-                indexList:{},
-                getStorage:{}
+                birthday:''
             }
         },
         created: function () {
@@ -93,8 +96,8 @@
         methods: {
             _getMyCenter() {
                 getMyCenter({clientvid: this.clientvid}).then(res => {
-                    this.indexList = res;
-                    console.log(res)
+                    this.uname = res.uname;
+                    this.phone = res.phone;
                     this.avatar = res.headimg;
                     this.birthday = res.birthday||''
                     this.sex = res.sex;  
@@ -114,6 +117,7 @@
               this.popupVisible=false;
             },
             select:function(){
+              this.popupVisible=false;
               var pickerVal=this.$refs.pickerObj.getValues();
               this.sex = pickerVal[0].value;
               this.sexText = pickerVal[0].name;
@@ -149,6 +153,16 @@
               // }
 
             },
+            save: function(){
+              let reqData = {
+                clientvid: this.clientvid,
+                uname: this.uname,
+                sex: this.sex,
+                birthday: this.birthday,
+                headimg: this.avatar
+              }
+              // editorMyCenter().then(res=>{})
+            }
         }
     }
 
@@ -182,10 +196,6 @@
                     right: .2rem;
                     top: 50%;
                     transform: translate(0, -50%);
-                    .grayColor {
-                        color: gray;
-                        font-size: .34rem;
-                    }
                     img {
                         display: inline-block;
                     }
@@ -200,6 +210,15 @@
             }
         }
     }
+  .grayColor {
+      color: gray;
+      font-size: .34rem;
+  }  
+  .uname{
+    height: 100%;
+    text-align: right;
+    font-size: .32rem;
+  }
   .rightArrow {
       width: .15rem;
       padding-left: .15rem;
@@ -212,7 +231,7 @@
     width: 100%;
     .picker-toolbar{
       width: 100%;
-      padding: 15px 10px;
+      padding: 0 10px;
       box-sizing: border-box;
       color: #26a2ff;
     }
@@ -222,5 +241,23 @@
     }
              
   }
-         
+  .btnWrap{
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    button{
+      width: 100%;
+      height: .8rem;
+      border: none;
+      width: 100%;
+      background: #FA9E15;
+      color: #ffffff;
+      border-radius : 2px;
+      font-size: .32rem;
+    } 
+     
+  }
+      
 </style>
