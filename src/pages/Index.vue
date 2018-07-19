@@ -143,8 +143,11 @@
             this._getIndexBanner();
             this._getRecommendList();
             this._getNearbyStores();
-            this.clientvid = this.$store.getters.getStorage.vid; //判断是否登录
-
+            let getStorage = this.$store.getters.getStorage;
+            if(getStorage){
+                this.clientvid = this.$store.getters.getStorage.vid;
+                this._getIndex()
+            }
 
         },
         watch: {
