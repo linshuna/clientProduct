@@ -16,6 +16,7 @@ import store from './store/index.js'
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
 Vue.use(MintUI)
+import { Toast} from 'mint-ui'
 
 import './assets/css/base.scss'
 import './assets/css/animations.css'

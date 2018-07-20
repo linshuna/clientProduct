@@ -8,60 +8,67 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="details-hd clearfix">
-          <img src="../../assets/images/首页-救援icon.png" alt="" class="hd-img fl">
+          <img :src="carMsg.icon" alt="" class="hd-img fl">
           <div class="hd-info fl">
-            <p class="car-name">宝马汽车 530Li</p>
-            <p class="car-number">车架号：{{carMsg.vin}}</p>
-            <img src="../../assets/images/车辆信息-修改icon.png" alt="" class="edit-icon">
+            <p class="car-name">{{carMsg.carplate}} {{carMsg.carmodel}} {{carMsg.carnat}}</p>
+            <p class="car-number">车架号：{{carMsg.vin | noDataFilter}}</p>
+            <img src="../../assets/images/车辆信息-修改icon.png" alt="" class="edit-icon" @click.stop="editCar">
           </div>
         </div>
         <ul class="details-bd">
           <li class="cell">
             <p class="left">注册时间</p>
-            <p class="right">{{carMsg.regtime}}</p>
+            <p class="right">{{carMsg.regtime | noDataFilter}}</p>
           </li>
-          <li class="cell">
+          <!--<li class="cell">
             <p class="left">车价</p>
             <p class="right">777万</p>
-          </li>
+          </li>-->
           <li class="cell">
             <p class="left">发动机号</p>
-            <p class="right">{{carMsg.engine}}</p>
+            <p class="right">{{carMsg.engine | noDataFilter}}</p>
           </li>
           <li class="cell">
             <p class="left">商业保险到期日</p>
-            <p class="right">{{carMsg.cominsurance}}</p>
+            <p class="right">{{carMsg.cominsurance | noDataFilter}}</p>
           </li>
           <li class="cell">
             <p class="left">交强保险到期日</p>
-            <p class="right">{{carMsg.daninsurance}}</p>
+            <p class="right">{{carMsg.daninsurance | noDataFilter}}</p>
           </li>
         </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <div class="footer">
-          <div class="footer_top">
-            <div>
-              <p>详情</p>
-            </div>
-            <div class="footer_top_right">
-              <p>查看更多账单</p>
-              <span>
-                <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
-              </span>
-            </div>
-          </div>
-          <ul class="footer_footer">
-            <li class="footer_footer_msg">
-              <div class="footer_footer_msg_left">
-                <p>支付小保养费</p>
+          
+          <template v-if="consumeList&&consumeList.length>0">
+            <div class="footer_top">
+              <div>
+                <p>详情</p>
               </div>
-              <div class="footer_footer_msg_right">
-                <p class="footer_footer_msg_right_pone">-300.00</p>
-                <p class="footer_footer_msg_right_ptwo">2018-8-31 21:14</p>
+              <div class="footer_top_right">
+                <p>查看更多账单</p>
+                <span>
+                  <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+                </span>
               </div>
-            </li>
-          </ul>
+            </div>
+            <ul class="footer_footer">
+              <li class="footer_footer_msg">
+                <div class="footer_footer_msg_left">
+                  <p>支付小保养费</p>
+                </div>
+                <div class="footer_footer_msg_right">
+                  <p class="footer_footer_msg_right_pone">-300.00</p>
+                  <p class="footer_footer_msg_right_ptwo">2018-8-31 21:14</p>
+                </div>
+              </li>
+            </ul>
+          </template>
+          <template v-else>
+            <no-data-tip :tipData="{typeTipe:0,conTip:'暂无消费记录'}"></no-data-tip>
+          </template>
+          
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -71,25 +78,40 @@
   import {
     carMsg
   } from '@/utils/api.js'
+  import noDataTip from '@/components/noDataTip'
   export default {
     name: 'MyCarDetails',
     data() {
       return {
         selected: '1',
         carvid: null,
-        carMsg: {}
+        carMsg: {},
+        consumeList: []//这里是存消费的列表
       }
+    },
+    components:{
+      'no-data-tip': noDataTip
     },
     mounted() {
       // this._getIndexData()
       this.carvid = this.$route.params.carvid;
       this.init() 
     },
+    filters:{
+      noDataFilter: function(value){
+          if(!value||value=='') return '暂无';
+            else return value;
+      }
+    },
     methods: {
       init() {
-        carMsg({clientvid: 1,carvid: this.carvid}).then(res => {
-          this.carMsg = res
+        carMsg({carvid: this.carvid}).then(res => {
+          this.carMsg = res;
+          console.log(res)
         })
+      },
+      editCar: function(){
+        this.$router.push({path: '/UserCenter/MyCar/AddCar/'+this.carvid})
       }
     }
   }

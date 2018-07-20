@@ -1,17 +1,20 @@
 <template>
   <div class="appointment-wrap">
     <nav>
-      <div class="addres">
-        <p class="city">广州市</p>
-        <p class="area">越秀区</p>
+      <div class="addres" @click="changeType(1)">
+        <p class="city">{{addressname.name}}</p>
         <img src="../assets/images/btmArrow.png" alt="">
       </div>
-      <p class="sort">默认排序
+      <p class="sort" @click="changeType(2)">默认排序
         <img src="../assets/images/btmArrow.png" alt="">
       </p>
     </nav>
+
+    <pro-city-area v-bind:current.sync="currentPicker" v-bind:popupVisible.sync="popupVisible" @gainAllAddress="gainAllAddress" @gainSort="gainSort"></pro-city-area>
+
+
     <ul class="store-list">
-      <li  v-for="item in AppointShopList">
+      <li  v-for="item in StoreaList">
         <div class="store-hd">
           <p>{{item.name}}</p>
           <img src="../assets/images/rightArrow.png" class="r-arrow" alt="">
@@ -21,7 +24,8 @@
                class="store-img fl">
           <div class="store-info-box fl">
             <p class="store-address">{{item.province}}{{item.city}}{{item.dist}}</p>
-            <p class="appointment-sum">预约数：3453次
+
+            <p class="appointment-sum">预约数：{{item.appointment}}次
             </p>
             <div class="item-box">
               <!--<div class="appointment">接受预约</div>-->
@@ -48,25 +52,84 @@
 </template>
 <script>
     // import { getIndexData } from '../utils/api.js'
-    import {getAppointShop} from '../utils/api.js'
+    import {score} from "mixins";
+    var jsonp = require('jsonp');
+    import {getStoreList,getCityList,getAddress} from '../utils/api.js'
+    import ProCityArea from '../components/ProCityArea.vue'
 
     export default {
         name: "Appointment",
+        mixins: [score],
+        components:{
+            'pro-city-area': ProCityArea
+        },
+
         data() {
             return {
                 AppointShopList:[],
-                pageData: {}
+                pageData: {},
+
+                longitude: '' ,
+                latitude:'',
+                StoreaList: [],
+                addressValue:0,
+                addressName:'',
+                checkedName:'',
+                currentPicker:1,
+                popupVisible: false,
+                addressname:{},
+                allAddress:[],
+                search:'',
+                sorts:1,
             };
         },
         mounted() {
-            this._getAppointShop()
+            //获取当前位置
+            let _this = this;
+            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data){
+                let res = data.result
+                let addressName = res.ad_info.city+" "+res.ad_info.district;
+                _this.$set(_this.addressname,'name',addressName)
+                _this.$set(_this.addressname,'longitude',res.location.lng)
+                _this.$set(_this.addressname,'latitude',res.location.lat)
+                _this.$set(_this.addressname,'code',res.ad_info.adcode)
+                console.log(res)
+            })
+        },
+        watch:{
+            addressname: function(newVal,oldVal){
+                this.longitude = newVal.longitude
+                this.latitude = newVal.latitude
+                this.search = newVal.code;//默认的城市code
+                this._getNearbyStorea()
+            }
         },
         methods: {
-            _getAppointShop(){
-                getAppointShop().then(res => {
-                    this.AppointShopList = res
-                    console.log(res);
+            _getNearbyStorea() {
+                getStoreList({
+                    longitude: this.longitude,
+                    latitude: this.latitude,
+                    search:this.search,
+                    sorts:this.sorts
+                }).then(res => {
+                    this.StoreaList = res.store
                 })
+            },
+            changeType:function(value){
+                this.currentPicker = value;
+                this.popupVisible = true;
+            },
+            onValuesChange: function(){
+                let obj = document.getElementsByClassName('picker-slot-wrapper')[0];
+            },
+            gainAllAddress:function(value){
+                this.$set(this.addressname,'name',value.area);
+                this.search = value.search;
+                this._getNearbyStorea()
+            },
+            gainSort: function(value){
+                this.sorts = value;
+                this._getNearbyStorea()
             }
         }
     };

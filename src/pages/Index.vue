@@ -146,7 +146,7 @@
             let getStorage = this.$store.getters.getStorage;
             if(getStorage){
                 this.clientvid = this.$store.getters.getStorage.vid;
-                this._getIndex()
+
             }
 
         },

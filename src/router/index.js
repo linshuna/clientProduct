@@ -190,13 +190,15 @@ export default new Router({
           path: '/UserCenter/MyCar',
           component: MyCar,
           meta: {
-            title: '我的车辆'
+            title: '我的车辆',
+            rush: true
           },
           children: [{
-            path: '/UserCenter/MyCar/AddCar',
+            path: '/UserCenter/MyCar/AddCar/:carvid',
             component: AddCar,
             meta: {
-              title: '新增车辆'
+              title: '新增车辆',
+              rush: true
             }
           }]
         },
