@@ -71,6 +71,8 @@ const Payment = () => import('@/pages/UserCenter/Payment')
 const PaymentFinsh = () => import('@/pages/UserCenter/PaymentFinsh')
 //我的帮助中心帮助
 const HelpConent = () => import('@/pages/UserCenter/HelpConent')
+//我的帮助中心帮助
+const Shopping = () => import('@/pages/Index/UpKeep/Shopping')
 
 
 
@@ -285,6 +287,14 @@ export default new Router({
           component: HelpConent,
           meta: {
             title: '帮助中心内容'
+          },
+        },
+
+        {
+          path: '/Index/Shopping',
+          component: Shopping,
+          meta: {
+            title: '首页/商城'
           },
         },
 

@@ -20,7 +20,7 @@
                     <img src="../assets/images/首页-预约icon.png" alt="预约图片" class="nav-img">
                     <p class="nav-txt">预约</p>
                 </li>
-                <router-link to="/Index/UpKeep" tag="li">
+                <router-link to="/Index/Shopping" tag="li">
                     <img src="../assets/images/shopIcon.png" alt="商城图片" class="nav-img">
                     <p class="nav-txt">商城</p>
                 </router-link>

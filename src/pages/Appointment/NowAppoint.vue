@@ -31,10 +31,20 @@
         </div>
         <div class="footer">
             <div class="footer_footer">
-                <div class="footer_footer_msg">
+                <div class="footer_footer_msg" @click="openPicker('registPicker')">
                     <div class="footer_footer_msg_left">
                         <p>预约时间</p>
                     </div>
+                    <!--<span class="inp" :class="{'blackColor':registDate!=''}"  @click="cusBirth('picker')">{{registDate==''?'请选择日期':registDate}}</span>-->
+                    <mt-datetime-picker
+                            ref="picker"
+                            type="date"
+                            year-format="{value} 年"
+                            month-format="{value} 月"
+                            date-format="{value} 日"
+                            @confirm="handleChange"
+                           >
+                    </mt-datetime-picker>
                     <div class="footer_footer_msg_right">
             <span>
               <img src="../../assets/images/rightArrow.png" alt="" class="big_rightArrow">
@@ -84,12 +94,50 @@
 </template>
 
 <script>
+    import Vue from 'vue';
+    import {Toast, Picker, DatetimePicker} from 'mint-ui';
+    import {format} from '../../assets/js/date.js'
+
+    Vue.component(Picker.name, Picker);
+    Vue.component(DatetimePicker.name, DatetimePicker);
+
     import {score} from "mixins";
-    import Calendar from 'vue-calendar-component'
 
     export default {
+        data() {
+            return {
+                pickerValue:null,
+                pickerVisible:null
+            }
+        },
         mixins: [score],
-        name: "nowappoin"
+        name: "nowappoin",
+
+        methods: {
+            openPicker() {
+                this.$refs.picker.open();
+                console.log(111);
+                this.currentCheckedDate = registPicker
+            },
+            handleChange(value) {
+                let date = value.toString();
+                date = format(date,'yyyy-MM-dd')
+                if(this.currentCheckedDate=='registPicker'){
+                    this.registDate = date
+                }else if(this.currentCheckedDate=='bussiPicker'){
+                    this.bussiDate = date
+                }else{
+                    this.tranDate = date
+                }
+            },
+            handleConfirm(){
+                let a = this.pickerValue
+                // console.log(a.split(" ")) ;
+                this.zheng=this.formatDate(this.$refs.picker.value)
+                console.log(this.formatDate(this.$refs.picker.value))
+                // console.log(this.value) ;
+            },
+        }
     }
 
 </script>
@@ -256,9 +304,6 @@
     .footer_footer_msg_input {
         width: 70%;
     }
-    .footer_footer_msg_input input{
-        font-size: .29rem;
-    }
 
     .footer_footer_msg_left p {
         /*font-weight: 600;*/
@@ -282,7 +327,6 @@
         bottom: 0;
         background-color: orange;
         color: #fff;
-        font-size: .3rem;
 
     }
 
