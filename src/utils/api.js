@@ -164,14 +164,18 @@ function getActivity(params = {}) {
     return axios.post('/cliapi.php/Discount/activity', params)
 }
 
-//我的  车险
+//首页  车险
 function getClientRiskIndex(params = {}) {
     return axios.post('/cliapi.php/ClientRisk/index', params)
 }
 
-//我的  洗车
+//首页  洗车
 function getCarwashIndex(params = {}) {
     return axios.post('/cliapi.php/Carwash/index', params)
+}
+//首页  救援
+function getClientRescue(params = {}) {
+    return axios.post('/cliapi.php/ClientRescue/index', params)
 }
 
 
@@ -223,7 +227,7 @@ export {
     // getAddress,//获取当前位置
 
 
-// =======
+
   isExistCustomer,
   getCode,
   saveRegister,
@@ -260,6 +264,7 @@ export {
   changeHeadimg,//上传头像
   getCityList,//筛选城市
   getAddress,//获取当前位置
-// >>>>>>> 4163cec5bf57c0317a290a7583e2962631e0fb32
+    getClientRescue,//首页 救援
+
 
 }

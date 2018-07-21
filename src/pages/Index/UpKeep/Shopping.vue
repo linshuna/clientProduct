@@ -73,9 +73,18 @@
                     <button class="footer_top_button">全程246加门店</button>
                 </div>
                 <div class="footer_center">
-                    <p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">
-                    <p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">
-                    <p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">
+                    <!--<p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">-->
+                    <!--<p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">-->
+                    <!--<p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">-->
+                    <mt-navbar v-model="selected">
+                        <mt-tab-item @click.native="transmit(sortList,sortData)" id="1">{{sortData}}</mt-tab-item>
+                        <mt-tab-item @click.native="transmit(FilterList,filterData)" id="2">{{filterData}}</mt-tab-item>
+                        <mt-tab-item @click.native="transmit(kmList,kmData)" id="3">{{kmData}}</mt-tab-item>
+                    </mt-navbar>
+                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">
+                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">
+                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">
+                    <select-list v-if="showSelList" @selType="selType" :selItem='selItem' :selectList='selectList'></select-list>
                 </div>
             </div>
             <router-link to="/Index/UpKeep">
@@ -98,7 +107,7 @@
                             </div>
                             <p>营业时间: 08:00-18:00</p>
                             <p>广州市越秀区环市东路400号</p>
-                            <img src="../../../assets/images/navigation-icon.png" alt="" class="navigation">
+                            <img src="../../../assets/images/navigation-icon.png" alt="" class="navigation" @click="openMap">
                             <p class="footer_km">距离 8km</p>
                         </div>
 
@@ -111,11 +120,22 @@
 </template>
 
 <script>
-
+    import {SelectList} from 'mixins'
     export default {
         name: 'Shopping',
+        mixins:[SelectList],
         data() {
-            return {}
+            return {
+                selected: '1',
+                selItem: '越秀区', //子组件默认值
+                selectList: [], //子组件列表
+                sortList: [ '天河区','海珠区','白云区', '番禺区' ],
+                sortData: '推荐排序',
+                FilterList: ['汽车美容', '常规保养'],
+                filterData: '服务类型',
+                kmData:'离我最近',
+                showSelList: false,
+            }
         },
         created: function () {
 
@@ -123,7 +143,25 @@
         mounted: function () {
 
         },
-        methods: {}
+        methods: {
+            transmit(list,data){
+                this.selectList = list
+                this.selItem = data
+                this.showSelList = true
+            },
+            selType(item){
+                if (this.selected == '1') {
+                    this.sortData = item
+                } else {
+                    this.filterData = item
+                }
+                this.showSelList = false
+            },
+            openMap:function (long,lat,dist,address) {
+                window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
+
+            },
+        }
     }
 </script>
 
@@ -181,7 +219,8 @@
     }
 
     .btmArrow_c {
-        right: 0.24rem;
+        right: .45rem;
+        position: absolute;
     }
 
     .section_top {
@@ -324,5 +363,21 @@
         text-align: center;
         line-height: 0.48rem;
         color: #ff8003;
+    }
+    .mint-navbar {
+        /*background-color: #ff0;*/
+        border-bottom: 1px solid #eaeaea;
+        width: 100%;
+    }
+
+    .mint-tab-item {
+        /*margin: 0 .92rem;*/
+        height: .68rem;
+        padding: 12px 0;
+    }
+
+    .mint-navbar .mint-tab-item.is-selected {
+        border: none;
+        color: #fa9e15;
     }
 </style>

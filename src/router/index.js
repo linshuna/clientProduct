@@ -73,6 +73,8 @@ const PaymentFinsh = () => import('@/pages/UserCenter/PaymentFinsh')
 const HelpConent = () => import('@/pages/UserCenter/HelpConent')
 //我的帮助中心帮助
 const Shopping = () => import('@/pages/Index/UpKeep/Shopping')
+//我的 推荐好友
+const selfCenter = () => import('@/pages/Index/UpKeep/selfCenter')
 
 
 
@@ -141,6 +143,13 @@ export default new Router({
           component: Rescue,
           meta: {
             title: '救援'
+          },
+        },
+        {
+          path: '/Index/UpKeep/selfCenter',
+          component: selfCenter,
+          meta: {
+            title: '推荐好友'
           },
         },
       ]

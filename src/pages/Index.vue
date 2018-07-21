@@ -88,8 +88,9 @@
                                 </div>
                                 <p class="shop-address ellipsis fl">
                                     {{nearbyStores.province}}{{nearbyStores.city}}{{nearbyStores.dist}}{{nearbyStores.address}}</p>
-                                <img src="../assets/images/首页-导航icon.png" class="shop-dist-img" alt="">
+
                             </div>
+                            <img src="../assets/images/首页-导航icon.png" class="shop-dist-img" alt="" @click="openMap">
                             <div class="shop-dist">大约{{Math.round(nearbyStores.distance)}}m</div>
                         </li>
                     </ul>
@@ -144,7 +145,7 @@
             this._getRecommendList();
             this._getNearbyStores();
             let getStorage = this.$store.getters.getStorage;
-            if(getStorage){
+            if (getStorage) {
                 this.clientvid = this.$store.getters.getStorage.vid;
 
             }
@@ -178,6 +179,10 @@
                     console.log(res);
                     this.nearbyStores = res
                 })
+            },
+            openMap: function (long, lat, dist, address) {
+                window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
+
             },
 
 
@@ -355,10 +360,14 @@
                 width: 3rem;
                 font-size: 0.24rem;
             }
-            .shop-dist-img {
-                width: 0.32rem;
-                height: 0.32rem;
-            }
+
+        }
+        .shop-dist-img {
+            width: 0.32rem;
+            height: 0.32rem;
+            position: absolute;
+            right: .5rem;
+            top: .3rem;
         }
         .shop-dist {
             position: absolute;

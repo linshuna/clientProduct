@@ -161,7 +161,7 @@
                 birthday: this.birthday,
                 headimg: this.avatar
               }
-              // editorMyCenter().then(res=>{})
+              editorMyCenter().then(res=>{})
             }
         }
     }

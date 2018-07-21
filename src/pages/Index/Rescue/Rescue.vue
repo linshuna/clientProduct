@@ -1,132 +1,265 @@
 <template>
-  <div class="insurance-wrap mask">
-    <div class="nav">
-      <div class="nav_left">
-        <div class="nav_left_section_img">
-          <div class="nav_left_section">
-            <img src="http://img5.imgtn.bdimg.com/it/u=257481653,4212749074&fm=27&gp=0.jpg" alt="">
-            <p>24小时服务</p>
-          </div>
-        </div>
-      </div>
-      <div class="nav_right">
-        <div class="nav_right_section">
-          <div class="nav_right_top">
-            <p>广东粤宝宝马</p>
-            <p>地址:&nbsp;广州市白云区白云大道南..</p>
-          </div>
-          <div class="nav_right_footer">
-            <p>一键导航</p>
-            <p>拨打电话</p>
-          </div>
-        </div>
+    <div class="insurance-wrap mask">
+        <nav>
+            <div class="addres" @click="changeType(1)">
+                <p>{{addressname.name}}</p>
+                <img src="../../../assets/images/btmArrow.png" alt="">
+            </div>
+            <!--<p class="sort" @click="changeType(2)">默认排序-->
+            <!--<img src="../../../assets/images/btmArrow.png" alt="">-->
+            <!--</p>-->
+        </nav>
+        <pro-city-area v-bind:current.sync="currentPicker" v-bind:popupVisible.sync="popupVisible"
+                       @gainAllAddress="gainAllAddress"></pro-city-area>
+        <ul class="insurance">
+            <li v-for="item in StoreaList">
 
-      </div>
+                <div class="nav">
+                    <div class="nav_left">
+                        <div class="nav_left_section_img">
+                            <div class="nav_left_section">
+                                <img :src="item.pic" alt="">
+                                <p>{{item.shoptime}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav_right">
+                        <div class="nav_right_section">
+                            <div class="nav_right_top">
+                                <p>{{item.name}}</p>
+                                <p>{{item.province}}{{item.city}}{{item.dist}}{{item.addressExtends.slice(0,5)}}...</p>
+                            </div>
+                            <div class="nav_right_footer">
+                                <p @click="openMap(item.longitude,item.latitude,item.dist,item.addressExtends)">一键导航</p>
+                                <p><a :href="'tel:'+item.phone"></a>拨打电话</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
-  </div>
 </template>
 
 <script>
-  export default {
-    name: "Rescue",
-      data(){
-        return{
+    var jsonp = require('jsonp');
+    import {MessageBox} from 'mint-ui';
+    import {score} from "mixins";
+    import ProCityArea from 'components/ProCityArea.vue'
+    import {getAddress, getClientRescue} from '../../../utils/api.js'
 
-        }
-      },
-      methods(){
+    export default {
+        mixins: [score],
+        components: {
+            'pro-city-area': ProCityArea
+        },
+        name: "Rescue",
+        data() {
+            return {
+                longitude: '',
+                latitude: '',
+                StoreaList: [],
+                addressValue: 0,
+                addressName: '',
+                checkedName: '',
+                currentPicker: 1,
+                popupVisible: false,
+                addressname: {},
+                allAddress: [],
+                search: '',
+                sorts: 1,
+                city:'',
+                address:'',
+                addressExtends:''
+            }
+        },
 
-      },
-      mounted(){
+        methods: {
+            openMap: function (long, lat, dist, address) {
+                window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
 
-      }
-  }
+            },
+
+            changeType: function (value) {
+                this.currentPicker = value;
+                this.popupVisible = true;
+            },
+            _getClientRescue() {
+                getClientRescue({
+                    longitude: this.longitude,
+                    latitude: this.latitude,
+                    city: this.city,
+                    search:this.search,
+                    addressExtends:this.addressExtends
+                }).then(res => {
+                    this.StoreaList = res
+                    console.log(res);
+                })
+            },
+            onValuesChange: function () {     //监听滚动事件
+                let obj = document.getElementsByClassName('picker-slot-wrapper')[0];
+            },
+            gainAllAddress: function (value) { //获取确定地址
+                this.$set(this.addressname, 'name', value.area);
+                this.search = value.search;
+                // this.address = value.address
+                this._getClientRescue()
+            },
+            // gainSort: function(value){//默认排序
+            //     this.sorts = value;
+            //     this._getNearbyStorea()
+            // }
+
+        },
+        created() {
+            this._getClientRescue()
+        },
+        mounted() {
+            let _this = this;
+            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data) {
+                let res = data.result
+                let addressName = res.ad_info.city + " " + res.ad_info.district;
+                _this.$set(_this.addressname, 'name', addressName)
+                _this.$set(_this.addressname, 'longitude', res.location.lng)
+                _this.$set(_this.addressname, 'latitude', res.location.lat)
+                _this.$set(_this.addressname, 'code', res.ad_info.adcode)
+                console.log(res)
+            })
+
+        },
+        watch: {
+            addressname: function (newVal, oldVal) {
+                this.longitude = newVal.longitude
+                this.latitude = newVal.latitude
+                this.search = newVal.code;//默认的城市code
+
+                this._getClientRescue()
+            }
+        },
+    }
 
 </script>
+<style lang="scss" scoped>
+    .insurance {
+        margin-top: 1rem;
+        min-height: 15rem;
+        background-color: #efefef;
+    }
 
-<style scoped>
-  .nav {
-    display: flex;
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        width: 7.5rem;
+        height: 0.72rem;
+        background-color: #ffffff;
+        font-size: 0.28rem;
+        z-index: 10000;
+        img {
+            width: 0.22rem;
+            height: 0.12rem;
+            padding-left: .1rem;
+        }
+        .addres {
+            display: flex;
+            align-items: center;
+            padding-left: .2rem;
+        }
+        .city {
+            padding: 0 .1rem 0 .38rem;
+        }
+        .sort {
+            position: absolute;
+            right: .3rem;
+        }
+    }
 
-  }
+    .nav {
+        display: flex;
 
-  .nav_left {
-    width: 3.32rem;
-    height: 2.0rem;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-  }
+    }
 
-  .nav_left_section {
-    width: 2.64rem;
-    height: 1.46rem;
-    position: relative;
-    display: flex;
-  }
-  .nav_left_section img{
-      width: 100%;
-      height: 100%;
-  }
+    .nav_left {
+        width: 3.32rem;
+        height: 2.0rem;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+    }
 
-  .nav_left_section p {
-    width: 2.64rem;
-    height: 0.38rem;
-    background-color: #070707;
-    opacity: 0.5;
-    position: absolute;
-    bottom: 0;
-    text-align: center;
-    line-height: 0.38rem;
-    color: #fff;
-  }
+    .nav_left_section {
+        width: 2.64rem;
+        height: 1.46rem;
+        position: relative;
+        display: flex;
+    }
 
-  .nav_left_section_img {
-    margin-left: 0.34rem;
-  }
+    .nav_left_section img {
+        width: 100%;
+        height: 100%;
+    }
 
-  .nav_right {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-  }
+    .nav_left_section p {
+        width: 2.64rem;
+        height: 0.38rem;
+        background-color: #070707;
+        opacity: 0.5;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        line-height: 0.38rem;
+        color: #fff;
+    }
 
-  .nav_right_section {
-    height: 1.46rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 0.16rem;
-  }
+    .nav_left_section_img {
+        margin-left: 0.34rem;
+    }
 
-  .nav_right_footer {
-    display: flex;
-  }
+    .nav_right {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+    }
 
-  .nav_right_top p:first-child {
-    color: #626262;
-    font-size: 0.32rem;
-  }
+    .nav_right_section {
+        height: 1.46rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 0.16rem;
+    }
 
-  .nav_right_top p:last-child {
-    font-size: 0.28rem;
-    color: #9f9f9f;
-  }
+    .nav_right_footer {
+        display: flex;
+    }
 
-  .nav_right_footer p {
-    width: 1.82rem;
-    height: 0.48rem;
-    background-color: #fff;
-    border-radius: 0.06rem;
-    color: #ff8003;
-    text-align: center;
-    line-height: 0.48rem;
-    border: 1px solid #ff8003;
-  }
+    .nav_right_top p:first-child {
+        color: #626262;
+        font-size: 0.32rem;
+    }
 
-  .nav_right_footer p:first-child {
-    margin-right: 0.16rem;
-  }
+    .nav_right_top p:last-child {
+        font-size: 0.28rem;
+        color: #9f9f9f;
+    }
+
+    .nav_right_footer p {
+        width: 1.82rem;
+        height: 0.48rem;
+        background-color: #fff;
+        border-radius: 0.06rem;
+        color: #ff8003;
+        text-align: center;
+        line-height: 0.48rem;
+        border: 1px solid #ff8003;
+    }
+
+    .nav_right_footer p:first-child {
+        margin-right: 0.16rem;
+    }
 
 </style>
