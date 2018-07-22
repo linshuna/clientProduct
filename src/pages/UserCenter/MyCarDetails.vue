@@ -17,8 +17,16 @@
         </div>
         <ul class="details-bd">
           <li class="cell">
+            <p class="left">车架号</p>
+            <p class="right">1sfsfsdf124213123</p>
+          </li>
+          <li class="cell">
             <p class="left">注册时间</p>
             <p class="right">{{carMsg.regtime | noDataFilter}}</p>
+          </li>
+          <li class="cell">
+            <p class="left">注册时间</p>
+            <p class="right">47.88万</p>
           </li>
           <!--<li class="cell">
             <p class="left">车价</p>

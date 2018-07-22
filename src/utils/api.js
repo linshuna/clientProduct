@@ -177,6 +177,10 @@ function getCarwashIndex(params = {}) {
 function getClientRescue(params = {}) {
     return axios.post('/cliapi.php/ClientRescue/index', params)
 }
+//我的  订单
+function getOrderIndex(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new', params)
+}
 
 
 //车辆型号
@@ -265,6 +269,6 @@ export {
   getCityList,//筛选城市
   getAddress,//获取当前位置
     getClientRescue,//首页 救援
-
+    getOrderIndex,//我的 订单
 
 }

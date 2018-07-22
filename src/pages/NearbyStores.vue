@@ -70,7 +70,7 @@
                 StoreaList: [],
                 pageData: {},
                 addressValue:0,
-                addressName:'',
+                // addressName:'',
                 checkedName:'',
                 currentPicker:1,
                 popupVisible: false,
@@ -90,14 +90,14 @@
           jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data){
             let res = data.result
             let addressName = res.ad_info.city+" "+res.ad_info.district;
-            _this.$set(_this.addressname,'name',addressName)
+            _this.$set(_this.addressname,'name',addressName)        //获取地理位置
             _this.$set(_this.addressname,'longitude',res.location.lng)
             _this.$set(_this.addressname,'latitude',res.location.lat)
             _this.$set(_this.addressname,'code',res.ad_info.adcode)
             console.log(res)
           })
         },
-        watch:{
+        watch:{     //监听data变量
           addressname: function(newVal,oldVal){
             this.longitude = newVal.longitude
             this.latitude = newVal.latitude
@@ -106,7 +106,7 @@
           }
         },
         methods: {
-            _getNearbyStorea() {
+            _getNearbyStorea() {        //获取接口经纬度
                 getStoreList({
                     longitude: this.longitude,
                     latitude: this.latitude,
@@ -123,7 +123,7 @@
             onValuesChange: function(){
               let obj = document.getElementsByClassName('picker-slot-wrapper')[0];
             },
-            gainAllAddress:function(value){
+            gainAllAddress:function(value){     //点击获取address位置
               this.$set(this.addressname,'name',value.area);
               this.search = value.search;
               this._getNearbyStorea()

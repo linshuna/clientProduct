@@ -43,8 +43,8 @@
 </template>
 
 <script>
-    var jsonp = require('jsonp');
-    import {MessageBox} from 'mint-ui';
+    var jsonp = require('jsonp');       //地址跨域
+    // import {MessageBox} from 'mint-ui';
     import {score} from "mixins";
     import ProCityArea from 'components/ProCityArea.vue'
     import {getAddress, getClientRescue} from '../../../utils/api.js'

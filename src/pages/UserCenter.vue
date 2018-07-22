@@ -67,7 +67,7 @@
                     'linkUrl': '',
                     // 'linkUrl': `/user/selfCenter`,
                     'icon': require("../assets/images/我的-rmb_20180721102839.png"),
-                    'linkName': '我的'
+                    'linkName': '我的车账单'
                 },{
                     'linkUrl': `/Index/UpKeep/selfCenter`,
                     'icon': require("../assets/images/我的-推荐好友icon.png"),
