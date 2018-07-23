@@ -3,14 +3,14 @@
         <div class="Shopping">
             <div class="nav_swipe">
                 <mt-swipe :auto="0">
-                    <mt-swipe-item><img
-                            src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg"
-                            alt=""></mt-swipe-item>
-                    <mt-swipe-item><img src="http://p2.gexing.com/G1/M00/14/03/rBACE1aTbCCSTsY5AAEIjDXspWQ96.jpeg"
-                                        alt="">
+                    <!--<mt-swipe-item><img-->
+                    <!--src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg"-->
+                    <!--alt=""></mt-swipe-item>-->
+                    <mt-swipe-item v-for="(item,index) in bannerList " :key="index">
+                        <img :src="item.pic" alt="">
                     </mt-swipe-item>
-                    <mt-swipe-item><img src="http://img.zcool.cn/community/017fcc5535f1710000001e3101c50c.jpg" alt="">
-                    </mt-swipe-item>
+                    <!--<mt-swipe-item><img src="http://img.zcool.cn/community/017fcc5535f1710000001e3101c50c.jpg" alt="">-->
+                    <!--</mt-swipe-item>-->
                 </mt-swipe>
             </div>
             <div class="section">
@@ -19,50 +19,13 @@
                 </div>
                 <div class="section_footer_ulaa">
                     <ul class="section_footer_ul">
-                        <li>
+                        <li v-for="(item,index) in RecommendList " :key="index">
                             <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
+                                <img :src="item.pic" alt="" class="section_footer_img">
+                                <p>{{item.name}}</p>
+                                <p>¥{{item.salesprice}}</p>
                             </div>
                         </li>
-                        <li>
-                            <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="section_footer">
-                                <img src="http://img3.redocn.com/tupian/20160108/lvsehuahuizhizhangfanyexiaoguobeijingsucai_5728265.jpg" alt="" class="section_footer_img">
-                                <p>米其林轮胎</p>
-                                <p>¥5040.00</p>
-                            </div>
-                        </li>
-
-
 
                     </ul>
                 </div>
@@ -72,47 +35,53 @@
                 <div class="footer_top">
                     <button class="footer_top_button">全程246加门店</button>
                 </div>
-                <div class="footer_center">
-                    <!--<p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">-->
-                    <!--<p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">-->
-                    <!--<p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">-->
-                    <mt-navbar v-model="selected">
-                        <mt-tab-item @click.native="transmit(sortList,sortData)" id="1">{{sortData}}</mt-tab-item>
-                        <mt-tab-item @click.native="transmit(FilterList,filterData)" id="2">{{filterData}}</mt-tab-item>
-                        <mt-tab-item @click.native="transmit(kmList,kmData)" id="3">{{kmData}}</mt-tab-item>
-                    </mt-navbar>
-                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">
-                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">
-                    <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">
-                    <select-list v-if="showSelList" @selType="selType" :selItem='selItem' :selectList='selectList'></select-list>
-                </div>
+                <!--<div class="footer_center">-->
+                <!--&lt;!&ndash;<p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">&ndash;&gt;-->
+                <!--&lt;!&ndash;<p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">&ndash;&gt;-->
+                <!--&lt;!&ndash;<p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">&ndash;&gt;-->
+                <!--<mt-navbar v-model="selected">-->
+                <!--<mt-tab-item @click.native="transmit(sortList,sortData)" id="1">{{sortData}}</mt-tab-item>-->
+                <!--<mt-tab-item @click.native="transmit(FilterList,filterData)" id="2">{{filterData}}</mt-tab-item>-->
+                <!--<mt-tab-item @click.native="transmit(kmList,kmData)" id="3">{{kmData}}</mt-tab-item>-->
+                <!--</mt-navbar>-->
+                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">-->
+                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">-->
+                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">-->
+                <!--<select-list v-if="showSelList" @selType="selType" :selItem='selItem'-->
+                <!--:selectList='selectList'></select-list>-->
+                <!--</div>-->
             </div>
             <router-link to="/Index/UpKeep">
-                <div class="footer_footer">
-                    <div class="footer_footer_nav">
-                        <p>NO.1 微位科技服务店 (越秀店)</p><img src="../../../assets/images/rightArrow.png" alt=""
-                                                      class="rightArrow">
-                    </div>
-
-                    <div class="footer_footer_section">
-                        <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt=""
-                             class="footer_footer_section_img">
-                        <div class="footer_footer_section_right">
-                            <p>主修车型: 奔驰 宝马 奥迪</p>
-                            <div class="footer_fsection">
-                                <div class="footer_footer_section_right_p"><p>订单</p>
-                                    <p>2589</p></div>
-                                <div class="footer_footer_section_right_pb"><p>已售</p>
-                                    <p>11463</p></div>
+                <ul>
+                    <li>
+                        <div class="footer_footer" v-for="item in ShopStoreList">
+                            <div class="footer_footer_nav">
+                                <p>{{item.name}}</p><img src="../../../assets/images/rightArrow.png" alt=""
+                                                         class="rightArrow">
                             </div>
-                            <p>营业时间: 08:00-18:00</p>
-                            <p>广州市越秀区环市东路400号</p>
-                            <img src="../../../assets/images/navigation-icon.png" alt="" class="navigation" @click="openMap">
-                            <p class="footer_km">距离 8km</p>
-                        </div>
 
-                    </div>
-                </div>
+                            <div class="footer_footer_section">
+                                <img src="http://img4.imgtn.bdimg.com/it/u=2136180122,282910574&fm=27&gp=0.jpg" alt=""
+                                     class="footer_footer_section_img">
+                                <div class="footer_footer_section_right">
+                                    <p>主修车型:{{item.carname}}</p>
+                                    <div class="footer_fsection">
+                                        <!--<div class="footer_footer_section_right_p"><p>订单</p>-->
+                                        <!--<p>2589</p>-->
+                                        <!--</div>-->
+                                        <div class="footer_footer_section_right_pb"><p>已售</p>
+                                            <p>{{item.sale}}</p></div>
+                                    </div>
+                                    <p>营业时间:{{item.storeTime}}</p>
+                                    <p>{{item.addressExtends.slice(0,11)}}...</p>
+                                    <img src="../../../assets/images/navigation-icon.png" alt="" class="navigation"
+                                         @click="openMap(item.longitude,item.latitude,item.dist,item.addressExtends)">
+                                    <p class="footer_km">距离 {{Math.round(item.distance)}}km</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </router-link>
 
         </div>
@@ -120,48 +89,136 @@
 </template>
 
 <script>
+    var jsonp = require('jsonp');       //地址跨域
+    import {getShopRecommend, getShopStore, getShopBanner} from '../../../utils/api.js'
     import {SelectList} from 'mixins'
+
     export default {
         name: 'Shopping',
-        mixins:[SelectList],
+        mixins: [SelectList],
         data() {
             return {
                 selected: '1',
                 selItem: '越秀区', //子组件默认值
                 selectList: [], //子组件列表
-                sortList: [ '天河区','海珠区','白云区', '番禺区' ],
+                sortList: ['天河区', '海珠区', '白云区', '番禺区'],
                 sortData: '推荐排序',
                 FilterList: ['汽车美容', '常规保养'],
                 filterData: '服务类型',
-                kmData:'离我最近',
+                kmData: '离我最近',
                 showSelList: false,
+                bannerList: [],
+                ShopStoreList: [],
+                RecommendList: [],
+
+
+                longitude: '',
+                latitude: '',
+                StoreaList: [],
+                addressValue: 0,
+                addressName: '',
+                checkedName: '',
+                currentPicker: 1,
+                addressname: {},
+                allAddress: [],
+                search: '',
+                sorts: 1,
+                city: '',
+                // address: '',
+                addressExtends:''
             }
         },
         created: function () {
-
+            let _this = this;
+            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data) {
+                let res = data.result
+                let addressName = res.ad_info.city + " " + res.ad_info.district;
+                _this.$set(_this.addressname, 'name', addressName)
+                _this.$set(_this.addressname, 'longitude', res.location.lng)
+                _this.$set(_this.addressname, 'latitude', res.location.lat)
+                _this.$set(_this.addressname, 'code', res.ad_info.adcode)
+                console.log(res)
+            })
         },
         mounted: function () {
+            this.$nextTick(function () {
+                this._getShopBanner()
+                this._getShopRecommend()
+                // this._getShopStore()
+            })
 
+            // this._getIndexBanner()
         },
-        methods: {
-            transmit(list,data){
-                this.selectList = list
-                this.selItem = data
-                this.showSelList = true
-            },
-            selType(item){
-                if (this.selected == '1') {
-                    this.sortData = item
-                } else {
-                    this.filterData = item
-                }
-                this.showSelList = false
-            },
-            openMap:function (long,lat,dist,address) {
-                window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
+        watch: {    //监听data变量
+            addressname: function (newVal, oldVal) {
+                this.longitude = newVal.longitude
+                this.latitude = newVal.latitude
+                this.search = newVal.code;//默认的城市code
 
+                this._getShopStore()
+            }
             },
-        }
+            methods: {
+                transmit(list, data) {
+                    this.selectList = list
+                    this.selItem = data
+                    this.showSelList = true
+                },
+                selType(item) {
+                    if (this.selected == '1') {
+                        this.sortData = item
+                    } else {
+                        this.filterData = item
+                    }
+                    this.showSelList = false
+                },
+
+                _getShopBanner() {
+                    getShopBanner().then(res => {
+                        this.bannerList = res
+                        // console.log(res);
+                    })
+                },
+                _getShopRecommend() {
+                    getShopRecommend().then(res => {
+                        this.RecommendList = res
+                        // console.log(res);
+                    })
+                },
+
+                _getShopStore() {
+                    getShopStore({
+                        longitude: this.longitude,
+                        latitude: this.latitude,
+                        city: this.city,
+                        search: this.search,
+                        address: this.addressExtends
+                    }).then(res => {
+                        this.ShopStoreList = res.store
+                        console.log(res.store);
+                    })
+                },
+
+
+                openMap: function (long, lat, dist, address) {
+                    window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
+
+                },
+                // gainAllAddress: function (value) { //获取确定地址
+                //     this.$set(this.addressname, 'name', value.area);
+                //     this.search = value.search;
+                //     // this.address = value.address
+                //     this._getShopStore()
+                // },
+
+                // _getIndexBanner() {
+                //     getIndexBanner().then(res => {
+                //         this.bannerList = res
+                //         console.log(res);
+                //     })
+                // },
+            }
+
     }
 </script>
 
@@ -337,7 +394,7 @@
     }
 
     .footer_footer_section_right_pb {
-        margin-left: 0.1rem;
+        /*margin-left: 0.1rem;*/
     }
 
     .footer_fsection {
@@ -364,6 +421,7 @@
         line-height: 0.48rem;
         color: #ff8003;
     }
+
     .mint-navbar {
         /*background-color: #ff0;*/
         border-bottom: 1px solid #eaeaea;

@@ -27,10 +27,10 @@
                         <div class="nav_right_section">
                             <div class="nav_right_top">
                                 <p>{{item.name}}</p>
-                                <p>{{item.province}}{{item.city}}{{item.dist}}{{item.addressExtends.slice(0,5)}}...</p>
+                                <p>{{item.province}}{{item.city}}{{item.dist}}{{item.address.slice(0,5)}}...</p>
                             </div>
                             <div class="nav_right_footer">
-                                <p @click="openMap(item.longitude,item.latitude,item.dist,item.addressExtends)">一键导航</p>
+                                <p @click="openMap(item.longitude,item.latitude,item.dist,item.address)">一键导航</p>
                                 <p><a :href="'tel:'+item.phone"></a>拨打电话</p>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                     latitude: this.latitude,
                     city: this.city,
                     search:this.search,
-                    addressExtends:this.addressExtends
+                    address:this.address
                 }).then(res => {
                     this.StoreaList = res
                     console.log(res);

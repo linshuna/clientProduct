@@ -181,6 +181,18 @@ function getClientRescue(params = {}) {
 function getOrderIndex(params = {}) {
     return axios.post('/cliapi.php/Order/index_new', params)
 }
+//首頁 商城廣告
+function getShopBanner(params = {}) {
+    return axios.post('/cliapi.php/Shop/banner', params)
+}
+//首頁 商城推薦
+function getShopRecommend(params = {}) {
+    return axios.get('/cliapi.php/Shop/recommend', params)
+}
+//首頁 商城门店
+function getShopStore(params = {}) {
+    return axios.post('/cliapi.php/Shop/shop_store', params)
+}
 
 
 //车辆型号
@@ -264,11 +276,15 @@ export {
   getActivity,//首页  特惠
   getClientRiskIndex,//首页 车险
     getCarwashIndex,//首页 洗车
+    getClientRescue,//首页 救援
+    getOrderIndex,//我的 订单
+    getShopBanner,//首頁 商城廣告
+    getShopRecommend,//首页 商城推薦
+    getShopStore,//首页 商城门店
+
 
   changeHeadimg,//上传头像
   getCityList,//筛选城市
   getAddress,//获取当前位置
-    getClientRescue,//首页 救援
-    getOrderIndex,//我的 订单
 
 }
