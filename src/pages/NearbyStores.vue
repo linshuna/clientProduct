@@ -30,7 +30,7 @@
                     <img :src="item.pic" alt=""
                          class="store-img fl">
                     <div class="store-info-box fl">
-                        <p class="store-address">{{item.province}}{{item.city}}{{item.dist}}{{item.address}}</p>
+                        <p class="store-address">{{item.province}}{{item.city}}{{item.dist}}{{item.address.slice(0,5)}}...</p>
                         <div class="star-box">
                             <score-lv :stars='item.evaluateShow-0'></score-lv>
 

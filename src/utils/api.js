@@ -193,6 +193,42 @@ function getShopRecommend(params = {}) {
 function getShopStore(params = {}) {
     return axios.post('/cliapi.php/Shop/shop_store', params)
 }
+//我的 钱包
+function getWalletIndex(params = {}) {
+    return axios.post('/cliapi.php/Wallet/index', params)
+}
+//我的 钱包消费
+function getWalletAmountlog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/amount_log', params)
+}
+//我的 钱包消费
+function getWalletRechargelog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/recharge_log', params)
+}
+//我的 钱包分红
+function getWalletBonuslog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/bonus_log', params)
+}
+//商城 列表
+function getGoodsBuy(params = {}) {
+    return axios.post('/cliapi.php/Goods/goods_buy', params)
+}
+//我的 订单带付款
+function getOrderIndexNew(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=1', params)
+}
+//我的 订单已付款
+function getOrderIndexOld(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=2', params)
+}
+//我的 订单已核销
+function getOrderIndexThree(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=3', params)
+}
+//我的 订单已过期
+function getOrderIndexFour(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=4', params)
+}
 
 
 //车辆型号
@@ -287,4 +323,14 @@ export {
   getCityList,//筛选城市
   getAddress,//获取当前位置
 
+    getWalletIndex,//我的 钱包
+    getWalletAmountlog,//我的 钱包消费记录
+    getWalletRechargelog,//我的 钱包充值
+    getWalletBonuslog,//我的  钱包分红
+    getGoodsBuy,//我的 列表
+
+    getOrderIndexNew,//我的 订单代付款
+    getOrderIndexOld,//我的 订单已付款
+    getOrderIndexThree,//我的 订单已核销
+    getOrderIndexFour,//我的 订单已过期
 }

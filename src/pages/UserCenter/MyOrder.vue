@@ -39,7 +39,7 @@
 
             <mt-tab-container-item id="2">
                 <ul class="order-list">
-                    <li class="clearfix" v-for="item in getOrderIndexList">
+                    <li class="clearfix" v-for="item in getOrderIndexNew">
                         <div class="order-top">
                             <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
                                  class="fl goods-img">
@@ -67,7 +67,7 @@
             </mt-tab-container-item>
             <mt-tab-container-item id="3">
                 <ul class="order-list">
-                    <li class="clearfix" v-for="item in getOrderIndexList">
+                    <li class="clearfix" v-for="item in OrderIndexOldList">
                         <div class="order-top">
                             <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
                                  class="fl goods-img">
@@ -95,7 +95,7 @@
             </mt-tab-container-item>
             <mt-tab-container-item id="4">
                 <ul class="order-list">
-                    <li class="clearfix" v-for="item in getOrderIndexList">
+                    <li class="clearfix" v-for="item in OrderIndexThree">
                         <div class="order-top">
                             <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
                                  class="fl goods-img">
@@ -123,7 +123,7 @@
             </mt-tab-container-item>
             <mt-tab-container-item id="5">
                 <ul class="order-list">
-                    <li class="clearfix" v-for="item in getOrderIndexList">
+                    <li class="clearfix" v-for="item in OrderIndexFour">
                         <div class="order-top">
                             <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
                                  class="fl goods-img">
@@ -154,14 +154,18 @@
 
 </template>
 <script>
-    import {getOrderIndex} from "../../utils/api";
+    import {getOrderIndex, getOrderIndexNew, getOrderIndexOld, getOrderIndexThree,getOrderIndexFour} from "../../utils/api";
     // import { getIndexData } from '../utils/api.js'
     export default {
         name: "Appointment",
         data() {
             return {
-                selected: 1,
-                getOrderIndexList: []
+                selected: '1',
+                getOrderIndexList: [],
+                getOrderIndexNew: [],
+                OrderIndexOldList: [],
+                OrderIndexThree: [],
+                OrderIndexFour:[]
             };
         },
         created() {
@@ -169,14 +173,58 @@
         },
         mounted() {
             this._getOrderIndex()
+            this._getOrderIndexNew()
+            this._getOrderIndexOld()
+            this._getOrderIndexThree()
+            this._OrderIndexFour()
         },
         methods: {
-            _getOrderIndex() {
+            _getOrderIndex() {      //全部
+
                 getOrderIndex().then(res => {
-                    this.getOrderIndexList = res
-                    console.log(res);
+                    if (res && !res.errorCode) {
+                        this.getOrderIndexList = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexNew() {    //待付款
+
+                getOrderIndexNew().then(res => {
+                    if (res && !res.errorCode) {
+                        this.getOrderIndexNew = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexOld() {
+
+                getOrderIndexOld().then(res => {
+                    if (res && !res.errorCode) {
+                        this.OrderIndexOldList = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexThree() {
+                getOrderIndexThree().then(res => {
+                    if (res && !res.errorCode) {
+                        this.OrderIndexThree = res
+                        console.log(res);
+                    }
+                })
+            },
+            _getOrderIndexFour(){
+                getOrderIndexFour().then(res =>{
+                    if(res && res.errorCode) {
+                        this.OrderIndexFour = res
+                    }
                 })
             }
+
         }
     };
 

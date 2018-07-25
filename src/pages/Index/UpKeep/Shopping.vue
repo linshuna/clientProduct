@@ -33,23 +33,36 @@
             </div>
             <div class="footer">
                 <div class="footer_top">
-                    <button class="footer_top_button">全程246加门店</button>
+                    <button class="footer_top_button">全城246家门店</button>
                 </div>
-                <!--<div class="footer_center">-->
-                <!--&lt;!&ndash;<p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">&ndash;&gt;-->
+                <div class="footer_center">
+                    <mt-navbar v-model="selected">
+                        <mt-tab-item id="1">
+                            <p @click="changeType(1)">{{addressname.name}}</p>
+                        </mt-tab-item>
+                        <mt-tab-item id="2" >
+                            <p @click="changeType(3)">{{standard}}</p>
+                        </mt-tab-item>
+                        <mt-tab-item id="3" @click="changeType(3)">
+                            <p @click="changeType(2)">{{sortsText}}</p>
+                        </mt-tab-item>
+                    </mt-navbar>
+                    <pro-city-area v-bind:current.sync="currentPicker" v-bind:popupVisible.sync="popupVisible" @gainAllAddress="gainAllAddress" @gainSort="gainSort" @gainProject="gainProject"></pro-city-area>
+
+                    <!--<p>越秀区</p> <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">-->
+                <!--<p>服务类型</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">-->
+                <!--<p>离我最近</p><img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">-->
                 <!--<mt-navbar v-model="selected">-->
                 <!--<mt-tab-item @click.native="transmit(sortList,sortData)" id="1">{{sortData}}</mt-tab-item>-->
                 <!--<mt-tab-item @click.native="transmit(FilterList,filterData)" id="2">{{filterData}}</mt-tab-item>-->
                 <!--<mt-tab-item @click.native="transmit(kmList,kmData)" id="3">{{kmData}}</mt-tab-item>-->
                 <!--</mt-navbar>-->
-                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">-->
-                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">-->
-                <!--<img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">-->
-                <!--<select-list v-if="showSelList" @selType="selType" :selItem='selItem'-->
-                <!--:selectList='selectList'></select-list>-->
-                <!--</div>-->
+                <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_a">
+                <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_b">
+                <img src="../../../assets/images/btmArrow.png" alt="" class="btmArrow_c">
+                <select-list v-if="showSelList" @selType="selType" :selItem='selItem'
+                :selectList='selectList'></select-list>
+                </div>
             </div>
             <router-link to="/Index/UpKeep">
                 <ul>
@@ -73,7 +86,7 @@
                                             <p>{{item.sale}}</p></div>
                                     </div>
                                     <p>营业时间:{{item.storeTime}}</p>
-                                    <p>{{item.addressExtends.slice(0,11)}}...</p>
+                                    <p>{{item.province}}{{item.city}}{{item.dist}}{{item.address.slice(0,3)}}...</p>
                                     <img src="../../../assets/images/navigation-icon.png" alt="" class="navigation"
                                          @click="openMap(item.longitude,item.latitude,item.dist,item.addressExtends)">
                                     <p class="footer_km">距离 {{Math.round(item.distance)}}km</p>
@@ -92,20 +105,25 @@
     var jsonp = require('jsonp');       //地址跨域
     import {getShopRecommend, getShopStore, getShopBanner} from '../../../utils/api.js'
     import {SelectList} from 'mixins'
+    import ProCityArea from 'components/ProCityArea.vue'
 
     export default {
         name: 'Shopping',
         mixins: [SelectList],
+        components:{
+            'pro-city-area': ProCityArea
+        },
         data() {
             return {
                 selected: '1',
-                selItem: '越秀区', //子组件默认值
-                selectList: [], //子组件列表
-                sortList: ['天河区', '海珠区', '白云区', '番禺区'],
-                sortData: '推荐排序',
-                FilterList: ['汽车美容', '常规保养'],
-                filterData: '服务类型',
-                kmData: '离我最近',
+                // selItem: '越秀区', //子组件默认值
+                // selectList: [], //子组件列表
+                // sortList: ['天河区', '海珠区', '白云区', '番禺区'],
+
+                // FilterList: ['汽车美容', '常规保养'],
+                // filterData: '服务类型',
+                // kmData: '离我最近',
+                popupVisible: false,
                 showSelList: false,
                 bannerList: [],
                 ShopStoreList: [],
@@ -124,27 +142,30 @@
                 search: '',
                 sorts: 1,
                 city: '',
+                sortsText: '默认排序',
+                standard: '商品类型',
                 // address: '',
                 addressExtends:''
             }
         },
         created: function () {
-            let _this = this;
-            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data) {
-                let res = data.result
-                let addressName = res.ad_info.city + " " + res.ad_info.district;
-                _this.$set(_this.addressname, 'name', addressName)
-                _this.$set(_this.addressname, 'longitude', res.location.lng)
-                _this.$set(_this.addressname, 'latitude', res.location.lat)
-                _this.$set(_this.addressname, 'code', res.ad_info.adcode)
-                console.log(res)
-            })
+
         },
         mounted: function () {
+            let _this = this;
+            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data){
+                let res = data.result
+                let name = res.ad_info.city+" "+res.ad_info.district;
+                _this.$set(_this.addressname,'name',name)
+                _this.$set(_this.addressname,'longitude',res.location.lng)
+                _this.$set(_this.addressname,'latitude',res.location.lat)
+                _this.$set(_this.addressname,'code',res.ad_info.adcode)
+                this._getShopStore()
+            })
             this.$nextTick(function () {
                 this._getShopBanner()
                 this._getShopRecommend()
-                // this._getShopStore()
+
             })
 
             // this._getIndexBanner()
@@ -159,6 +180,7 @@
             }
             },
             methods: {
+
                 transmit(list, data) {
                     this.selectList = list
                     this.selItem = data
@@ -204,19 +226,26 @@
                     window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
 
                 },
-                // gainAllAddress: function (value) { //获取确定地址
-                //     this.$set(this.addressname, 'name', value.area);
-                //     this.search = value.search;
-                //     // this.address = value.address
-                //     this._getShopStore()
-                // },
-
-                // _getIndexBanner() {
-                //     getIndexBanner().then(res => {
-                //         this.bannerList = res
-                //         console.log(res);
-                //     })
-                // },
+                changeType:function(value){
+                    this.currentPicker = value;
+                    this.popupVisible = true;
+                },
+                gainAllAddress:function(value){
+                    this.$set(this.addressname,'name',value.area);
+                    this.search = value.search;
+                    this._getShopStore()
+                },
+                gainSort: function(value){
+                    this.sorts = value.value;
+                    this.sortsText = value.name;
+                    this._getShopStore()
+                },
+                gainProject: function(value){//洗车项目
+                    console.log(value)
+                    this.project_id = value.value;
+                    this.standard = value.name;
+                    this._getShopStore()
+                },
             }
 
     }
@@ -268,7 +297,7 @@
     }
 
     .btmArrow_a {
-        left: 1.88rem;
+        left: 2.3rem;
     }
 
     .btmArrow_b {
