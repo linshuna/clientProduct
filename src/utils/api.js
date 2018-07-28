@@ -254,11 +254,12 @@ function payRecharge(params = {}) {
 }
 
 
-//我的  车险
+//首页  车险
 function getClientRiskIndex(params = {}) {
     return axios.post('/cliapi.php/ClientRisk/index', params)
 }
 
+<<<<<<< HEAD
 //首頁 商城廣告
 function getShopBanner(params = {}) {
   return axios.post('/cliapi.php/Shop/banner', params)
@@ -350,6 +351,69 @@ function carwashOrderList(params = {}) {
 function carwashOrderCancel(params = {}) { 
   return axios.post('/cliapi.php/Carwash/cancels', params)
 }
+=======
+//首页  洗车
+function getCarwashIndex(params = {}) {
+    return axios.post('/cliapi.php/Carwash/index', params)
+}
+//首页  救援
+function getClientRescue(params = {}) {
+    return axios.post('/cliapi.php/ClientRescue/index', params)
+}
+//我的  订单
+function getOrderIndex(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new', params)
+}
+//首頁 商城廣告
+function getShopBanner(params = {}) {
+    return axios.post('/cliapi.php/Shop/banner', params)
+}
+//首頁 商城推薦
+function getShopRecommend(params = {}) {
+    return axios.get('/cliapi.php/Shop/recommend', params)
+}
+//首頁 商城门店
+function getShopStore(params = {}) {
+    return axios.post('/cliapi.php/Shop/shop_store', params)
+}
+//我的 钱包
+function getWalletIndex(params = {}) {
+    return axios.post('/cliapi.php/Wallet/index', params)
+}
+//我的 钱包消费
+function getWalletAmountlog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/amount_log', params)
+}
+//我的 钱包消费
+function getWalletRechargelog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/recharge_log', params)
+}
+//我的 钱包分红
+function getWalletBonuslog(params = {}) {
+    return axios.post('/cliapi.php/Wallet/bonus_log', params)
+}
+//商城 列表
+function getGoodsBuy(params = {}) {
+    return axios.post('/cliapi.php/Goods/goods_buy', params)
+}
+//我的 订单带付款
+function getOrderIndexNew(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=1', params)
+}
+//我的 订单已付款
+function getOrderIndexOld(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=2', params)
+}
+//我的 订单已核销
+function getOrderIndexThree(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=3', params)
+}
+//我的 订单已过期
+function getOrderIndexFour(params = {}) {
+    return axios.post('/cliapi.php/Order/index_new?state=4', params)
+}
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
 
 //车辆型号
 function bandList(params = {}) {
@@ -367,6 +431,44 @@ function carYearPl(params = {}) {
 
 
 export {
+<<<<<<< HEAD
+=======
+    // isExistCustomer,
+    // getCode,
+    // saveRegister,
+    // login,
+    // forget,
+    // getIndexBanner,
+    // getRecommendList,
+    // getNearbyStores,
+    //
+    // carList,//车辆列表
+    // addCar,//新增车辆
+    // delCar,//删除车辆
+    // setCarDefault,//设备默认车辆
+    // carMsg,//具体车辆信息
+    // bandList,//车辆型号
+    // carModules,//车辆模型
+    // carYearPl,//车系
+    //
+    // getEvaluate, //我的评价
+    // getIndex, //我的首页
+    // getMyCenter, //我的 个人中心
+    // getHelpCenter,// 我的 帮助中心
+    // getHelpDetails,//我的 帮助中心
+    // getAppointShop,// 预约 立即预约
+    // getAppointConent,// 我的 我的预约
+    // getActivity,//首页  特惠
+    // getClientRiskIndex,//首页 车险
+    // getCarwashIndex,//首页 洗车
+    //
+    // changeHeadimg,//上传头像
+    // getCityList,//筛选城市
+    // getAddress,//获取当前位置
+
+
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
   isExistCustomer,
   getCode,
   saveRegister,
@@ -416,6 +518,7 @@ export {
   recharge,//充值优惠
   payRecharge,//充值接口
   getClientRiskIndex,//首页 车险
+<<<<<<< HEAD
   getClientRescue,//首页 救援
   
   getCarwashIndex,//首页 洗车
@@ -453,4 +556,28 @@ export {
   getWalletAmountlog,//我的 钱包消费记录
   getWalletRechargelog,//我的 钱包充值
   getWalletBonuslog,//我的  钱包分红
+=======
+    getCarwashIndex,//首页 洗车
+    getClientRescue,//首页 救援
+    getOrderIndex,//我的 订单
+    getShopBanner,//首頁 商城廣告
+    getShopRecommend,//首页 商城推薦
+    getShopStore,//首页 商城门店
+
+
+  changeHeadimg,//上传头像
+  getCityList,//筛选城市
+  getAddress,//获取当前位置
+
+    getWalletIndex,//我的 钱包
+    getWalletAmountlog,//我的 钱包消费记录
+    getWalletRechargelog,//我的 钱包充值
+    getWalletBonuslog,//我的  钱包分红
+    getGoodsBuy,//我的 列表
+
+    getOrderIndexNew,//我的 订单代付款
+    getOrderIndexOld,//我的 订单已付款
+    getOrderIndexThree,//我的 订单已核销
+    getOrderIndexFour,//我的 订单已过期
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
 }

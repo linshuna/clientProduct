@@ -40,8 +40,24 @@
 </template>
 
 <script>
+    import {getGoodsBuy} from'../../../utils/api.js'
     export default {
-        name: "Purchase"
+        name: "Purchase",
+        data(){
+            goodsIndexList:{}
+        },
+
+        mounted(){
+            this._getGoodsBuy()
+        },
+        methods:{
+            _getGoodsBuy(){
+                getGoodsBuy().then(res =>{
+                    this.goodsIndexList = res
+                    console.log(res);
+                })
+            }
+        }
     }
 </script>
 

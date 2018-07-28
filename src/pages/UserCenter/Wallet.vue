@@ -27,6 +27,7 @@
             </div>
 
             <div class="footer">
+<<<<<<< HEAD
 
 
                 <mt-tab-container v-model="selected">
@@ -118,11 +119,70 @@
                         <template v-else>
                             <no-data-tip :tipData="{typeTipe:0,conTip:'暂无数据'}"></no-data-tip>
                         </template>
+=======
+                <div class="footer_top">
+                    <div>
+                        <p>详情</p>
+                    </div>
+                    <div class="footer_top_right">
+                        <p>查看更多账单</p>
+                        <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+            </span>
+                    </div>
+                </div>
+
+
+                <mt-tab-container v-model="selected">
+                    <mt-tab-container-item id="1">
+                        <ul class="footer_footer" v-for="item in WalletAmountlogList">
+                            <li class="footer_footer_msg">
+                                <div class="footer_footer_msg_left">
+                                    <p>{{item.des}}</p>
+                                </div>
+                                <div class="footer_footer_msg_right">
+                                    <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                    <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </mt-tab-container-item>
+
+                    <mt-tab-container-item id="2">
+                        <ul class="footer_footer">
+                            <li class="footer_footer_msg" v-for="item in WalletRechargelog">
+                                <div class="footer_footer_msg_left">
+                                    <p>{{item.des}}</p>
+                                </div>
+                                <div class="footer_footer_msg_right">
+                                    <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                    <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </mt-tab-container-item>
+
+                    <mt-tab-container-item id="3">
+                        <ul class="footer_footer">
+                            <li class="footer_footer_msg" v-for="item in WalletBonuslog">
+                                <div class="footer_footer_msg_left">
+                                    <p>{{item.des}}</p>
+                                </div>
+                                <div class="footer_footer_msg_right">
+                                    <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                    <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                </div>
+                            </li>
+                        </ul>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                     </mt-tab-container-item>
                 </mt-tab-container>
             </div>
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     </div>
 </template>
 
@@ -132,8 +192,11 @@
     import {getWalletRechargelog} from '../../utils/api.js'
     import {getWalletBonuslog} from '../../utils/api.js'
 
+<<<<<<< HEAD
     import noDataTip from '@/components/noDataTip'
 
+=======
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     export default {
         components: {
             'no-data-tip': noDataTip
@@ -178,8 +241,13 @@
                 })
             },
             _getWalletAmountlog() {      //消费
+<<<<<<< HEAD
                 getWalletAmountlog({clientvid:this.clientvid}).then(res => {
                     if (res && !res.errorCode) {
+=======
+                getWalletAmountlog({clientvid: this.clientvid}).then(res => {
+                    if (res&&!res.errorCode) {
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                         this.WalletAmountlogList = res
                         console.log(res);
                     }
@@ -188,7 +256,11 @@
             },
             _getWalletRechargelog() {        //充值
                 getWalletRechargelog({clientvid: this.clientvid}).then(res => {
+<<<<<<< HEAD
                     if (res && !res.errorCode) {
+=======
+                    if (res&&!res.errorCode) {
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                         this.WalletRechargelog = res
                     }
                     // console.log(res);
@@ -196,7 +268,11 @@
             },
             _getWalletBonuslog() {       //红包
                 getWalletBonuslog({clientvid: this.clientvid}).then(res => {
+<<<<<<< HEAD
                     if (res && !res.errorCode) {
+=======
+                    if (res&&!res.errorCode) {
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                         this.WalletBonuslog = res
                     }
                     // console.log(res);
@@ -214,6 +290,7 @@
         /*border-bottom: 1px solid #eaeaea;*/
         margin-bottom: .3rem;
     }
+<<<<<<< HEAD
 
     .mint-tab-item {
         height: 1rem;
@@ -248,6 +325,42 @@
     /*z-index: 5;*/
     /*}*/
 
+=======
+
+    .mint-tab-item {
+        height: 1rem;
+    }
+
+    .mint-navbar .mint-tab-item.is-selected {
+        border-bottom: 2px solid #fa9e15;
+        color: #fff;
+    }
+
+    /*.mint-tab-item-label{*/
+    /*padding-bottom: .5rem;*/
+    /*}*/
+
+    .nav {
+        height: 4.96rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #020202;
+        background: url("../../assets/images/Wallet_bg.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+    }
+
+    /*.price {*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+    /*display: flex;*/
+    /*bottom: 1rem;*/
+    /*z-index: 5;*/
+    /*}*/
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     .price {
         height: 0.5rem;
         text-align: center;

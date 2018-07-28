@@ -154,6 +154,7 @@
                 birthday: this.birthday,
                 headimg: this.avatar
               }
+<<<<<<< HEAD
               MessageBox.confirm('是否确定保存信息','').then(action => { 
                 editorMyCenter(reqData).then(res=>{
                   if(res&&!res.errorCode){
@@ -163,6 +164,9 @@
                 })
               }).catch(()=>{})
               
+=======
+              editorMyCenter().then(res=>{})
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
             }
         }
     }

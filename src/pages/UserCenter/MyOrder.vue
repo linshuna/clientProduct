@@ -2,13 +2,18 @@
     <div class="my-order mask">
         <mt-navbar v-model="selected">
             <mt-tab-item id="1">全部</mt-tab-item>
+<<<<<<< HEAD
             <mt-tab-item id="2">待付款</mt-tab-item>
+=======
+            <mt-tab-item id="2">代付款</mt-tab-item>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
             <mt-tab-item id="3">已付款</mt-tab-item>
             <mt-tab-item id="4">已核销</mt-tab-item>
             <mt-tab-item id="5">已过期</mt-tab-item>
         </mt-navbar>
         <mt-tab-container v-model="selected">
             <mt-tab-container-item id="1">
+<<<<<<< HEAD
               <template v-if="!getOrderIndexList||getOrderIndexList.length==0">
                 <no-data-tip :tipData="{typeTipe:0,titleTip:'订单',conTip:'暂无购买记录'}"></no-data-tip>
               </template>
@@ -18,6 +23,12 @@
                       <p class="setTitle border-bottom-1px">预约时间：{{item.addtime}}</p>
                         <div class="order-top">
                             <img :src="item.pic" alt="商品图片"
+=======
+                <ul class="order-list">
+                    <li class="clearfix" v-for="item in getOrderIndexList">
+                        <div class="order-top">
+                            <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                                  class="fl goods-img">
                             <div class="goods-info">
                                 <p class="goods-name">{{item.name}}
@@ -32,6 +43,7 @@
                             </div>
                         </div>
                         <div class="order-bottom clearfix">
+<<<<<<< HEAD
                             <p class="order-state_wait order-state fl">
                               {{item.state==1?'待付款':
                                 (item.state==2?'已付款':
@@ -62,6 +74,23 @@
                       <p class="setTitle border-bottom-1px">预约时间：{{item.addtime}}</p>
                         <div class="order-top">
                             <img :src="item.pic" alt="商品图片"
+=======
+                            <p class="order-state_wait order-state fl">待付款</p>
+                            <router-link to="/UserCenter/Payment">
+                                <button class="pay-btn order-btn fr">付款</button>
+                            </router-link>
+                            <button class="delete-btn order-btn fr">删除订单</button>
+                        </div>
+                    </li>
+                </ul>
+            </mt-tab-container-item>
+
+            <mt-tab-container-item id="2">
+                <ul class="order-list">
+                    <li class="clearfix" v-for="item in getOrderIndexNew">
+                        <div class="order-top">
+                            <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                                  class="fl goods-img">
                             <div class="goods-info">
                                 <p class="goods-name">{{item.name}}
@@ -77,6 +106,7 @@
                         </div>
                         <div class="order-bottom clearfix">
                             <p class="order-state_wait order-state fl">待付款</p>
+<<<<<<< HEAD
                             <button class="pay-btn order-btn fr" @click.stop="payment(item.orderNo)">付款</button>
                             <button class="delete-btn order-btn fr" @click.stop="cancel(item.orderNo)">删除订单</button>
                         </div>
@@ -95,6 +125,20 @@
                         <p class="setTitle border-bottom-1px">预约时间：{{item.addtime}}</p>
                         <div class="order-top">
                             <img :src="item.pic" alt="商品图片"
+=======
+                            <router-link to="/UserCenter/Payment">
+                                <button class="pay-btn order-btn fr">付款</button>
+                            </router-link>
+                            <button class="delete-btn order-btn fr">删除订单</button>
+                        </div>
+                    </li>
+                </ul>
+            </mt-tab-container-item>
+            <mt-tab-container-item id="3">
+                <ul class="order-list">
+                    <li class="clearfix" v-for="item in OrderIndexOldList">
+                        <div class="order-top">
+                            <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
                                  class="fl goods-img">
                             <div class="goods-info">
                                 <p class="goods-name">{{item.name}}
@@ -107,6 +151,36 @@
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="order-bottom clearfix">
+                            <p class="order-state_wait order-state fl">已付款</p>
+                            <!--<router-link to="/UserCenter/Payment">-->
+                            <!--<button class="pay-btn order-btn fr">付款</button>-->
+                            <!--</router-link>-->
+                            <!--<button class="delete-btn order-btn fr">删除订单</button>-->
+                        </div>
+                    </li>
+                </ul>
+            </mt-tab-container-item>
+            <mt-tab-container-item id="4">
+                <ul class="order-list">
+                    <li class="clearfix" v-for="item in OrderIndexThree">
+                        <div class="order-top">
+                            <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
+                                 class="fl goods-img">
+                            <div class="goods-info">
+                                <p class="goods-name">{{item.name}}
+                                    <img class="r-arrow" src="../../assets/images/rightArrow.png" alt="">
+                                </p>
+                                <div class="price-box clearfix">
+                                    <p class="goods-price fl">￥{{item.price}}</p>
+                                    <p class="goods-total fr">x1</p>
+                                    <p class="car">车牌:{{item.carNo}}</p>
+                                </div>
+
+                            </div>
+<<<<<<< HEAD
                         </div>
                         <div class="order-bottom clearfix">
                             <p class="order-state_wait order-state fl">已付款</p>
@@ -177,18 +251,66 @@
             </mt-tab-container-item>
         </mt-tab-container>
         <base-footer></base-footer>
+=======
+                        </div>
+                        <div class="order-bottom clearfix">
+                            <p class="order-state_wait order-state fl">已核销</p>
+                            <!--<router-link to="/UserCenter/Payment">-->
+                            <!--<button class="pay-btn order-btn fr">付款</button>-->
+                            <!--</router-link>-->
+                            <!--<button class="delete-btn order-btn fr">删除订单</button>-->
+                        </div>
+                    </li>
+                </ul>
+            </mt-tab-container-item>
+            <mt-tab-container-item id="5">
+                <ul class="order-list">
+                    <li class="clearfix" v-for="item in OrderIndexFour">
+                        <div class="order-top">
+                            <img src="http://img4.imgtn.bdimg.com/it/u=3796003502,2383472742&fm=27&gp=0.jpg" alt=""
+                                 class="fl goods-img">
+                            <div class="goods-info">
+                                <p class="goods-name">{{item.name}}
+                                    <img class="r-arrow" src="../../assets/images/rightArrow.png" alt="">
+                                </p>
+                                <div class="price-box clearfix">
+                                    <p class="goods-price fl">￥{{item.price}}</p>
+                                    <p class="goods-total fr">x1</p>
+                                    <p class="car">车牌:{{item.carNo}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="order-bottom clearfix">
+                            <p class="order-state_wait order-state fl">已过期</p>
+                            <!--<router-link to="/UserCenter/Payment">-->
+                            <!--<button class="pay-btn order-btn fr">付款</button>-->
+                            <!--</router-link>-->
+                            <!--<button class="delete-btn order-btn fr">删除订单</button>-->
+                        </div>
+                    </li>
+                </ul>
+            </mt-tab-container-item>
+        </mt-tab-container>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     </div>
 
 </template>
 <script>
+<<<<<<< HEAD
     import {getOrderIndex,goodsCancels} from "../../utils/api";
     import {MessageBox} from 'mint-ui'
     import noDataTip from '@/components/noDataTip'
     import baseFooter from '@/components/baseFooter'
+=======
+    import {getOrderIndex, getOrderIndexNew, getOrderIndexOld, getOrderIndexThree,getOrderIndexFour} from "../../utils/api";
+    // import { getIndexData } from '../utils/api.js'
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     export default {
         name: "Appointment",
         data() {
             return {
+<<<<<<< HEAD
                 clientvid:'',
                 selected: '1',
                 getOrderIndexList: [],
@@ -247,6 +369,73 @@
 
               }).catch(()=>{})
             }
+=======
+                selected: '1',
+                getOrderIndexList: [],
+                getOrderIndexNew: [],
+                OrderIndexOldList: [],
+                OrderIndexThree: [],
+                OrderIndexFour:[]
+            };
+        },
+        created() {
+
+        },
+        mounted() {
+            this._getOrderIndex()
+            this._getOrderIndexNew()
+            this._getOrderIndexOld()
+            this._getOrderIndexThree()
+            this._OrderIndexFour()
+        },
+        methods: {
+            _getOrderIndex() {      //全部
+
+                getOrderIndex().then(res => {
+                    if (res && !res.errorCode) {
+                        this.getOrderIndexList = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexNew() {    //待付款
+
+                getOrderIndexNew().then(res => {
+                    if (res && !res.errorCode) {
+                        this.getOrderIndexNew = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexOld() {
+
+                getOrderIndexOld().then(res => {
+                    if (res && !res.errorCode) {
+                        this.OrderIndexOldList = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getOrderIndexThree() {
+                getOrderIndexThree().then(res => {
+                    if (res && !res.errorCode) {
+                        this.OrderIndexThree = res
+                        console.log(res);
+                    }
+                })
+            },
+            _getOrderIndexFour(){
+                getOrderIndexFour().then(res =>{
+                    if(res && res.errorCode) {
+                        this.OrderIndexFour = res
+                    }
+                })
+            }
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         }
     };
 

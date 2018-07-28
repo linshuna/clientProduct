@@ -8,6 +8,7 @@
 </template>
 <script>
     // import { getIndexData } from '../utils/api.js'
+<<<<<<< HEAD
     // import {getIndex} from '../utils/api.js'
     // import {Toast} from 'mint-ui'
     // export default {
@@ -74,6 +75,74 @@
     //               linkName:'优惠券',
     //               num: ''
     //             },]
+=======
+    import {getIndex} from '../utils/api.js'
+    import {Toast} from 'mint-ui'
+    export default {
+        name: "Appointment",
+        data() {
+            return {
+                defaultIcon: require("@/assets/images/我的-我的头像icon.png"),
+                clientvid: 0,
+                clcararr:[],
+                indexList:{},
+                isshow: true,
+                pageData: {},
+                userSettingTypeData: [{
+                    'linkUrl': '',
+                    // 'linkUrl': `/user/selfCenter`,
+                    'icon': require("../assets/images/我的-rmb_20180721102839.png"),
+                    'linkName': '我的车账单'
+                },{
+                    'linkUrl': `/Index/UpKeep/selfCenter`,
+                    'icon': require("../assets/images/我的-推荐好友icon.png"),
+                    'linkName': '推荐好友'
+                }, {
+                    'linkUrl': '/UserCenter/MyCenter',
+                    'icon': require("../assets/images/我的-个人中心icon.png"),
+                    'linkName': '个人中心'
+                }, {
+                    'linkUrl': '/UserCenter/MyCar',
+                    'icon': require("../assets/images/我的-我的车辆icon.png"),
+                    'linkName': '我的车辆'
+                }, {
+                    'linkUrl': '/UserCenter/HelpCenter',
+                    'icon': require("../assets/images/我的-帮助中心.png"),
+                    'linkName': '帮助中心'
+                },
+                    {
+                        'linkUrl': '/UserCenter/Setting',
+                        'icon': require("../assets/images/我的-设置icon.png"),
+                        'linkName': '设置'
+                    }
+                ],
+                userMsgData:[{
+                  linkUrl:'/UserCenter/Wallet',
+                  icon:require('../assets/images/我的-钱包icon.png'),
+                  linkName:'钱包'
+                },{
+                  linkUrl:'/UserCenter/Evaluate',
+                  icon:require('../assets/images/我的-我的评价icon.png'),
+                  linkName:'我的评价'
+                },{
+                  linkUrl:'',
+                  icon:require('../assets/images/我的-客户icon.png'),
+                  linkName:'客服'
+                }],
+                userOrderData:[{
+                  linkUrl:'/UserCenter/MyOrder',
+                  linkName:'订单',
+                  num: '',
+                },{
+                  linkUrl:'/UserCenter/MyAppointment',
+                  linkName:'预约',
+                  num: ''
+                },{
+                  linkUrl:'/UserCenter/Coupon',
+                  linkName:'优惠券',
+                  num: ''
+                },]
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
 
     //         };
     //     },

@@ -11,6 +11,7 @@
         </nav>
         <pro-city-area v-bind:current.sync="currentPicker" v-bind:popupVisible.sync="popupVisible"
                        @gainAllAddress="gainAllAddress"></pro-city-area>
+<<<<<<< HEAD
         <template v-if="StoreaList&&StoreaList.length>0">              
           <ul class="insurance">
               <li v-for="item in StoreaList">
@@ -44,16 +45,54 @@
         <template v-else>
           <p style="text-align: center;margin-top: 25%;font-size:.28rem;">暂时搜索不到救援信息，更换筛选条件</p>
       </template> 
+=======
+        <ul class="insurance">
+            <li v-for="item in StoreaList">
+
+                <div class="nav">
+                    <div class="nav_left">
+                        <div class="nav_left_section_img">
+                            <div class="nav_left_section">
+                                <img :src="item.pic" alt="">
+                                <p>{{item.shoptime}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav_right">
+                        <div class="nav_right_section">
+                            <div class="nav_right_top">
+                                <p>{{item.name}}</p>
+                                <p>{{item.province}}{{item.city}}{{item.dist}}{{item.address.slice(0,5)}}...</p>
+                            </div>
+                            <div class="nav_right_footer">
+                                <p @click="openMap(item.longitude,item.latitude,item.dist,item.address)">一键导航</p>
+                                <p><a :href="'tel:'+item.phone"></a>拨打电话</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     </div>
 </template>
 
 <script>
     var jsonp = require('jsonp');       //地址跨域
     // import {MessageBox} from 'mint-ui';
+<<<<<<< HEAD
+=======
+    import {score} from "mixins";
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     import ProCityArea from 'components/ProCityArea.vue'
     import {getAddress, getClientRescue} from '../../../utils/api.js'
 
     export default {
+<<<<<<< HEAD
+=======
+        mixins: [score],
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         components: {
             'pro-city-area': ProCityArea
         },
@@ -80,6 +119,7 @@
 
         methods: {
             openMap: function (long, lat, dist, address) {
+<<<<<<< HEAD
                 this.map(long,lat,dist,address)
 
             },
@@ -132,6 +172,65 @@
                 this.longitude = newVal.longitude
                 this.latitude = newVal.latitude
                 // this.search = newVal.code;//默认的城市code
+=======
+                window.location.href = `https://apis.map.qq.com/tools/poimarker?type=0&marker=coord:${lat},${long};title:${dist};addr:${address};&key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&referer=myapp `
+
+            },
+
+            changeType: function (value) {
+                this.currentPicker = value;
+                this.popupVisible = true;
+            },
+            _getClientRescue() {
+                getClientRescue({
+                    longitude: this.longitude,
+                    latitude: this.latitude,
+                    city: this.city,
+                    search:this.search,
+                    address:this.address
+                }).then(res => {
+                    this.StoreaList = res
+                    console.log(res);
+                })
+            },
+            onValuesChange: function () {     //监听滚动事件
+                let obj = document.getElementsByClassName('picker-slot-wrapper')[0];
+            },
+            gainAllAddress: function (value) { //获取确定地址
+                this.$set(this.addressname, 'name', value.area);
+                this.search = value.search;
+                // this.address = value.address
+                this._getClientRescue()
+            },
+            // gainSort: function(value){//默认排序
+            //     this.sorts = value;
+            //     this._getNearbyStorea()
+            // }
+
+        },
+        created() {
+            this._getClientRescue()
+        },
+        mounted() {
+            let _this = this;
+            jsonp('http://apis.map.qq.com/ws/location/v1/ip?key=IK2BZ-QCAKQ-QJ45W-GCLNJ-JCWSK-GWBYA&get_poi=0&output=jsonp', null, function (err, data) {
+                let res = data.result
+                let addressName = res.ad_info.city + " " + res.ad_info.district;
+                _this.$set(_this.addressname, 'name', addressName)
+                _this.$set(_this.addressname, 'longitude', res.location.lng)
+                _this.$set(_this.addressname, 'latitude', res.location.lat)
+                _this.$set(_this.addressname, 'code', res.ad_info.adcode)
+                console.log(res)
+            })
+
+        },
+        watch: {
+            addressname: function (newVal, oldVal) {
+                this.longitude = newVal.longitude
+                this.latitude = newVal.latitude
+                this.search = newVal.code;//默认的城市code
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                 this._getClientRescue()
             }
         },
@@ -141,11 +240,16 @@
 <style lang="scss" scoped>
     .insurance {
         margin-top: 1rem;
+<<<<<<< HEAD
         min-height: 100%;
         background-color: #efefef;
         li{
           margin-bottom: .2rem;
         }
+=======
+        min-height: 15rem;
+        background-color: #efefef;
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     }
 
     nav {
@@ -236,11 +340,14 @@
 
     .nav_right_footer {
         display: flex;
+<<<<<<< HEAD
         .tel{
           display: inline-block;
           width: 100%;
           height: 100%;
         }
+=======
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     }
 
     .nav_right_top p:first-child {
@@ -249,12 +356,17 @@
     }
 
     .nav_right_top p:last-child {
+<<<<<<< HEAD
         font-size: 0.26rem;
         color: #9f9f9f;
         display:-webkit-box;
         -webkit-box-orient:vertical; 
         -webkit-line-clamp:2;
         overflow: hidden;
+=======
+        font-size: 0.28rem;
+        color: #9f9f9f;
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     }
 
     .nav_right_footer p {

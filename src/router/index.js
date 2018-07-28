@@ -117,6 +117,10 @@ const Purchase = () => import('@/pages/Index/UpKeep/Purchase')
 const PaymentFinsh = () => import('@/pages/UserCenter/PaymentFinsh')
 //我的帮助中心帮助
 const HelpConent = () => import('@/pages/UserCenter/HelpConent')
+//我的帮助中心帮助
+const Shopping = () => import('@/pages/Index/UpKeep/Shopping')
+//我的 推荐好友
+const selfCenter = () => import('@/pages/Index/UpKeep/selfCenter')
 
 
 
@@ -236,12 +240,21 @@ export default new Router({
           },
         },
         {
+<<<<<<< HEAD
           path: '/Index/storeDetail/:stopId',
           component: storeDetail,
           meta: {
             title: '门店详情'
           },
         }
+=======
+          path: '/Index/UpKeep/selfCenter',
+          component: selfCenter,
+          meta: {
+            title: '推荐好友'
+          },
+        },
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
       ]
     },
     {
@@ -486,6 +499,14 @@ export default new Router({
           },
         },
         
+
+        {
+          path: '/Index/Shopping',
+          component: Shopping,
+          meta: {
+            title: '首页/商城'
+          },
+        },
 
 
       ],

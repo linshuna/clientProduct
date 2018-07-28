@@ -38,6 +38,7 @@
             </div>
         </div>
         <div class="footer">
+<<<<<<< HEAD
 
           <appoint-public servertype="1" :myCarList="myCarList" :shopId="shopId" :typeData="typeData" @gainReqData="gainReqData"></appoint-public>
 
@@ -53,6 +54,67 @@
             <button class="appoint_btn" @click="order">立即预约</button>
           </div>
 
+=======
+            <div class="footer_footer">
+                <div class="footer_footer_msg" @click="openPicker('registPicker')">
+                    <div class="footer_footer_msg_left">
+                        <p>预约时间</p>
+                    </div>
+                    <!--<span class="inp" :class="{'blackColor':registDate!=''}"  @click="cusBirth('picker')">{{registDate==''?'请选择日期':registDate}}</span>-->
+                    <mt-datetime-picker
+                            ref="picker"
+                            type="date"
+                            year-format="{value} 年"
+                            month-format="{value} 月"
+                            date-format="{value} 日"
+                            @confirm="handleChange"
+                           >
+                    </mt-datetime-picker>
+                    <div class="footer_footer_msg_right">
+            <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="big_rightArrow">
+            </span>
+                    </div>
+                </div>
+                <div class="footer_footer_msg">
+                    <div class="footer_footer_msg_left">
+                        <p>选择项目</p>
+                    </div>
+                    <div class="footer_footer_msg_right">
+            <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="big_rightArrow">
+            </span>
+                    </div>
+                </div>
+                <div class="footer_footer_msg">
+                    <div class="footer_footer_msg_left">
+                        <p>选择车辆</p>
+                    </div>
+                    <div class="footer_footer_msg_right">
+            <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="big_rightArrow">
+            </span>
+                    </div>
+                </div>
+                <div class="footer_footer_msg">
+                    <div class="footer_footer_msg_left">
+                        <p>用户姓名</p>
+                    </div>
+                    <div class="footer_footer_msg_input">
+                        <input type="text" placeholder="用户姓名">
+                    </div>
+                </div>
+                <div class="footer_footer_msg">
+                    <div class="footer_footer_msg_left">
+                        <p>用户电话</p>
+                    </div>
+                    <div class="footer_footer_msg_input">
+                        <input type="number" placeholder="用户电话">
+                    </div>
+                </div>
+                <button class="appoint_btn">立即预约</button>
+            </div>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         </div>
 
         <mt-datetime-picker ref="picker" type="date" :startDate="startDate" year-format="{value} 年"  month-format="{value} 月" date-format="{value} 日" @confirm="handleChange">
@@ -72,13 +134,31 @@
 </template>
 
 <script>
+    import Vue from 'vue';
+    import {Toast, Picker, DatetimePicker} from 'mint-ui';
+    import {format} from '../../assets/js/date.js'
+
+    Vue.component(Picker.name, Picker);
+    Vue.component(DatetimePicker.name, DatetimePicker);
+
     import {score} from "mixins";
+<<<<<<< HEAD
     import {storeDetail,carList,serverList,orderTime,reservations} from '@/utils/api.js'
     import {format} from '@/assets/js/date.js'
     import rightMtPopup from '@/components/rightMtPopup'
     import appointPublic from '@/components/appointPublic'
+=======
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     export default {
+        data() {
+            return {
+                pickerValue:null,
+                pickerVisible:null
+            }
+        },
         mixins: [score],
+<<<<<<< HEAD
         name: "NowAppoint",
         data(){
           return {
@@ -309,6 +389,34 @@
               
             })
           }
+=======
+        name: "nowappoin",
+
+        methods: {
+            openPicker() {
+                this.$refs.picker.open();
+                console.log(111);
+                this.currentCheckedDate = registPicker
+            },
+            handleChange(value) {
+                let date = value.toString();
+                date = format(date,'yyyy-MM-dd')
+                if(this.currentCheckedDate=='registPicker'){
+                    this.registDate = date
+                }else if(this.currentCheckedDate=='bussiPicker'){
+                    this.bussiDate = date
+                }else{
+                    this.tranDate = date
+                }
+            },
+            handleConfirm(){
+                let a = this.pickerValue
+                // console.log(a.split(" ")) ;
+                this.zheng=this.formatDate(this.$refs.picker.value)
+                console.log(this.formatDate(this.$refs.picker.value))
+                // console.log(this.value) ;
+            },
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         }
     }
 
@@ -470,11 +578,14 @@
     .footer_footer_msg_input {
         width: 70%;
     }
+<<<<<<< HEAD
     .footer_footer_msg_input input{
         width: 100%;
         font-size: .29rem;
         text-align: right;
     }
+=======
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
 
     .footer_footer_msg_left p {
         /*font-weight: 600;*/
@@ -490,6 +601,7 @@
     .section_top_left_ptop {
         font-weight: 800;
     }
+<<<<<<< HEAD
     .btn-wrap{
       width: 100%;
       height: 0.96rem;
@@ -549,6 +661,17 @@
         font-size: .28rem;
         box-sizing: border-box;
       }  
+=======
+
+    .appoint_btn {
+        width: 100%;
+        height: 0.72rem;
+        /* position: absolute; */
+        bottom: 0;
+        background-color: orange;
+        color: #fff;
+
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     }
   .assess{
     vertical-align: middle;

@@ -3,6 +3,7 @@
         <div class="discounts">
             <div class="nav"></div>
             <ul class="banner-list">
+<<<<<<< HEAD
                 <li v-for="(item,index) in ActivityList">
                     <!--<img :src="item.pic" alt="">-->
                     <img :src="item.pic" alt="">
@@ -10,6 +11,12 @@
                       <p>倒计时</p>:
                       <p>{{item.djs}}</p>
                     </div>
+=======
+                <li v-for="item in ActivityList">
+                    <!--<img :src="item.pic" alt="">-->
+                    <img src="../../../assets/images/特惠3_20180722164421.png" alt="">
+                    <div class="times"><p>倒计时</p>:<p>{{time}}</p></div>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                 </li>
             </ul>
         </div>
@@ -17,6 +24,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 function InitTime(starttime,endtime){
     var dd,hh,mm,ss = null;
     var time = new Date(endtime).getTime() - new Date().getTime();
@@ -31,6 +39,8 @@ function InitTime(starttime,endtime){
         return str;
     }
 }
+=======
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     import {getActivity} from '../../../utils/api.js'
 
     export default {
@@ -50,6 +60,7 @@ function InitTime(starttime,endtime){
 
         },
         mounted() {
+<<<<<<< HEAD
           
           this.$nextTick(()=>{
             this._getActivity();
@@ -70,6 +81,15 @@ function InitTime(starttime,endtime){
             }, 1000)
           })
             
+=======
+            this._getActivity()
+            this.time = setInterval(() => {
+                if (this.flag == true) {
+                    clearInterval(time)
+                }
+                this.countdown()
+            }, 1000)
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         },
         methods: {
             _getActivity() {
@@ -80,6 +100,7 @@ function InitTime(starttime,endtime){
                     })
                 })
             },
+<<<<<<< HEAD
 
             countdown(index) {          //倒计时
                 // 目标日期时间戳
@@ -112,6 +133,34 @@ function InitTime(starttime,endtime){
                     // 一秒后递归
                     _this.countdown(index)
                 }, 1000)  
+=======
+            countdown() {          //倒计时
+                getActivity().then(res => {
+                    console.log(res[1].starttime);
+                    // 目标日期时间戳
+                    const end = Date.parse(new Date(res[1].starttime))
+                    // 当前时间戳
+                    const now = Date.parse(new Date())
+                    // 相差的毫秒数
+                    const msec = end - now
+                    // 计算时分秒数
+                    let day = parseInt(msec / 1000 / 60 / 60 / 24)
+                    let hr = parseInt(msec / 1000 / 60 / 60 % 24)
+                    let min = parseInt(msec / 1000 / 60 % 60)
+                    let sec = parseInt(msec / 1000 % 60)
+                    // 个位数前补零
+                    hr = hr > 9 ? hr : '0' + hr
+                    min = min > 9 ? min : '0' + min
+                    sec = sec > 9 ? sec : '0' + sec
+                    // 控制台打印
+                    console.log(`${day}天 ${hr}小时 ${min}分钟 ${sec}秒`)
+                    // 一秒后递归
+                    this.time = `${day}天${hr}小时${min}分${sec}秒`
+                    // setTimeout(function () {
+                    //     countdown()
+                    // }, 1000)
+                })
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
 
             }
         },
@@ -129,7 +178,11 @@ function InitTime(starttime,endtime){
         background-color: #F3F3F3;
     }
     .nav {
+<<<<<<< HEAD
         background-image: url('../../../assets/images/特惠背景.png');
+=======
+        background-image: url('../../../assets/images/特惠背景_20180722164427.png');
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
         background-size: 100%;
         height: 3.66rem;
     }

@@ -13,7 +13,11 @@
                                 <p class="p_data">{{item.addtime}}</p>
                             </div>
                             <div class="section_top_center">
+<<<<<<< HEAD
                                 <p class="section_top_center_p">我的点评</p>
+=======
+                                <p class="section_top_center_p">综合评分</p>
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
                                 <div class="star-box">
                                     <score-lv :stars='parseInt(item.evaluatenum-0)'></score-lv>
                                 </div>
@@ -103,6 +107,11 @@
         height: 1rem;
         position: absolute;
         left: 0.28rem;
+<<<<<<< HEAD
+=======
+        top: 0.3rem;
+        border-radius: 1px;
+>>>>>>> 61cf0832abcd706603c243b3e1776be136ec67f6
     }
 
     .section_top_top {
