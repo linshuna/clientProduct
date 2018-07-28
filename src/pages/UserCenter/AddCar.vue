@@ -18,7 +18,8 @@
         <li>
           <span class="fieldName">品牌车型</span>
           <div class="setCusRight">
-            <input type="text" readonly unselectable="on" placeholder="请选择品牌车型" v-model="selectedBrand" @focus="popBrand=true"/>
+            <span class="inp" :class="{'blackColor':selectedBrand!=''}"  @click.stop="popBrand=true">{{selectedBrand==''?'请选择品牌车型':selectedBrand}}</span>
+           
           </div>
         </li>
         <li>
@@ -395,6 +396,9 @@ export default {
             padding: .2rem 0 .2rem .1rem;
             box-sizing:border-box ;
             font-size: .28rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
           span.inp{
             color: gray ;
@@ -539,5 +543,9 @@ export default {
       color: #ffffff;
       font-size: .28rem;
     }
-      
+    .setTranslate{
+      color: transparent;
+      text-shadow: 0 0 0 #000;
+      outline:none;
+    }
 </style>

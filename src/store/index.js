@@ -57,13 +57,12 @@ const mutations = {
     Toast(value)
   },
   delay(state, paramData) {
-    
+    let delayTime = paramData.time || 1500;
     setTimeout(function () {     
-      console.log('清时期')
       let $router = paramData.$router;
       $router.push({path:paramData.url})
       store.dispatch('delToast')
-    },1500)
+    },delayTime)
   }
 }
 

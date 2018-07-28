@@ -21,7 +21,7 @@
                     </p>
                     <div class="handle-box clearfix" >
                         <label class="defaultIcon" @click.stop="getPretermit(item.carvid)">
-                            <input type="radio" :checked="item.moren==1?true:false" name="default">
+                            <input type="radio" :class="{'no-checked': item.moren!==1,'checked':item.moren==1}" name="default">
                             <span>默认</span> 
                         </label>
                         <div class="del-box deleteIcon" @click.stop="delCar(item.carvid)">
@@ -44,6 +44,7 @@
 <script>
     import {carList,setCarDefault,delCar} from '../../utils/api'
     import noDataTip from '@/components/noDataTip'
+    import { MessageBox } from 'mint-ui'
     export default {
         name: 'App',
         data() {
@@ -78,16 +79,24 @@
               this.$router.push({path: '/UserCenter/MyCarDetails/'+carvid})
             },
             getPretermit(carvid) {
+              MessageBox.confirm('是否确定设置为默认','').then(action => { 
                 setCarDefault({clientvid: this.clientvid,carvid: carvid}).then(res => {
                     this.$store.commit('showToast','更改默认成功')
                     this._getMyCar()
                 })
+              })
+              .catch(()=>{})
+                
             },
             delCar: function(carvid){
-              delCar({clientvid: this.clientvid,carvid: carvid}).then(res=>{
-                  this.$store.commit('showToast','删除车辆成功')
-                  this._getMyCar()
+              MessageBox.confirm('是否确定删除车辆','').then(action => { 
+                delCar({clientvid: this.clientvid,carvid: carvid}).then(res=>{
+                    this.$store.commit('showToast','删除车辆成功')
+                    this._getMyCar()
+                })
               })
+              .catch(()=>{})
+              
             },
             addCar: function(){
               this.$router.push({path: '/UserCenter/MyCar/AddCar/0'})
@@ -169,7 +178,7 @@
             right: .22rem;
             height: 0.36rem;
             line-height: .36rem;
-            font-size: 0.2rem;
+            font-size: 0.24rem;
             .del-icon {
                 width: 0.36rem;
                 height: 0.36rem;
@@ -201,7 +210,7 @@
         background-color: #fba019;
     }
 
-    input[type="radio"] {
+    .no-checked {
         -moz-appearance: button;
         /* Firefox */
         -webkit-appearance: button;
@@ -215,7 +224,7 @@
         vertical-align: middle;
     }
 
-    input[type="radio"]:checked {
+    .checked {
         display: inline-block;
         background: url('../../assets/images/我的车辆-选中icon.png') no-repeat;
         background-size: 0.36rem 0.36rem;

@@ -69,7 +69,7 @@
   .input_btn {
     width: 1.5rem;
     height: 0.48rem;
-    background-color: orange;
+    background-color: #fa9e15;
     color: #fff;
     font-size: 0.05rem;
     border: none;
@@ -86,7 +86,7 @@
       border: none;
       width: 7.5rem;
       height: 0.72rem;
-      background-color: orange;
+      background-color: #fa9e15;
       color: #fff;
     }
 

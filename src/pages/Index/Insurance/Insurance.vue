@@ -1,28 +1,26 @@
 <template>
   <div class="insurance-wrap mask">
     <ul class="insurance">
-      <router-link to="/Index/Insurance/InsuranceDetails">
-        <li class="nav" v-for="item in ClientRiskIndexList">
-          <div class="nav_left">
-            <div class="nav_left_section_img">
-              <div class="nav_left_section">
-                <img :src="item.pic" alt="">
-              </div>
+      <li class="nav" v-for="item in ClientRiskIndexList" @click.stop="moveUrl(item.url)">
+        <div class="nav_left">
+          <div class="nav_left_section_img">
+            <div class="nav_left_section">
+              <img :src="item.pic" alt="">
             </div>
           </div>
-          <div class="nav_right">
-            <div class="nav_right_section">
-              <div class="nav_right_top">
-                <p>{{item.name}}</p>
-                <p>{{item.desc.slice(0,11)}}..</p>
-              </div>
-              <div class="nav_right_footer">
-                <p  v-for="(items,index) in item.labels">{{items[index]}}</p>
-              </div>
+        </div>
+        <div class="nav_right">
+          <div class="nav_right_section">
+            <div class="nav_right_top">
+              <p>{{item.name}}</p>
+              <p class="desc">{{item.desc}}</p>
+            </div>
+            <div class="nav_right_footer">
+              <p  v-for="(items,index) in item.labels">{{items[index]}}</p>
             </div>
           </div>
-        </li>
-      </router-link>
+        </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -45,6 +43,9 @@
                   this.ClientRiskIndexList = res
                   console.log(res.labels);
               })
+          },
+          moveUrl: function(url){
+            window.location.href = url;
           }
       },
   }
@@ -77,6 +78,13 @@
     height: 1.46rem;
     position: relative;
     display: flex;
+  }
+  .desc{
+    width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
 
   .nav_left_section img {
@@ -125,7 +133,7 @@
   }
 
   .nav_right_top p:last-child {
-    font-size: 0.28rem;
+    font-size: 0.25rem;
     color: #9f9f9f;
   }
 

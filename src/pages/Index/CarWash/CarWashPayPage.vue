@@ -3,15 +3,15 @@
         <div class="nav">
             <div class="nav_top">
                 <div class="nav_img">
-                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1880760143,1213047443&fm=27&gp=0.jpg" alt="">
+                    <img :src="shopsMsg.pic" alt="">
                 </div>
                 <div class="nav_p">
-                    <p>微位科技汽车美容</p>
-                    <p>广州市荔湾区东风中路439号</p>
+                    <p>{{shopsMsg.name}}</p>
+                    <p>{{shopsMsg.city}}{{shopsMsg.dist}}{{shopsMsg.address}}{{shopsMsg.addressExtends}}</p>
                 </div>
 
             </div>
-            <div class="nav_center">
+            <div class="nav_center" @click.stop="openMap(shopsMsg.longitude,shopsMsg.latitude,shopsMsg.name,shopsMsg.address)">
                 <div class="nav_center_left">
                     <img src="../../../assets/images/洗车支付-导航icon.png" alt="">
                     <p>导航去店</p>
@@ -28,12 +28,10 @@
                 </div>
                 <div class="section_bottom">
                     <div class="section_bottom_left">
-                        <img src="http://img2.imgtn.bdimg.com/it/u=2598268720,2590532498&fm=27&gp=0.jpg" alt="">
-                        <p>五座轿车标准洗车</p>
+                        <p>{{orderMsg.goodname}}</p>
                     </div>
                     <div class="section_bottom_right">
-                        <p>¥ 35.00</p>
-                        <p>x1</p>
+                        <p>¥{{orderMsg.amount}} x{{orderMsg.num}}</p>
                     </div>
                 </div>
             </div>
@@ -41,48 +39,136 @@
 
             <div class="section_footer">
                 <div class="section_footer_top">
-                    <p>订单编号: TH33221297
-                        <button class="section_footer_top_btn">复制</button>
-                    </p>
-                    <p>订单时间: 2018.07.11 16:23:00</p>
-                    <p>支付方式: 线上支付</p>
-                    <p>配送方式: 无需配送</p>
+                    <p>订单编号：{{orderNo}}</p>
+                    <p>订单时间：{{orderMsg.addtime}}</p>
+                    <p>到店服务</p>
+                    <p>用户名：{{orderMsg.uname}}</p>
+                    <p>电话：{{orderMsg.phone}}</p>
                 </div>
 
                 <div class="section_footer_msg">
                     <div class="section_footer_left">
                         <p>商品总额</p>
-                        <p>优惠券</p>
-                        <p>运费</p>
                     </div>
                     <div class="section_footer_right">
-                        <p>&nbsp;¥&nbsp;35.00</p>
-                        <p>- &nbsp;¥&nbsp;0.00</p>
-                        <p>+&nbsp;¥&nbsp;0.00</p>
-                    </div>
-                </div>
-
-                <div class="section_footer_footer">
-                    <p>实付款:</p>
-                    <p>¥35.00</p>
-                </div>
-
-                <div class="footer_btn">
-                    <div class="footer_btn_btn">
-                        <button>取消订单</button>
-                        <button>微信支付</button>
+                        <p>&nbsp;¥&nbsp;{{orderMsg.amount}}</p>
                     </div>
                 </div>
             </div>
         </div>
 
+      <div class="footer_btn">
+        <div class="section_footer_footer">
+          <p>实付款:</p>
+          <p>¥{{orderMsg.amount}}</p>
+        </div>
+        <div class="footer_btn_btn">
+            <button @click.stop="cancel">取消订单</button>
+            <button @click.stop="pay">立即支付</button>
+        </div>
+      </div>
 
+      <!--遮罩层-->
+      <div class="checked-mask" v-if="showPay"> 
+        <div class="set-position">
+
+          <template v-for="(listItem,listIndex) in options">
+            <div class="set-inline-block clearFloat" :class="{'border-bottom-1px':listIndex+1!=options.length}">
+            <!--:checked="listIndex==0?true:false"-->
+              <input :disabled="listItem.value==3?true:false" type="radio" :name="'checked'+listIndex" :value="listItem.label" @change="check(listItem.value,listItem.label)" class="fr" :class="{'gray':listItem.value==3}">
+              <label :for="'checked'+listItem.value" class="fl">{{listItem.label}}</label> 
+            </div>
+            
+          </template> 
+          <div class="delIcon" @click.stop="showPay=false"></div>
+        </div>
+        
+      </div>
     </div>
 </template>
 
 <script>
+  import {carwashPayList,carwashOrderList,carwashOrderCancel} from '@/utils/api.js'
+  import { MessageBox } from 'mint-ui'
     export default {
-        name: "payment"
+        name: "payment",
+        data(){
+          return{
+            clientvid:'',
+            orderNo : '',
+            orderMsg: {},
+            shopsMsg:{},
+            payType:'',//支付的方式
+            showPay:false,//支付的隐藏
+            //支付类型1余额支付 2活动金额支付 3微信支付
+            options:[{
+                label: '余额支付',
+                value: '1'
+              },
+              {
+                label: '活动金额支付',
+                value: '2',
+                disabled: true
+              },
+              {
+                label: '微信支付',
+                value: '3',
+                disabled: true
+              }]
+          }
+        },
+        created() {
+          let getStorage = this.$store.getters.getStorage;
+          this.clientvid = getStorage?getStorage.vid:''
+          this.orderNo = this.$route.params.orderNo;
+          console.log(this.orderNo)
+          this.init();//初始化数据
+        },
+        methods: {
+          init: function(){
+            carwashOrderList({orderNo: this.orderNo}).then(res=>{
+                this.orderMsg = res.orderdata;
+                this.shopsMsg = res.shops
+            })
+          },
+          openMap:function (long,lat,dist,address) { //打开地图
+            this.map(long,lat,dist,address)   
+          },
+          
+          check: function(id,label){
+            let _this = this;
+            this.options.map((item,index)=>{
+              if(item.value == id){
+                this.payType = id;
+                setTimeout(function(){
+                  _this.showPay = false;
+                },2000)
+              }
+            })
+            MessageBox.confirm('是否确定支付订单','').then(action => {
+              carwashPayList({orderNo: this.orderNo,type:this.payType}).then(res=>{
+                if(res&&!res.errorCode){
+                  this.$store.commit('showToast','支付成功')
+                  this.$store.commit('delay',{url:'/UserCenter/MyOrder',$router:this.$router})
+                }
+              })
+            }).catch(()=>{})
+          },
+          pay:function(){
+            this.showPay = true
+          },
+          cancel: function(){
+            MessageBox.confirm('是否确定删除订单','').then(action => { 
+              carwashOrderCancel({orderNo: this.orderNo}).then(res=>{
+                if(res&&!res.errorCode){
+                  this.$store.commit('showToast','删除成功')
+                }
+              })
+
+            }).catch(()=>{})
+            
+          }
+        }
     }
 </script>
 
@@ -157,6 +243,7 @@
         margin-top: 0.2rem;
         position: relative;
         color: #303030;
+        width: 100%;
     }
 
     .section_top span {
@@ -292,8 +379,12 @@
         width: 100%;
         height: 1.04rem;
         background-color: #ffffff;
-        position: absolute;
+        position: fixed;
         bottom: 0;
+    }
+    .section_footer_footer{
+      position: absolute;
+      left: .22rem;
     }
     .footer_btn_btn{
         position: absolute;
@@ -317,4 +408,79 @@
         color: #f28817;
     }
 
+
+.gray{
+    background: #999!important;
+  }
+  input[type="radio"] {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    border: 1px solid #999;
+    /* Safari 和 Chrome */
+    display: inline-block;
+    outline: none;
+    height: 0.45rem;
+    width: 0.45rem;
+    margin-bottom: 1px;
+    vertical-align: middle;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0,-50%);
+  }
+
+  input[type="radio"]:checked {
+    display: inline-block;
+    background: url('../../../assets/images/rightIcon.png')no-repeat;
+    height: .45rem;
+    width: 0.45rem;
+    margin-bottom: 1px;
+    vertical-align: middle;
+    border: 1px solid #fa9e15 ;
+    border-radius: 50%;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0,-50%);
+  }
+  .checked-mask{
+    position: fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background: rgba(0,0,0,.3);
+  }
+  .set-position{
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radio: 5px;
+    background: #ffffff;
+    padding: 0 .2rem;
+  }
+  .set-inline-block{
+    position: relative;
+    height: .7rem;
+    line-height: .7rem;
+  }
+  .delIcon{
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    transform: translate(-50%,0);
+    width: 25px !important;
+    height: 25px;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+  .delIcon::before,.delIcon::after{
+    left: 5px;
+    width: 60%!important;
+  }
 </style>

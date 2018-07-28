@@ -1,8 +1,8 @@
 <template>
     <div class="guideWrap mask">
-        <p class="hotQuestion" v-for="item in defaultList">热点问题</p>
+        <!--<p class="hotQuestion">热点问题</p>
 
-        <ul v-for="item in defaultList">
+        <ul v-for="item in defaultList" @click="HelpGoods(item.id)">
             <router-link to="/UserCenter/HelpConent">
                 <li>
                     <span>{{item.title}}</span>
@@ -11,7 +11,8 @@
                     </div>
                 </li>
             </router-link>
-        </ul>
+        </ul>-->
+        <router-view></router-view>
 
     </div>
 
@@ -37,7 +38,10 @@
                     this.defaultList = res
                     console.log(this.defaultList);
                 })
-            }
+            },
+            HelpGoods: function(id){//购买商品详情
+                this.$router.push({path: '/UserCenter/HelpConent/'+id})//选中哪个id 传参  push 父路由传参给子路由
+            },
         }
     }
 

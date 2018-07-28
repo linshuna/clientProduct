@@ -1,47 +1,50 @@
 <template>
-  <mt-popup v-model="show" position="right" class="pop-wrapper" :closeOnClickModal=false>
-    <div ref="wrapper" style="height: 100%">
-      <div>
-        <div class="brand-wrapper" v-for="(item,key) of brandArr" :key="key" :ref="key" v-show="brandArr">
-          <div class="title border-bottom-1px">{{key}}</div>
-          <ul class="item-list">
-            <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.carplateid" @click="selected(innerItem.carplateid,index,key,innerItem.carplate,0)">
-              <img :src="innerItem.icon" class="carnoLogo"/>
-              <span class="text">{{innerItem.carplate}}</span>
-              <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
+  <mt-popup v-model="show" position="right" class="pop-wrapper" :closeOnClickModal="closeModal">
+    <div ref="wrapper" style="height: 100%;position:absolute;left:0;top:0;width: 100%;">
+      <div style="padding-bottom: 2rem;">
+        <div>
+          <div class="brand-wrapper" v-for="(item,key) of brandArr" :key="key" :ref="key" v-show="brandArr">
+            <p class="title border-bottom-1px">{{key}}</p>
+            <ul class="item-list">
+              <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.carplateid" @click="selected(innerItem.carplateid,index,key,innerItem.carplate,0)">
+                <img :src="innerItem.icon" class="carnoLogo"/>
+                <span class="text">{{innerItem.carplate}}</span>
+                <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
+                    <img :src="rightIcon" class="rightLogo"/>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="brand-wrapper" v-for="(item,key) of carmodelsList" :key="key" :ref="key" v-show="carmodelsList">
+            <p class="title border-bottom-1px">{{key}}</p>
+            <ul class="item-list">
+              <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.carnatid" @click="selected(innerItem.carnatid,index,key,innerItem.carnat,1)">
+                <span class="text">{{innerItem.carnat}}</span>
+                <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
                   <img :src="rightIcon" class="rightLogo"/>
-              </span>
-            </li>
-          </ul>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="brand-wrapper" v-for="(item,key) of carmodelsList" :key="key" :ref="key" v-show="carmodelsList">
-          <div class="title border-bottom-1px">{{key}}</div>
-          <ul class="item-list">
-            <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.carnatid" @click="selected(innerItem.carnatid,index,key,innerItem.carnat,1)">
-              <span class="text">{{innerItem.carnat}}</span>
-              <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
-                <img :src="rightIcon" class="rightLogo"/>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
 
-      <div>
-        <div class="brand-wrapper" v-for="(item,key) of carnatList" :key="key" :ref="key" v-show="carnatList">
-          <div class="title border-bottom-1px">{{key}}</div>
-          <ul class="item-list">
-            <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.modelid" @click="selected(innerItem.modelid,index,key,innerItem.outputs,2)">
-              <span class="text">{{innerItem.outputs}}</span>
-              <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
-                <img :src="rightIcon" class="rightLogo"/>
-              </span>
-            </li>
-          </ul>
+        <div>
+          <div class="brand-wrapper" v-for="(item,key) of carnatList" :key="key" :ref="key" v-show="carnatList">
+            <p class="title border-bottom-1px">{{key}}</p>
+            <ul class="item-list">
+              <li class="brand border-bottom-1px" v-for="(innerItem,index) of item" :key="innerItem.modelid" @click="selected(innerItem.modelid,index,key,innerItem.outputs,2)">
+                <span class="text">{{innerItem.outputs}}</span>
+                <span class="iconfont selected-icon icon-xuanzhong" v-show="activeIndex===index&&activeKey===key">
+                  <img :src="rightIcon" class="rightLogo"/>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+      
 
     </div>
 
@@ -75,6 +78,7 @@
     },
     data() {
       return {
+        closeModal: false,
         rightIcon: require('../assets/images/right-icon.png'),
         popupVisible: false,
         show: false,
@@ -106,7 +110,6 @@
           this.initScroll()
           this.init();//如果是滚动就显示
         }
-        //this.$emit('show',this.show)
       },
       currentLetter(){
         const element = this.$refs[this.currentLetter][0];
@@ -116,6 +119,17 @@
     },
     created: function(){
       // this.init()
+    },
+    mounted() {
+      this.$nextTick(()=>{
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$refs.wrapper, {
+            click: true
+          });
+        } else {
+          this.scroll.refresh();
+        };
+      });
     },
     methods: {
       init(){
@@ -138,11 +152,10 @@
       },
       initScroll() {
         this.$nextTick(() => {  
-        if (!this.scroll) {  
-          this.scroll = new BScroll(this.$refs.wrapper, {
-            click: true
-          })  
-          console.log(this.scroll)  
+          if (!this.scroll) {  
+            this.scroll = new BScroll(this.$refs.wrapper, {
+              click: true
+            })  
           }  
         })  
       },
@@ -160,15 +173,18 @@
           },500)
           this.carplateid = id; 
           this.getCarmodels() 
+          this.initScroll()
         }else if(type==1){
           setTimeout(function(){
             _this.carmodelsList = [];//设置为空
           },500)
           this.carnatid = id;
           this.getYearPl()
+          this.initScroll()
         }else if(type==2){
           this.modelid = id;
         }
+
         
       },
       reset() {
@@ -180,6 +196,8 @@
       confirm() {
         
         if(!this.activeKey){Toast('请选择车型');return false;}
+        if(!this.carnatid){Toast('请选择车辆车系类型');return false;}
+        if(!this.modelid){Toast('请选择车辆年产类型');return false;}
         this.carnatList = [];//清空数据
         this.$emit('closePop')
         this.$emit('selectedBrand',this.activeBrand.substring(0,this.activeBrand.length-1));
@@ -192,9 +210,8 @@
 </script>
 <style lang="scss">
   .mint-toast{
-    z-index: 99999;
+    z-index: 99999!important;
   }
-    
 </style>
 <style lang="scss" scoped>
  
@@ -286,5 +303,5 @@
     }
        
   }
-            
+         
 </style>

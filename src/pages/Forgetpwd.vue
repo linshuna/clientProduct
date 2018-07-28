@@ -159,6 +159,10 @@ export default {
     font-size: .28rem;
     padding:0 .32rem;
     box-sizing: border-box;
+    min-height: 100%;
+    background: #fff;
+    position: absolute;
+    top:0;
   }
     
     .loginWrap{

@@ -10,7 +10,7 @@
         <div class="details-hd clearfix">
           <img :src="carMsg.icon" alt="" class="hd-img fl">
           <div class="hd-info fl">
-            <p class="car-name">{{carMsg.carplate}} {{carMsg.carmodel}} {{carMsg.carnat}}</p>
+            <p class="car-name">{{carMsg.carplate}} - {{carMsg.carNo}}</p>
             <p class="car-number">车架号：{{carMsg.vin | noDataFilter}}</p>
             <img src="../../assets/images/车辆信息-修改icon.png" alt="" class="edit-icon" @click.stop="editCar">
           </div>
@@ -54,13 +54,13 @@
               </div>
             </div>
             <ul class="footer_footer">
-              <li class="footer_footer_msg">
+              <li class="footer_footer_msg" v-for="(item,index) in consumeList">
                 <div class="footer_footer_msg_left">
-                  <p>支付小保养费</p>
+                  <p>{{item.des}}</p>
                 </div>
                 <div class="footer_footer_msg_right">
-                  <p class="footer_footer_msg_right_pone">-300.00</p>
-                  <p class="footer_footer_msg_right_ptwo">2018-8-31 21:14</p>
+                  <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                  <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
                 </div>
               </li>
             </ul>
@@ -76,7 +76,8 @@
 </template>
 <script>
   import {
-    carMsg
+    carMsg,
+    carLog
   } from '@/utils/api.js'
   import noDataTip from '@/components/noDataTip'
   export default {
@@ -95,7 +96,8 @@
     mounted() {
       // this._getIndexData()
       this.carvid = this.$route.params.carvid;
-      this.init() 
+      this.init();//车辆信息
+      this.initCarLog();//车辆消费 
     },
     filters:{
       noDataFilter: function(value){
@@ -107,7 +109,11 @@
       init() {
         carMsg({carvid: this.carvid}).then(res => {
           this.carMsg = res;
-          console.log(res)
+        })
+      },
+      initCarLog: function(){
+        carLog({carvid: this.carvid}).then(res=>{
+          this.consumeList = res;
         })
       },
       editCar: function(){
@@ -120,11 +126,18 @@
   .mint-navbar {
     background-color: #fff;
     border-bottom: 1px solid #eaeaea;
+    padding: 0;
   }
 
   .mint-tab-item {
     margin: 0 .92rem;
-    height: .84rem;
+    height: .7rem;
+    line-height: .7rem;
+    padding: 0!important;
+    .mint-tab-item-label{
+      height: .7rem!important;
+      line-height: .7rem!important;
+    }
   }
 
   .mint-navbar .mint-tab-item.is-selected {
@@ -148,9 +161,13 @@
     }
     .car-name {
       height: 1rem;
-      font-size: 0.4rem;
+      font-size: 0.32rem;
       line-height: 1rem;
       border-bottom: 1px solid #efefef;
+      width: 90%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .car-number {
       height: 0.7rem;
@@ -161,8 +178,8 @@
       position: absolute;
       top: 0.24rem;
       right: 0.24rem;
-      width: 0.28rem;
-      height: 0.28rem;
+      width: 0.32rem;
+      height: 0.32rem;
     }
   }
 

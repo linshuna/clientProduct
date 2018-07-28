@@ -39,9 +39,9 @@ import baseFooter from './components/baseFooter.vue'
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   #app {
-    height: 100%;
+    min-height: 100%;
     color: #666;
   }
 
@@ -52,8 +52,7 @@ import baseFooter from './components/baseFooter.vue'
     top: 0;
     left: 0;
     right: 0;
-    bottom: 1.04rem;
-    overflow: auto;
+    background-color: #f5f5f5;
   }
 
 </style>

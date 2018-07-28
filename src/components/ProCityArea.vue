@@ -10,9 +10,13 @@
   </div>
 </template>
 <script>
-  import {getCityList} from '../utils/api.js'
+  import {getCityList,getCarwashList,shopProject} from '../utils/api.js'
   export default {
-    props:{'popupVisible':{type: Boolean},'current':{type: Number}},
+    props:{
+      'popupVisible':{type: Boolean},
+      'current':{type: Number},
+      'selectType':{type: String}//select是方向
+    },
     data(){
       return {
         slots:[],
@@ -26,10 +30,14 @@
           {name:'默认排序',value:'1'},
           {name:'评分最高',value:'4'},
         ],
+        carwashList: [],//洗车 洗车服务类型
+        shopProjectList: []//商城 门店 分类
       }
     },
     created() {
       this.initCity()
+      this.initWashCarList()//初始化洗车项目
+      this.initporject()//初始化 商城 门店 分类
     },
     watch:{
       current: function(newVal,oldVal){
@@ -37,7 +45,7 @@
       }
     },
     methods: {
-       initCity: function(){
+      initCity: function(){
         getCityList().then(res=>{
           res.map((item,index)=>{
             this.allAddress.push({name:item.province,value:index,children:[]})
@@ -65,6 +73,26 @@
             })
           })
           this.changeAddress(this.current)
+        })
+      },
+      initWashCarList: function(){
+        getCarwashList().then(res=>{
+          res.map((item,index)=>{
+            this.carwashList.push({
+              name: item.typename,
+              value: item.id
+            })
+          })
+        })
+      },
+      initporject: function(){
+        shopProject().then(res=>{
+          res.map((item,index)=>{
+            this.shopProjectList.push({
+              name: item.typename,
+              value: item.id
+            })
+          })
         })
       },
       changeAddress: function(value){
@@ -98,12 +126,34 @@
                 className: 'slot5',
                 textAlign: 'center'
               }];
-        }else{
+        }else if(value==2){
           this.slots=[{
               defaultIndex:2,
               flex: 1,
-              values: this.checkedStatus,//职业类型
-              textAlign: 'left'
+              values: this.checkedStatus,//排序
+              textAlign: 'right'
+          }];
+        }else if(value==3){//洗车的服务类型
+          this.slots=[{
+              defaultIndex:2,
+              flex: 1,
+              values: this.carwashList,//洗车服务类型
+              textAlign: 'center'
+          }];
+        }else if(value==4){//排序去掉  评分最高
+           this.$delete(this.checkedStatus,3)
+           this.slots=[{
+              defaultIndex:2,
+              flex: 1,
+              values: this.checkedStatus,//排序
+              textAlign: this.selectType||'right'
+          }];
+        }else if(value==5){ //商城 门店 分类
+          this.slots=[{
+              defaultIndex:2,
+              flex: 1,
+              values: this.shopProjectList,//排序
+              textAlign: 'center'
           }];
         }
         
@@ -122,8 +172,12 @@
           }
           let area = pickerVal[1]['name']+" "+pickerVal[2]['name']
           this.$emit('gainAllAddress',{search:currentSearch,area: area})
-        }else{
-          this.$emit('gainSort',pickerVal[0]['value'])
+        }else if(this.current == 2 || this.current==4){
+          this.$emit('gainSort',pickerVal[0])
+        }else if(this.current == 3){
+          this.$emit('gainProject',pickerVal[0])
+        }else if(this.current == 5){
+          this.$emit('gainShopProject',pickerVal[0])
         }
         this.$emit('update:popupVisible', false)
       },
@@ -145,23 +199,21 @@
   }
 
 </script>
-<style lang="scss">
+<style>
+  .picker-slot{
+    font-size: 16px!important;
+  }
+  .picker-slot.picker-slot-right{
+    width: 100%;
+    padding-right: .3rem;
+    box-sizing: border-box;
+  }
+</style>
+<style lang="scss" scoped>
   .mint-popup{
     width: 100%;
   }
-  .v-modal{
-    top: .7rem!important;
-  }
-  .picker-center-highlight{
-    // top: 10%!important;
-  }
-  .picker-items .picker-slot .picker-slot-wrapper{
-    // transform: translate(0px, 0px) translateZ(0px);
-  }
-  .picker-slot.picker-slot-divider{
-    lign-items: inherit!important;
-    padding-top: 7px;
-  }
+  
   .picker-toolbar{
     border-top: 1px solid #f4f4f4;
     width: 100%;

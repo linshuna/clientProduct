@@ -1,228 +1,402 @@
 <template>
-  <div class="wallet-wrap mask">
-    <div class="wallet">
-      <div class="nav">
-        <p class="nav_wallet_p">我的余额</p>
-        <p class="nav_money_p">¥ 1556</p>
-        <div class="section">
-          <div class="section_left">
-            <div class="section_left_left">
-              <span>177.80</span>
-              <p>消费记录</p>
-            </div>
-            <!--<img src="../../assets/images/rightArrow.png" alt="">-->
-          </div>
-          <div class="section_center">
-            <div class="section_center_center">
-              <span>177.80</span>
-              <p>充值记录</p>
-            </div>
-            <!--<img src="../../assets/images/rightArrow.png" alt="">-->
-          </div>
-          <div class="section_right">
-            <div class="section_right_right">
-              <span class="section_right_span">177.80</span>
-              <p>分红</p>
-            </div>
-            <!--<img src="../../assets/images/rightArrow.png" alt="">-->
-          </div>
-        </div>
-      </div>
+    <div class="wallet-wrap mask">
 
-      <div class="footer">
-        <div class="footer_top">
-          <div>
-            <p>详情</p>
-          </div>
-          <div class="footer_top_right">
-            <p>查看更多账单</p>
-            <span>
+        <div class="wallet">
+            <div class="nav">
+                <p class="nav_wallet_p">我的余额</p>
+                <p class="nav_money_p">¥&nbsp;{{walletIndex.amount}}</p>
+                <!--<div class="section">-->
+                <!--<div class="price">-->
+
+                <!---->
+                <!---->
+                <!--</div>-->
+
+                <mt-navbar v-model="selected">
+                    <mt-tab-item id="1">
+                        <p class="price">{{walletlog.amount}}</p>消费记录
+                    </mt-tab-item>
+                    <mt-tab-item id="2">
+                        <p class="price">{{walletlog.recharge}}</p>充值记录
+                    </mt-tab-item>
+                    <mt-tab-item id="3">
+                        <p class="price">{{walletlog.bonus}}</p>分红
+                    </mt-tab-item>
+                </mt-navbar>
+
+            </div>
+
+            <div class="footer">
+
+
+                <mt-tab-container v-model="selected">
+                    <mt-tab-container-item id="1">
+                        <template v-if="WalletAmountlogList&&WalletAmountlogList.length>0">
+                            <div class="footer_top">
+                                <div>
+                                    <p>详情</p>
+                                </div>
+                                <div class="footer_top_right">
+                                    <p>查看更多账单</p>
+                                    <span>
               <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
             </span>
-          </div>
+                                </div>
+                            </div>
+                            <ul class="footer_footer" v-for="item in WalletAmountlogList">
+                                <li class="footer_footer_msg">
+                                    <div class="footer_footer_msg_left">
+                                        <p>{{item.des}}</p>
+                                    </div>
+                                    <div class="footer_footer_msg_right">
+                                        <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                        <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                        <template v-else>
+                            <no-data-tip :tipData="{typeTipe:0,conTip:'暂无数据'}"></no-data-tip>
+                        </template>
+                    </mt-tab-container-item>
+
+                    <mt-tab-container-item id="2">
+                        <template v-if="WalletRechargelog&&WalletRechargelog.length>0">
+                            <div class="footer_top">
+                                <div>
+                                    <p>详情</p>
+                                </div>
+                                <div class="footer_top_right">
+                                    <p>查看更多账单</p>
+                                    <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+            </span>
+                                </div>
+                            </div>
+                            <ul class="footer_footer">
+                                <li class="footer_footer_msg" v-for="item in WalletRechargelog">
+                                    <div class="footer_footer_msg_left">
+                                        <p>{{item.des}}</p>
+                                    </div>
+                                    <div class="footer_footer_msg_right">
+                                        <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                        <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                        <template v-else>
+                            <no-data-tip :tipData="{typeTipe:0,conTip:'暂无数据'}"></no-data-tip>
+                        </template>
+                    </mt-tab-container-item>
+
+                    <mt-tab-container-item id="3">
+                        <template v-if="WalletBonuslog&&WalletBonuslog.length>0">
+                            <div class="footer_top">
+                                <div>
+                                    <p>详情</p>
+                                </div>
+                                <div class="footer_top_right">
+                                    <p>查看更多账单</p>
+                                    <span>
+              <img src="../../assets/images/rightArrow.png" alt="" class="rightArrow">
+            </span>
+                                </div>
+                            </div>
+                            <ul class="footer_footer">
+                                <li class="footer_footer_msg" v-for="item in WalletBonuslog">
+                                    <div class="footer_footer_msg_left">
+                                        <p>{{item.des}}</p>
+                                    </div>
+                                    <div class="footer_footer_msg_right">
+                                        <p class="footer_footer_msg_right_pone">{{item.state}}{{item.price}}</p>
+                                        <p class="footer_footer_msg_right_ptwo">{{item.addtime}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                        <template v-else>
+                            <no-data-tip :tipData="{typeTipe:0,conTip:'暂无数据'}"></no-data-tip>
+                        </template>
+                    </mt-tab-container-item>
+                </mt-tab-container>
+            </div>
         </div>
 
-        <ul class="footer_footer">
-          <li class="footer_footer_msg">
-            <div class="footer_footer_msg_left">
-              <p>支付小保养费</p>
-            </div>
-            <div class="footer_footer_msg_right">
-              <p class="footer_footer_msg_right_pone">-300.00</p>
-              <p class="footer_footer_msg_right_ptwo">2018-8-31 21:14</p>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
-    export default {
-        name: "wallet",
+    import {getWalletIndex} from '../../utils/api.js'
+    import {getWalletAmountlog} from '../../utils/api.js'
+    import {getWalletRechargelog} from '../../utils/api.js'
+    import {getWalletBonuslog} from '../../utils/api.js'
 
-        created(){
+    import noDataTip from '@/components/noDataTip'
+
+    export default {
+        components: {
+            'no-data-tip': noDataTip
+        },
+        name: "wallet",
+        data() {
+            return {
+                walletIndex: {},
+                walletlog: {},
+                selected: "1",
+                WalletAmountlogList: '',     //消费
+                WalletRechargelog: '',       //充值
+                WalletBonuslog: '',      //分红
+                clientvid: 0,
+            }
+        },
+        mounted() {
+            // this._getWalletIndex()
+            // this._getWalletAmountlog()
+            // this._getWalletRechargelog()
+            // this._getWalletBonuslog()
+            let getStorage = this.$store.getters.getStorage;
+            if (getStorage) {
+                this.clientvid = this.$store.getters.getStorage.vid;
+                this._getWalletIndex()
+                this._getWalletAmountlog()
+                this._getWalletRechargelog()
+                this._getWalletBonuslog()
+            }
+        },
+
+        created() {
             this.clientvid = this.$store.getters.getStorage.vid;
+        },
+        methods: {
+            _getWalletIndex() {
+                getWalletIndex({clientvid: this.clientvid}).then(res => {
+                    this.walletIndex = res.wallet
+                    this.walletlog = res.log
+                    // console.log(res);
+                    // console.log(this.walletIndex);
+                })
+            },
+            _getWalletAmountlog() {      //消费
+                getWalletAmountlog({clientvid:this.clientvid}).then(res => {
+                    if (res && !res.errorCode) {
+                        this.WalletAmountlogList = res
+                        console.log(res);
+                    }
+                })
+
+            },
+            _getWalletRechargelog() {        //充值
+                getWalletRechargelog({clientvid: this.clientvid}).then(res => {
+                    if (res && !res.errorCode) {
+                        this.WalletRechargelog = res
+                    }
+                    // console.log(res);
+                })
+            },
+            _getWalletBonuslog() {       //红包
+                getWalletBonuslog({clientvid: this.clientvid}).then(res => {
+                    if (res && !res.errorCode) {
+                        this.WalletBonuslog = res
+                    }
+                    // console.log(res);
+                })
+            }
         }
     }
 
 </script>
 
 <style lang="scss" scoped>
+    .mint-navbar {
+        padding: 0 .05rem;
+        background-color: #fa9e15;
+        /*border-bottom: 1px solid #eaeaea;*/
+        margin-bottom: .3rem;
+    }
 
+    .mint-tab-item {
+        height: 1rem;
+    }
 
-  .nav {
-    height: 4.96rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #020202;
-    background: url("../../assets/images/Wallet_bg.png")no-repeat;
-    background-size: 100% 100%;
-    position: relative;
-  }
+    .mint-navbar .mint-tab-item.is-selected {
+        border-bottom: 2px solid #fa9e15;
+        color: #fff;
+    }
 
+    /*.mint-tab-item-label{*/
+    /*padding-bottom: .5rem;*/
+    /*}*/
 
-  .nav_wallet_p {
-    padding-top: .1rem;
-    font-size: 0.28rem;
-    color: #fceed9;
-  }
+    .nav {
+        height: 4.96rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #020202;
+        background: url("../../assets/images/Wallet_bg.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+    }
 
-  .nav_money_p {
-    font-size: 0.6rem;
-    color: #fdfdfd;
-  }
+    /*.price {*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+    /*display: flex;*/
+    /*bottom: 1rem;*/
+    /*z-index: 5;*/
+    /*}*/
 
-  .section {
-    height: 0.9rem;
-    display: flex;
-    flex-direction: row;
-    margin-top: 0.2rem;
-    position:absolute;
-    bottom:0.32rem;
-    color: #020202;
+    .price {
+        height: 0.5rem;
+        text-align: center;
+    }
 
-    width: 7.5rem;
-  }
-  .section>.section_left,
-  .section>.section_center {
-    position: relative;
-  }
-  /*<!--&lt;!&ndash;.section>.section_left::after,-->*/
-  /*<!--.section>.section_center::after {-->*/
-  /*<!--content: '';-->*/
-  /*<!--@include ct;-->*/
-  /*<!--right: 0;-->*/
-  /*<!--width: 2px;-->*/
-  /*<!--height: 1.12rem;-->*/
-  /*<!--background-color: #efefef;-->*/
-  /*<!--}&ndash;&gt;-->*/
+    .nav_wallet_p {
+        padding-top: .1rem;
+        font-size: 0.28rem;
+        color: #fceed9;
+        position: relative;
+    }
 
-  .section div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+    .nav_money_p {
+        font-size: 0.6rem;
+        color: #fdfdfd;
+    }
 
-  .section span {
-    font-size: 0.36rem;
-    color: #fefefe;
+    .mint-navbar {
+        height: 0.9rem;
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.2rem;
+        position: absolute;
+        bottom: 0.32rem;
+        color: #020202;
 
-  }
+        width: 7.5rem;
+    }
 
-  .section p {
-    font-size: 0.28rem;
-  }
+    .section > .section_left,
+    .section > .section_center {
+        position: relative;
+    }
 
-  .section img {
-    width: 0.16rem;
-    height: 0.3rem;
-  }
+    /*<!--&lt;!&ndash;.section>.section_left::after,-->*/
+    /*<!--.section>.section_center::after {-->*/
+    /*<!--content: '';-->*/
+    /*<!--@include ct;-->*/
+    /*<!--right: 0;-->*/
+    /*<!--width: 2px;-->*/
+    /*<!--height: 1.12rem;-->*/
+    /*<!--background-color: #efefef;-->*/
+    /*<!--}&ndash;&gt;-->*/
 
-  .section_left {
-    position: relative;
-  }
-  .section_right,.section_left,.section_center{
+    .section div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-    font-size: 0.28rem;
-    color: #fdfdfd;
-  }
-  .section_right p,.section_left p,.section_center p{
-    font-size: 0.28rem;
-    color: #fdfdfd;
-  }
-  .section_left img,
-  .section_center img,
-  .section_right img {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0.26rem;
-  }
+    .section span {
+        font-size: 0.36rem;
+        color: #fefefe;
 
-  .rightArrow {
-    width: 0.1rem;
-    height: 0.1rem;
-    padding-left: 0.08rem;
-  }
+    }
 
-  .footer {
-    margin-top: 0.1rem;
-  }
+    .section p {
+        font-size: 0.28rem;
+    }
 
-  .footer_top {
-    height: 0.42rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-left: 0.24rem;
-    padding-right: 0.5rem;
-  }
+    .section img {
+        width: 0.16rem;
+        height: 0.3rem;
+    }
 
-  .footer_top_right {
-    display: flex;
-    flex-direction: row;
-  }
+    .section_left {
+        position: relative;
+    }
 
-  .footer_footer {
-    background-color: #fff;
-  }
+    .section_right, .section_left, .section_center {
 
-  .footer_footer_msg {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 0.24rem;
-    padding-right: 0.5rem;
-    height: 0.96rem;
-    align-items: center;
-    border-bottom: 1px solid #efefef;
-  }
+        font-size: 0.28rem;
+        color: #fdfdfd;
+    }
 
-  .footer_footer_msg_right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
+    .section_right p, .section_left p, .section_center p {
+        font-size: 0.28rem;
+        color: #fdfdfd;
+    }
 
-  .footer_footer_msg_left p {
-    /*font-weight: 600;*/
-    font-size: 0.28rem;
-    color: #000
-  }
+    .section_left img,
+    .section_center img,
+    .section_right img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.26rem;
+    }
 
-  .footer_footer_msg_right_pone {
-    /*font-weight: 700;*/
-    font-size: 0.30rem;
-    color: #000;
-  }
+    .rightArrow {
+        width: 0.1rem;
+        height: 0.1rem;
+        padding-left: 0.08rem;
+    }
 
-  .footer_footer_msg_right_ptwo {
-    color: #ccc;
-  }
+    .footer {
+        margin-top: 0.1rem;
+    }
+
+    .footer_top {
+        height: 0.42rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 0.24rem;
+        padding-right: 0.5rem;
+    }
+
+    .footer_top_right {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .footer_footer {
+        background-color: #fff;
+    }
+
+    .footer_footer_msg {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 0.24rem;
+        padding-right: 0.5rem;
+        height: 0.96rem;
+        align-items: center;
+        border-bottom: 1px solid #efefef;
+    }
+
+    .footer_footer_msg_right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .footer_footer_msg_left p {
+        /*font-weight: 600;*/
+        font-size: 0.28rem;
+        color: #000
+    }
+
+    .footer_footer_msg_right_pone {
+        /*font-weight: 700;*/
+        font-size: 0.30rem;
+        color: #000;
+    }
+
+    .footer_footer_msg_right_ptwo {
+        color: #ccc;
+    }
 
 </style>

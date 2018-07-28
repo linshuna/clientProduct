@@ -67,10 +67,21 @@
             if(this.plate.length>10){
                 return
             }
+           
             this.txtboardshow = false;
             this.numboardshow = true;
             this.plate+=txt;
             this.keyb = txt;
+             //判断第二位不能是数字
+            if(this.plate.length>1){
+                let isNum = this.plate.substr(1,2);
+                if(!/^[A-Z]+$/.test(isNum)){
+                    this.tips = '车牌号第二位是字母';
+                    this.plate = this.plate.substr(0,1);
+                    this.$emit('transferplate',{carno:this.plate,tips:this.tips})
+                    return false;
+                }
+            }
             this.composition(indexi,size);    
             this.$emit('transferplate',{carno:this.plate})        
         },
@@ -147,7 +158,8 @@
                 this.$emit('transferplate',{carno:this.plate,tips:this.tips});
                 return;
             } 
-            let carBol = (/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[警京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{0,1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}[A-Z0-9]{0,1}[A-Z0-9]{0,1}$/.test(this.plate)  )      
+            let carBol = (/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[警京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼]{0,1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}[A-Z0-9]{0,1}[A-Z0-9]{0,1}$/.test(this.plate)  )   
+            console.log(carBol)   
             if(!carBol){//不是车牌
                 this.tips = '车牌号格式不正确'  
                 this.$emit('transferplate',{carno:this.plate,tips:this.tips});

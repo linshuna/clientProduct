@@ -67,6 +67,7 @@
 <script>
     import {getMyCenter,changeHeadimg,editorMyCenter} from '../../utils/api.js'
     import {format} from '@/assets/js/date.js'
+    import { Toast,MessageBox } from 'mint-ui'
     export default {
         name: 'MyCenter',
         data() {
@@ -142,16 +143,8 @@
                 .then(res=>{
                   that.avatar = res.headimg; //改变头像
                 })
-                .catch(err=>{Toast(err)})
-                
+                .catch(err=>{Toast(err)})                
               }
-              // if (this.$refs.avatarInput.files.length != 0) {
-              //   var changeAvatarForm = this.$refs.changeAvatarForm; //获取form对象
-              //   var image = new FormData(changeAvatarForm);
-              //   image.append('avatar', this.$refs.avatarInput.files[0])
-              //   //对接修改头像接口
-              // }
-
             },
             save: function(){
               let reqData = {
@@ -161,7 +154,15 @@
                 birthday: this.birthday,
                 headimg: this.avatar
               }
-              // editorMyCenter().then(res=>{})
+              MessageBox.confirm('是否确定保存信息','').then(action => { 
+                editorMyCenter(reqData).then(res=>{
+                  if(res&&!res.errorCode){
+                    this.$store.commit("showToast",'修改成功')
+                    this.$store.commit('delay',{url:'/UserCenter/UserCenterIndex',$router:this.$router})
+                  }
+                })
+              }).catch(()=>{})
+              
             }
         }
     }

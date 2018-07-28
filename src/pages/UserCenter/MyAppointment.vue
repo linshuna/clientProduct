@@ -1,191 +1,49 @@
 <template>
     <div class="my-appointment mask">
-        <div class="search-box clearfix">
-            <img class="fl" src="../../assets/images/search-icon.png" alt="">
-            <p class="fl">日历筛选</p>
-        </div>
-        <mt-navbar v-model="selected">
-            <mt-tab-item id="1">待使用</mt-tab-item>
-            <mt-tab-item id="2">已使用</mt-tab-item>
-            <mt-tab-item id="3">已过期</mt-tab-item>
-            <mt-tab-item id="4">已取消</mt-tab-item>
-        </mt-navbar>
-        <mt-tab-container v-model="selected">
-            <mt-tab-container-item id="1">
-                <ul v-for="item in ConentList">
-                    <li class="nav">
-                        <div class="nav_top">
-                            <div class="nav_top_img">
-                                <img src="../../assets/images/carImg.png" alt="">
-                            </div>
-                            <div>
-                                <p>奔驰C级 2018款 C 180 L 动感版</p>
-                            </div>
-                            <img src="../../assets/images/rightArrow.png" alt="" class="nav_span">
-                        </div>
-
-                        <div class="nav_section">
-                            <div class="nav_section_left">
-                                <div class="nav_section_left_top">
-                                    <img src="../../assets/images/time.png" alt="">
-                                    <p>预约时间</p>
-                                </div>
-                                <div class="nav_section_left_center">
-                                    <p>{{item.appTime}}</p>
-                                </div>
-                                <div class="nav_section_left_footer">
-                                    <img src="../../assets/images/car-number.png" alt="">
-                                    <p>{{item.carNO}}</p>
-                                </div>
-                            </div>
-                            <div class="nav_section_right">
-                                <button>取消预约</button>
-                            </div>
-                        </div>
-                        <div class="nav_footer">
-                            <p>预约项目: 小保养,更换雨刮器...</p>
-                        </div>
-                    </li>
-                </ul>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="2">
-                <ul>
-                    <li class="nav">
-                        <div class="nav_top">
-                            <div class="nav_top_img">
-                                <img src="" alt="">
-                            </div>
-                            <div>
-                                <p>奔驰C级 2018款 C 180 L 动感版</p>
-                            </div>
-                            <img src="../../assets/images/rightArrow.png" alt="" class="nav_span">
-                        </div>
-                        <div class="nav_section">
-                            <div class="nav_section_left">
-                                <div class="nav_section_left_top">
-                                    <img src="" alt="">
-                                    <p>预约时间</p>
-                                </div>
-                                <div class="nav_section_left_center">
-                                    <p>2018.07.10 13:00</p>
-                                </div>
-                                <div class="nav_section_left_footer">
-                                    <img src="" alt="">
-                                    <p>粤A123456</p>
-                                </div>
-                            </div>
-                            <div class="nav_section_right">
-                                <button>取消预约</button>
-                            </div>
-                        </div>
-                        <div class="nav_footer">
-                            <p>预约项目: 小保养,更换雨刮器...</p>
-                        </div>
-                    </li>
-                </ul>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="3">
-                <div class="couponList couponList-used">
-                    <ul>
-                        <li class="nav">
-                            <div class="nav_top">
-                                <div class="nav_top_img">
-                                    <img src="" alt="">
-                                </div>
-                                <div>
-                                    <p>奔驰C级 2018款 C 180 L 动感版</p>
-                                </div>
-                                <img src="../../assets/images/rightArrow.png" alt="" class="nav_span">
-                            </div>
-                            <div class="nav_section">
-                                <div class="nav_section_left">
-                                    <div class="nav_section_left_top">
-                                        <img src="" alt="">
-                                        <p>预约时间</p>
-                                    </div>
-                                    <div class="nav_section_left_center">
-                                        <p>2018.07.10 13:00</p>
-                                    </div>
-                                    <div class="nav_section_left_footer">
-                                        <img src="" alt="">
-                                        <p>粤A123456</p>
-                                    </div>
-                                </div>
-                                <div class="nav_section_right">
-                                    <button>取消预约</button>
-                                </div>
-                            </div>
-                            <div class="nav_footer">
-                                <p>预约项目: 小保养,更换雨刮器...</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="4">
-                <div class="couponList couponList-used">
-                    <ul>
-                        <li class="nav">
-                            <div class="nav_top">
-                                <div class="nav_top_img">
-                                    <img src="" alt="">
-                                </div>
-                                <div>
-                                    <p>奔驰C级 2018款 C 180 L 动感版</p>
-                                </div>
-                                <img src="../../assets/images/rightArrow.png" alt="" class="nav_span">
-                            </div>
-                            <div class="nav_section">
-                                <div class="nav_section_left">
-                                    <div class="nav_section_left_top">
-                                        <img src="" alt="">
-                                        <p>预约时间</p>
-                                    </div>
-                                    <div class="nav_section_left_center">
-                                        <p>2018.07.10 13:00</p>
-                                    </div>
-                                    <div class="nav_section_left_footer">
-                                        <img src="" alt="">
-                                        <p>粤A123456</p>
-                                    </div>
-                                </div>
-                                <div class="nav_section_right">
-                                    <button>取消预约</button>
-                                </div>
-                            </div>
-                            <div class="nav_footer">
-                                <p>预约项目: 小保养,更换雨刮器...</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </mt-tab-container-item>
-        </mt-tab-container>
+      <router-view></router-view>
     </div>
 </template>
 <script>
-    import {getAppointConent} from '../../utils/api.js'
-
+    import {getMyAppoint} from '../../utils/api.js'
+    import noDataTip from '@/components/noDataTip'
     export default {
-        // import{
-        //
-        // }from '..'
         name: 'MyAppointment',
         data() {
             return {
-                ConentList: [],
-                selected: '1'
+              clientvid:'',
+              ConentList: [],
+              selected: '1',
+              noUseList:[],
+              reUseList:[],
+              cancelList:[],
+              overList:[]
             }
         },
         mounted: function () {
-            this._getAppointConent()
+          let getStorage = this.$store.getters.getStorage;
+          this.clientvid = getStorage?getStorage.vid:''
+          this.getMyAppoint()
+        },
+        components:{
+          'no-data-tip':noDataTip
         },
         methods: {
-            _getAppointConent() {
-                getAppointConent().then(res => {
-
-                    this.ConentList = [res]
-                    console.log(res);
+            getMyAppoint() {
+              let _this = this;
+                getMyAppoint({clientvid: this.clientvid}).then(res => {
+                  console.log(res)
+                    res.map((item,index)=>{//0未使用1已使用2已取消4已过期
+                      if(item.status==0){
+                        this.noUseList.push(item)
+                      }else if(item.status==1){
+                        this.reUseList.push(item)
+                      }else if(item.status==2){
+                        this.cancelList.push(item)
+                      }else if(item.status==4){
+                        this.overList.push(item)
+                      }
+                    })
+                    
                 })
             }
         }
